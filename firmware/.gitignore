@@ -1,0 +1,10 @@
+*~
+*#*#
+*.DS_Store
+*.cydsn/Backup
+*.cydsn/CortexM3
+*.arh
+*.cydsn/codegentemp
+*.cydsn/Archive
+*.cydsn/CortexM0
+*.cydsn/Export
