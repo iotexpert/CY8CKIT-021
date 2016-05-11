@@ -3,8 +3,18 @@
 #include "cytypes.h"
    
 void BLEIOT_Start();
+int BLEIOT_isUpdated();
 
-typedef struct SystemStatus {
+void BLEIOT_writeBlue(uint8);
+uint8 BLEIOT_readBlue();
+
+void BLEIOT_writeLed0(uint8);
+uint8 BLEIOT_readLed0();
+
+void BLEIOT_writeLed1(uint8);
+uint8 BLEIOT_readLed1();
+
+typedef struct BLEIOT_SystemStatus {
     uint8 blue;
     uint8 led0;
     uint8 led1;
@@ -16,7 +26,7 @@ typedef struct SystemStatus {
     uint16 display;
     uint16 tone;
     uint8 bleConnected;
-} __attribute__((packed)) SystemStatus;
+} __attribute__((packed)) BLEIOT_SystemStatus;
 
 #endif
     

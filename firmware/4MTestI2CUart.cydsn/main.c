@@ -28,6 +28,8 @@ int main()
     uint8 b1previous = 0;
     uint8 b0previous = 0;
     uint8 blueState = 0;
+    led0_Write(!blueState);
+    led1_Write(!blueState);
     
     for(;;)
     {
@@ -37,25 +39,15 @@ int main()
             uint8 b0current = CapSense_CheckIsWidgetActive(CapSense_BUTTON0__BTN);
             
             if( b1current == 1 && b1previous==0)
-            {
-                /*
-                if(blueState)
-                    BLEIOT_SendCommand(CMD_BLE_BLUE_LED_OFF);
-                else
-                    BLEIOT_SendCommand(CMD_BLE_BLUE_LED_ON);
-                */
-                
+            {                                
                 blueState = !blueState;
-                led1_Write(blueState);
+                BLEIOT_writeBlue(blueState);
             }
+          
+            led0_Write(!BLEIOT_readLed0());
             
-            if( b0current == 1 && b0previous==0)
-            {
-                //BLE_SendCommand(CMD_BLE_BLUE_LED_ON);
-                //BLE_SendCommand(CMD_BLE_BOOTLOAD);         
-                led0_Write(!led0_Read());
-            }
-            
+            led1_Write(!BLEIOT_readLed1());
+
             
             b0previous = b0current;
             b1previous = b1current;

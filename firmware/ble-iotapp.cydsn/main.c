@@ -10,7 +10,7 @@
  * ========================================
 */
 #include <project.h>
-#include "commands.h"
+#include "BLEIOT_BLEIOT.h"
 
 #define LED_ON 0
 #define LED_OFF 1
@@ -18,30 +18,21 @@ int main()
 {
 
     CyGlobalIntEnable;
-    UART_Start();
-    blue_Write(LED_OFF);
-    uint8 c;
-    
+    BLEIOT_Start();
+    blue_Write(LED_OFF);    
     for(;;)
     {
-        c = UART_UartGetByte();
-      
-        switch(c)
+        if(BLEIOT_isUpdated())
         {
-            case CMD_BLE_BLUE_LED_ON:
-                blue_Write(LED_ON);
-            break;
-            case CMD_BLE_BLUE_LED_OFF:
-                blue_Write(LED_OFF);
-            break;
-            case CMD_BLE_BOOTLOAD:
-                Bootloadable_Load();
-            break;
-                
-           
+            blue_Write(!BLEIOT_readBlue());
         }
-      
+        
+        BLEIOT_writeLed0(BLEIOT_readBlue());
+        BLEIOT_writeLed1(BLEIOT_readBlue());
+
+          
     }
+     
 }
 
 /* [] END OF FILE */

@@ -1,4 +1,5 @@
 #include "project.h"
+#include "BLEIOT_BLEIOT.h"
 
 BLEIOT_SystemStatus BLEIOT_local;
 BLEIOT_SystemStatus BLEIOT_remote;
