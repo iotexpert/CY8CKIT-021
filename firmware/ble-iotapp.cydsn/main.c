@@ -22,14 +22,11 @@ int main()
     blue_Write(LED_OFF);    
     for(;;)
     {
-        if(BLEIOT_isUpdated())
-        {
-            blue_Write(!BLEIOT_readBlue());
-        }
+       blue_Write(!BLEIOT_readRemoteBlue());
         
-        BLEIOT_writeLed0(BLEIOT_readBlue());
-        BLEIOT_writeLed1(BLEIOT_readBlue());
-
+       BLEIOT_sendUpdateLed0(BLEIOT_readRemoteBlue());
+       BLEIOT_sendUpdateLed1(BLEIOT_readRemoteBlue());
+      
           
     }
      

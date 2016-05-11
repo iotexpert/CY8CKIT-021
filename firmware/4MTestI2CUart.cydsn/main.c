@@ -11,6 +11,7 @@
 */
 #include <project.h>
 
+
 int main()
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
@@ -41,14 +42,12 @@ int main()
             if( b1current == 1 && b1previous==0)
             {                                
                 blueState = !blueState;
-                BLEIOT_writeBlue(blueState);
+                BLEIOT_sendUpdateBlue(blueState);
             }
           
-            led0_Write(!BLEIOT_readLed0());
-            
-            led1_Write(!BLEIOT_readLed1());
+            led0_Write(!BLEIOT_readRemoteLed0());
+            led1_Write(!BLEIOT_readRemoteLed1());
 
-            
             b0previous = b0current;
             b1previous = b1current;
             CapSense_UpdateEnabledBaselines();
