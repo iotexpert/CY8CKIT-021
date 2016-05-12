@@ -1,20 +1,9 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
 #include <project.h>
-
 
 int main()
 {
     CyGlobalIntEnable; /* Enable global interrupts. */
+    
     
     uint8 buff[] = {1,2,3,4};
     
@@ -32,6 +21,8 @@ int main()
     led0_Write(!blueState);
     led1_Write(!blueState);
     
+    P06_Write(1); // turn it off
+    
     for(;;)
     {
         if(!CapSense_IsBusy())
@@ -42,18 +33,37 @@ int main()
             if( b1current == 1 && b1previous==0)
             {                                
                 blueState = !blueState;
-                BLEIOT_sendUpdateBlue(blueState);
+                if(blueState)
+                {
+                    BLEIOT_sendUpdateBlue(ON);
+                    P06_Write(0);
+                    
+                }
+                else
+                {
+                    BLEIOT_sendUpdateBlue(OFF);
+                    P06_Write(1);
+                }
+                    
+            }
+            
+            if(b0current == 1 && b0previous == 0)
+            {
+                BLEIOT_sendUpdateBlue(BLINK);
+                
             }
           
-            led0_Write(!BLEIOT_readRemoteLed0());
-            led1_Write(!BLEIOT_readRemoteLed1());
+ 
 
             b0previous = b0current;
             b1previous = b1current;
             CapSense_UpdateEnabledBaselines();
             CapSense_ScanEnabledWidgets();
         }
-        
+       
+        //P06_Write(!BLEIOT_readRemoteBlue());
+        led0_Write(!BLEIOT_readRemoteLed0());
+        led1_Write(!BLEIOT_readRemoteLed1());      
     }
 }
 

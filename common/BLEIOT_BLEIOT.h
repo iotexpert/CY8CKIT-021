@@ -1,14 +1,20 @@
 #ifndef BLEIOT_H
 #define BLEIOT_H
 #include "cytypes.h"
-   
+
+typedef enum BlueStates {
+    OFF,
+    ON,
+    BLINK,
+    BLECONTROL
+} BlueStates;
+
 void BLEIOT_Start();
+uint32 BLEIOT_getDirtyFlags();
 
-uint32 BLEIOT_clearRemoteFlags(uint32 mask);
-uint32 BLEIOT_getRemoteFlags();
 
-void BLEIOT_sendUpdateBlue(uint8);
-uint8 BLEIOT_readRemoteBlue();
+void BLEIOT_sendUpdateBlue(BlueStates);
+BlueStates BLEIOT_readRemoteBlue();
 
 void BLEIOT_sendUpdateLed0(uint8);
 uint8 BLEIOT_readRemoteLed0();
@@ -29,9 +35,10 @@ uint8 BLEIOT_readRemoteLed1();
 #define BLEIOT_FLAG_BLECONNECTED (0x01<<9)
 #define BLEIOT_FLAG_BOOTLOAD (0x01<<10)
 
+
 typedef struct BLEIOT_SystemStatus {
-    uint32 flags;
-    uint8 blue;
+    uint32 updatedFlags;
+    BlueStates blue;
     uint8 led0;
     uint8 led1;
     uint8 button0;

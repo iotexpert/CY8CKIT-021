@@ -19,15 +19,37 @@ int main()
 
     CyGlobalIntEnable;
     BLEIOT_Start();
-    blue_Write(LED_OFF);    
+    //blue_Write(LED_OFF);
+    
+    PWM_Start();
+    
     for(;;)
     {
-       blue_Write(!BLEIOT_readRemoteBlue());
-        
-       BLEIOT_sendUpdateLed0(BLEIOT_readRemoteBlue());
-       BLEIOT_sendUpdateLed1(BLEIOT_readRemoteBlue());
-      
-          
+       
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLUE)
+        {
+            switch(BLEIOT_readRemoteBlue())
+            {
+                case ON:
+                    PWM_Stop();
+                    blue_Write(1); // in HW mode sw reg is OE.. output enable=on to drive active low
+                    break;
+                case OFF:
+                    PWM_Stop();
+                    blue_Write(0); // in HW mode sw reg is OE.. output enable=off to drive tristate output
+                break;
+                break;
+                case BLECONTROL:
+                case BLINK:
+                    blue_Write(1); // turn the OE back on
+                    PWM_Start();
+                break;
+
+                BLEIOT_sendUpdateBlue(BLEIOT_readRemoteBlue());
+                
+            }
+           
+        } 
     }
      
 }

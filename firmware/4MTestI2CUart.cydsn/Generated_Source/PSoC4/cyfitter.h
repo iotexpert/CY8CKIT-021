@@ -2,6 +2,69 @@
 #define INCLUDED_CYFITTER_H
 #include "cydevice_trm.h"
 
+/* P06 */
+#define P06__0__DR CYREG_GPIO_PRT0_DR
+#define P06__0__DR_CLR CYREG_GPIO_PRT0_DR_CLR
+#define P06__0__DR_INV CYREG_GPIO_PRT0_DR_INV
+#define P06__0__DR_SET CYREG_GPIO_PRT0_DR_SET
+#define P06__0__HSIOM CYREG_HSIOM_PORT_SEL0
+#define P06__0__HSIOM_MASK 0x0F000000u
+#define P06__0__HSIOM_SHIFT 24u
+#define P06__0__INTCFG CYREG_GPIO_PRT0_INTR_CFG
+#define P06__0__INTR CYREG_GPIO_PRT0_INTR
+#define P06__0__INTR_CFG CYREG_GPIO_PRT0_INTR_CFG
+#define P06__0__INTSTAT CYREG_GPIO_PRT0_INTR
+#define P06__0__MASK 0x40u
+#define P06__0__PA__CFG0 CYREG_UDB_PA0_CFG0
+#define P06__0__PA__CFG1 CYREG_UDB_PA0_CFG1
+#define P06__0__PA__CFG10 CYREG_UDB_PA0_CFG10
+#define P06__0__PA__CFG11 CYREG_UDB_PA0_CFG11
+#define P06__0__PA__CFG12 CYREG_UDB_PA0_CFG12
+#define P06__0__PA__CFG13 CYREG_UDB_PA0_CFG13
+#define P06__0__PA__CFG14 CYREG_UDB_PA0_CFG14
+#define P06__0__PA__CFG2 CYREG_UDB_PA0_CFG2
+#define P06__0__PA__CFG3 CYREG_UDB_PA0_CFG3
+#define P06__0__PA__CFG4 CYREG_UDB_PA0_CFG4
+#define P06__0__PA__CFG5 CYREG_UDB_PA0_CFG5
+#define P06__0__PA__CFG6 CYREG_UDB_PA0_CFG6
+#define P06__0__PA__CFG7 CYREG_UDB_PA0_CFG7
+#define P06__0__PA__CFG8 CYREG_UDB_PA0_CFG8
+#define P06__0__PA__CFG9 CYREG_UDB_PA0_CFG9
+#define P06__0__PC CYREG_GPIO_PRT0_PC
+#define P06__0__PC2 CYREG_GPIO_PRT0_PC2
+#define P06__0__PORT 0u
+#define P06__0__PS CYREG_GPIO_PRT0_PS
+#define P06__0__SHIFT 6
+#define P06__DR CYREG_GPIO_PRT0_DR
+#define P06__DR_CLR CYREG_GPIO_PRT0_DR_CLR
+#define P06__DR_INV CYREG_GPIO_PRT0_DR_INV
+#define P06__DR_SET CYREG_GPIO_PRT0_DR_SET
+#define P06__INTCFG CYREG_GPIO_PRT0_INTR_CFG
+#define P06__INTR CYREG_GPIO_PRT0_INTR
+#define P06__INTR_CFG CYREG_GPIO_PRT0_INTR_CFG
+#define P06__INTSTAT CYREG_GPIO_PRT0_INTR
+#define P06__MASK 0x40u
+#define P06__PA__CFG0 CYREG_UDB_PA0_CFG0
+#define P06__PA__CFG1 CYREG_UDB_PA0_CFG1
+#define P06__PA__CFG10 CYREG_UDB_PA0_CFG10
+#define P06__PA__CFG11 CYREG_UDB_PA0_CFG11
+#define P06__PA__CFG12 CYREG_UDB_PA0_CFG12
+#define P06__PA__CFG13 CYREG_UDB_PA0_CFG13
+#define P06__PA__CFG14 CYREG_UDB_PA0_CFG14
+#define P06__PA__CFG2 CYREG_UDB_PA0_CFG2
+#define P06__PA__CFG3 CYREG_UDB_PA0_CFG3
+#define P06__PA__CFG4 CYREG_UDB_PA0_CFG4
+#define P06__PA__CFG5 CYREG_UDB_PA0_CFG5
+#define P06__PA__CFG6 CYREG_UDB_PA0_CFG6
+#define P06__PA__CFG7 CYREG_UDB_PA0_CFG7
+#define P06__PA__CFG8 CYREG_UDB_PA0_CFG8
+#define P06__PA__CFG9 CYREG_UDB_PA0_CFG9
+#define P06__PC CYREG_GPIO_PRT0_PC
+#define P06__PC2 CYREG_GPIO_PRT0_PC2
+#define P06__PORT 0u
+#define P06__PS CYREG_GPIO_PRT0_PS
+#define P06__SHIFT 6
+
 /* led0 */
 #define led0__0__DR CYREG_GPIO_PRT3_DR
 #define led0__0__DR_CLR CYREG_GPIO_PRT3_DR_CLR
@@ -34,7 +97,7 @@
 #define led0__0__PC2 CYREG_GPIO_PRT3_PC2
 #define led0__0__PORT 3u
 #define led0__0__PS CYREG_GPIO_PRT3_PS
-#define led0__0__SHIFT 1u
+#define led0__0__SHIFT 1
 #define led0__DR CYREG_GPIO_PRT3_DR
 #define led0__DR_CLR CYREG_GPIO_PRT3_DR_CLR
 #define led0__DR_INV CYREG_GPIO_PRT3_DR_INV
@@ -63,7 +126,7 @@
 #define led0__PC2 CYREG_GPIO_PRT3_PC2
 #define led0__PORT 3u
 #define led0__PS CYREG_GPIO_PRT3_PS
-#define led0__SHIFT 1u
+#define led0__SHIFT 1
 
 /* led1 */
 #define led1__0__DR CYREG_GPIO_PRT3_DR
@@ -97,7 +160,7 @@
 #define led1__0__PC2 CYREG_GPIO_PRT3_PC2
 #define led1__0__PORT 3u
 #define led1__0__PS CYREG_GPIO_PRT3_PS
-#define led1__0__SHIFT 0u
+#define led1__0__SHIFT 0
 #define led1__DR CYREG_GPIO_PRT3_DR
 #define led1__DR_CLR CYREG_GPIO_PRT3_DR_CLR
 #define led1__DR_INV CYREG_GPIO_PRT3_DR_INV
@@ -126,7 +189,7 @@
 #define led1__PC2 CYREG_GPIO_PRT3_PC2
 #define led1__PORT 3u
 #define led1__PS CYREG_GPIO_PRT3_PS
-#define led1__SHIFT 0u
+#define led1__SHIFT 0
 
 /* EZI2C_SCB */
 #define EZI2C_SCB__CTRL CYREG_SCB0_CTRL
@@ -236,15 +299,8 @@
 #define EZI2C_scl__0__DR_INV CYREG_GPIO_PRT4_DR_INV
 #define EZI2C_scl__0__DR_SET CYREG_GPIO_PRT4_DR_SET
 #define EZI2C_scl__0__HSIOM CYREG_HSIOM_PORT_SEL4
-#define EZI2C_scl__0__HSIOM_GPIO 0u
-#define EZI2C_scl__0__HSIOM_I2C 14u
-#define EZI2C_scl__0__HSIOM_I2C_SCL 14u
 #define EZI2C_scl__0__HSIOM_MASK 0x0000000Fu
 #define EZI2C_scl__0__HSIOM_SHIFT 0u
-#define EZI2C_scl__0__HSIOM_SPI 15u
-#define EZI2C_scl__0__HSIOM_SPI_MOSI 15u
-#define EZI2C_scl__0__HSIOM_UART 9u
-#define EZI2C_scl__0__HSIOM_UART_RX 9u
 #define EZI2C_scl__0__INTCFG CYREG_GPIO_PRT4_INTR_CFG
 #define EZI2C_scl__0__INTR CYREG_GPIO_PRT4_INTR
 #define EZI2C_scl__0__INTR_CFG CYREG_GPIO_PRT4_INTR_CFG
@@ -254,7 +310,7 @@
 #define EZI2C_scl__0__PC2 CYREG_GPIO_PRT4_PC2
 #define EZI2C_scl__0__PORT 4u
 #define EZI2C_scl__0__PS CYREG_GPIO_PRT4_PS
-#define EZI2C_scl__0__SHIFT 0u
+#define EZI2C_scl__0__SHIFT 0
 #define EZI2C_scl__DR CYREG_GPIO_PRT4_DR
 #define EZI2C_scl__DR_CLR CYREG_GPIO_PRT4_DR_CLR
 #define EZI2C_scl__DR_INV CYREG_GPIO_PRT4_DR_INV
@@ -268,7 +324,7 @@
 #define EZI2C_scl__PC2 CYREG_GPIO_PRT4_PC2
 #define EZI2C_scl__PORT 4u
 #define EZI2C_scl__PS CYREG_GPIO_PRT4_PS
-#define EZI2C_scl__SHIFT 0u
+#define EZI2C_scl__SHIFT 0
 
 /* EZI2C_sda */
 #define EZI2C_sda__0__DR CYREG_GPIO_PRT4_DR
@@ -276,15 +332,8 @@
 #define EZI2C_sda__0__DR_INV CYREG_GPIO_PRT4_DR_INV
 #define EZI2C_sda__0__DR_SET CYREG_GPIO_PRT4_DR_SET
 #define EZI2C_sda__0__HSIOM CYREG_HSIOM_PORT_SEL4
-#define EZI2C_sda__0__HSIOM_GPIO 0u
-#define EZI2C_sda__0__HSIOM_I2C 14u
-#define EZI2C_sda__0__HSIOM_I2C_SDA 14u
 #define EZI2C_sda__0__HSIOM_MASK 0x000000F0u
 #define EZI2C_sda__0__HSIOM_SHIFT 4u
-#define EZI2C_sda__0__HSIOM_SPI 15u
-#define EZI2C_sda__0__HSIOM_SPI_MISO 15u
-#define EZI2C_sda__0__HSIOM_UART 9u
-#define EZI2C_sda__0__HSIOM_UART_TX 9u
 #define EZI2C_sda__0__INTCFG CYREG_GPIO_PRT4_INTR_CFG
 #define EZI2C_sda__0__INTR CYREG_GPIO_PRT4_INTR
 #define EZI2C_sda__0__INTR_CFG CYREG_GPIO_PRT4_INTR_CFG
@@ -294,7 +343,7 @@
 #define EZI2C_sda__0__PC2 CYREG_GPIO_PRT4_PC2
 #define EZI2C_sda__0__PORT 4u
 #define EZI2C_sda__0__PS CYREG_GPIO_PRT4_PS
-#define EZI2C_sda__0__SHIFT 1u
+#define EZI2C_sda__0__SHIFT 1
 #define EZI2C_sda__DR CYREG_GPIO_PRT4_DR
 #define EZI2C_sda__DR_CLR CYREG_GPIO_PRT4_DR_CLR
 #define EZI2C_sda__DR_INV CYREG_GPIO_PRT4_DR_INV
@@ -308,7 +357,7 @@
 #define EZI2C_sda__PC2 CYREG_GPIO_PRT4_PC2
 #define EZI2C_sda__PORT 4u
 #define EZI2C_sda__PS CYREG_GPIO_PRT4_PS
-#define EZI2C_sda__SHIFT 1u
+#define EZI2C_sda__SHIFT 1
 
 /* BLEIOT_UART_rx */
 #define BLEIOT_UART_rx__0__DR CYREG_GPIO_PRT6_DR
@@ -316,15 +365,8 @@
 #define BLEIOT_UART_rx__0__DR_INV CYREG_GPIO_PRT6_DR_INV
 #define BLEIOT_UART_rx__0__DR_SET CYREG_GPIO_PRT6_DR_SET
 #define BLEIOT_UART_rx__0__HSIOM CYREG_HSIOM_PORT_SEL6
-#define BLEIOT_UART_rx__0__HSIOM_GPIO 0u
-#define BLEIOT_UART_rx__0__HSIOM_I2C 14u
-#define BLEIOT_UART_rx__0__HSIOM_I2C_SCL 14u
 #define BLEIOT_UART_rx__0__HSIOM_MASK 0x0000000Fu
 #define BLEIOT_UART_rx__0__HSIOM_SHIFT 0u
-#define BLEIOT_UART_rx__0__HSIOM_SPI 15u
-#define BLEIOT_UART_rx__0__HSIOM_SPI_MOSI 15u
-#define BLEIOT_UART_rx__0__HSIOM_UART 9u
-#define BLEIOT_UART_rx__0__HSIOM_UART_RX 9u
 #define BLEIOT_UART_rx__0__INTCFG CYREG_GPIO_PRT6_INTR_CFG
 #define BLEIOT_UART_rx__0__INTR CYREG_GPIO_PRT6_INTR
 #define BLEIOT_UART_rx__0__INTR_CFG CYREG_GPIO_PRT6_INTR_CFG
@@ -334,7 +376,7 @@
 #define BLEIOT_UART_rx__0__PC2 CYREG_GPIO_PRT6_PC2
 #define BLEIOT_UART_rx__0__PORT 6u
 #define BLEIOT_UART_rx__0__PS CYREG_GPIO_PRT6_PS
-#define BLEIOT_UART_rx__0__SHIFT 0u
+#define BLEIOT_UART_rx__0__SHIFT 0
 #define BLEIOT_UART_rx__DR CYREG_GPIO_PRT6_DR
 #define BLEIOT_UART_rx__DR_CLR CYREG_GPIO_PRT6_DR_CLR
 #define BLEIOT_UART_rx__DR_INV CYREG_GPIO_PRT6_DR_INV
@@ -348,7 +390,7 @@
 #define BLEIOT_UART_rx__PC2 CYREG_GPIO_PRT6_PC2
 #define BLEIOT_UART_rx__PORT 6u
 #define BLEIOT_UART_rx__PS CYREG_GPIO_PRT6_PS
-#define BLEIOT_UART_rx__SHIFT 0u
+#define BLEIOT_UART_rx__SHIFT 0
 
 /* BLEIOT_UART_SCB */
 #define BLEIOT_UART_SCB__CTRL CYREG_SCB3_CTRL
@@ -458,15 +500,8 @@
 #define BLEIOT_UART_tx__0__DR_INV CYREG_GPIO_PRT6_DR_INV
 #define BLEIOT_UART_tx__0__DR_SET CYREG_GPIO_PRT6_DR_SET
 #define BLEIOT_UART_tx__0__HSIOM CYREG_HSIOM_PORT_SEL6
-#define BLEIOT_UART_tx__0__HSIOM_GPIO 0u
-#define BLEIOT_UART_tx__0__HSIOM_I2C 14u
-#define BLEIOT_UART_tx__0__HSIOM_I2C_SDA 14u
 #define BLEIOT_UART_tx__0__HSIOM_MASK 0x000000F0u
 #define BLEIOT_UART_tx__0__HSIOM_SHIFT 4u
-#define BLEIOT_UART_tx__0__HSIOM_SPI 15u
-#define BLEIOT_UART_tx__0__HSIOM_SPI_MISO 15u
-#define BLEIOT_UART_tx__0__HSIOM_UART 9u
-#define BLEIOT_UART_tx__0__HSIOM_UART_TX 9u
 #define BLEIOT_UART_tx__0__INTCFG CYREG_GPIO_PRT6_INTR_CFG
 #define BLEIOT_UART_tx__0__INTR CYREG_GPIO_PRT6_INTR
 #define BLEIOT_UART_tx__0__INTR_CFG CYREG_GPIO_PRT6_INTR_CFG
@@ -476,7 +511,7 @@
 #define BLEIOT_UART_tx__0__PC2 CYREG_GPIO_PRT6_PC2
 #define BLEIOT_UART_tx__0__PORT 6u
 #define BLEIOT_UART_tx__0__PS CYREG_GPIO_PRT6_PS
-#define BLEIOT_UART_tx__0__SHIFT 1u
+#define BLEIOT_UART_tx__0__SHIFT 1
 #define BLEIOT_UART_tx__DR CYREG_GPIO_PRT6_DR
 #define BLEIOT_UART_tx__DR_CLR CYREG_GPIO_PRT6_DR_CLR
 #define BLEIOT_UART_tx__DR_INV CYREG_GPIO_PRT6_DR_INV
@@ -490,7 +525,7 @@
 #define BLEIOT_UART_tx__PC2 CYREG_GPIO_PRT6_PC2
 #define BLEIOT_UART_tx__PORT 6u
 #define BLEIOT_UART_tx__PS CYREG_GPIO_PRT6_PS
-#define BLEIOT_UART_tx__SHIFT 1u
+#define BLEIOT_UART_tx__SHIFT 1
 
 /* CapSense_Cmod */
 #define CapSense_Cmod__0__DR CYREG_GPIO_PRT4_DR
@@ -509,7 +544,7 @@
 #define CapSense_Cmod__0__PC2 CYREG_GPIO_PRT4_PC2
 #define CapSense_Cmod__0__PORT 4u
 #define CapSense_Cmod__0__PS CYREG_GPIO_PRT4_PS
-#define CapSense_Cmod__0__SHIFT 2u
+#define CapSense_Cmod__0__SHIFT 2
 #define CapSense_Cmod__Cmod__DR CYREG_GPIO_PRT4_DR
 #define CapSense_Cmod__Cmod__DR_CLR CYREG_GPIO_PRT4_DR_CLR
 #define CapSense_Cmod__Cmod__DR_INV CYREG_GPIO_PRT4_DR_INV
@@ -523,7 +558,7 @@
 #define CapSense_Cmod__Cmod__PC2 CYREG_GPIO_PRT4_PC2
 #define CapSense_Cmod__Cmod__PORT 4u
 #define CapSense_Cmod__Cmod__PS CYREG_GPIO_PRT4_PS
-#define CapSense_Cmod__Cmod__SHIFT 2u
+#define CapSense_Cmod__Cmod__SHIFT 2
 #define CapSense_Cmod__DR CYREG_GPIO_PRT4_DR
 #define CapSense_Cmod__DR_CLR CYREG_GPIO_PRT4_DR_CLR
 #define CapSense_Cmod__DR_INV CYREG_GPIO_PRT4_DR_INV
@@ -537,7 +572,7 @@
 #define CapSense_Cmod__PC2 CYREG_GPIO_PRT4_PC2
 #define CapSense_Cmod__PORT 4u
 #define CapSense_Cmod__PS CYREG_GPIO_PRT4_PS
-#define CapSense_Cmod__SHIFT 2u
+#define CapSense_Cmod__SHIFT 2
 
 /* CapSense_CSD_FFB */
 #define CapSense_CSD_FFB__CSD_CONFIG CYREG_CSD0_CONFIG
@@ -552,26 +587,26 @@
 /* CapSense_IDAC1_cy_psoc4_idac */
 #define CapSense_IDAC1_cy_psoc4_idac__CONTROL CYREG_CSD0_CONFIG
 #define CapSense_IDAC1_cy_psoc4_idac__CSD_IDAC CYREG_CSD0_IDAC
-#define CapSense_IDAC1_cy_psoc4_idac__CSD_IDAC_SHIFT 0u
+#define CapSense_IDAC1_cy_psoc4_idac__CSD_IDAC_SHIFT 0
 #define CapSense_IDAC1_cy_psoc4_idac__CSD_TRIM1 CYREG_CSD0_TRIM1
-#define CapSense_IDAC1_cy_psoc4_idac__CSD_TRIM1_SHIFT 0u
+#define CapSense_IDAC1_cy_psoc4_idac__CSD_TRIM1_SHIFT 0
 #define CapSense_IDAC1_cy_psoc4_idac__CSD_TRIM2 CYREG_CSD0_TRIM2
-#define CapSense_IDAC1_cy_psoc4_idac__CSD_TRIM2_SHIFT 0u
+#define CapSense_IDAC1_cy_psoc4_idac__CSD_TRIM2_SHIFT 0
 #define CapSense_IDAC1_cy_psoc4_idac__IDAC_NUMBER 1u
 #define CapSense_IDAC1_cy_psoc4_idac__POLARITY CYREG_CSD0_CONFIG
-#define CapSense_IDAC1_cy_psoc4_idac__POLARITY_SHIFT 16u
+#define CapSense_IDAC1_cy_psoc4_idac__POLARITY_SHIFT 16
 
 /* CapSense_IDAC2_cy_psoc4_idac */
 #define CapSense_IDAC2_cy_psoc4_idac__CONTROL CYREG_CSD0_CONFIG
 #define CapSense_IDAC2_cy_psoc4_idac__CSD_IDAC CYREG_CSD0_IDAC
-#define CapSense_IDAC2_cy_psoc4_idac__CSD_IDAC_SHIFT 16u
+#define CapSense_IDAC2_cy_psoc4_idac__CSD_IDAC_SHIFT 16
 #define CapSense_IDAC2_cy_psoc4_idac__CSD_TRIM1 CYREG_CSD0_TRIM1
-#define CapSense_IDAC2_cy_psoc4_idac__CSD_TRIM1_SHIFT 4u
+#define CapSense_IDAC2_cy_psoc4_idac__CSD_TRIM1_SHIFT 4
 #define CapSense_IDAC2_cy_psoc4_idac__CSD_TRIM2 CYREG_CSD0_TRIM2
-#define CapSense_IDAC2_cy_psoc4_idac__CSD_TRIM2_SHIFT 4u
+#define CapSense_IDAC2_cy_psoc4_idac__CSD_TRIM2_SHIFT 4
 #define CapSense_IDAC2_cy_psoc4_idac__IDAC_NUMBER 2u
 #define CapSense_IDAC2_cy_psoc4_idac__POLARITY CYREG_CSD0_CONFIG
-#define CapSense_IDAC2_cy_psoc4_idac__POLARITY_SHIFT 17u
+#define CapSense_IDAC2_cy_psoc4_idac__POLARITY_SHIFT 17
 
 /* CapSense_ISR */
 #define CapSense_ISR__INTC_CLR_EN_REG CYREG_CM0_ICER
@@ -628,7 +663,7 @@
 #define CapSense_Sns__0__PC2 CYREG_GPIO_PRT2_PC2
 #define CapSense_Sns__0__PORT 2u
 #define CapSense_Sns__0__PS CYREG_GPIO_PRT2_PS
-#define CapSense_Sns__0__SHIFT 7u
+#define CapSense_Sns__0__SHIFT 7
 #define CapSense_Sns__1__DR CYREG_GPIO_PRT1_DR
 #define CapSense_Sns__1__DR_CLR CYREG_GPIO_PRT1_DR_CLR
 #define CapSense_Sns__1__DR_INV CYREG_GPIO_PRT1_DR_INV
@@ -660,7 +695,7 @@
 #define CapSense_Sns__1__PC2 CYREG_GPIO_PRT1_PC2
 #define CapSense_Sns__1__PORT 1u
 #define CapSense_Sns__1__PS CYREG_GPIO_PRT1_PS
-#define CapSense_Sns__1__SHIFT 0u
+#define CapSense_Sns__1__SHIFT 0
 #define CapSense_Sns__Button0__BTN__DR CYREG_GPIO_PRT1_DR
 #define CapSense_Sns__Button0__BTN__DR_CLR CYREG_GPIO_PRT1_DR_CLR
 #define CapSense_Sns__Button0__BTN__DR_INV CYREG_GPIO_PRT1_DR_INV
@@ -689,7 +724,7 @@
 #define CapSense_Sns__Button0__BTN__PC2 CYREG_GPIO_PRT1_PC2
 #define CapSense_Sns__Button0__BTN__PORT 1u
 #define CapSense_Sns__Button0__BTN__PS CYREG_GPIO_PRT1_PS
-#define CapSense_Sns__Button0__BTN__SHIFT 0u
+#define CapSense_Sns__Button0__BTN__SHIFT 0
 #define CapSense_Sns__Button1__BTN__DR CYREG_GPIO_PRT2_DR
 #define CapSense_Sns__Button1__BTN__DR_CLR CYREG_GPIO_PRT2_DR_CLR
 #define CapSense_Sns__Button1__BTN__DR_INV CYREG_GPIO_PRT2_DR_INV
@@ -718,12 +753,11 @@
 #define CapSense_Sns__Button1__BTN__PC2 CYREG_GPIO_PRT2_PC2
 #define CapSense_Sns__Button1__BTN__PORT 2u
 #define CapSense_Sns__Button1__BTN__PS CYREG_GPIO_PRT2_PS
-#define CapSense_Sns__Button1__BTN__SHIFT 7u
+#define CapSense_Sns__Button1__BTN__SHIFT 7
 
 /* Miscellaneous */
 #define CY_PROJECT_NAME "4MTestI2CUart"
-#define CY_VERSION "PSoC Creator  3.3 Nightly Build 9582"
-#define CYDEV_BANDGAP_VOLTAGE 1.024
+#define CY_VERSION "PSoC Creator  3.3 CP2"
 #define CYDEV_BCLK__HFCLK__HZ 48000000U
 #define CYDEV_BCLK__HFCLK__KHZ 48000U
 #define CYDEV_BCLK__HFCLK__MHZ 48U
@@ -731,9 +765,9 @@
 #define CYDEV_BCLK__SYSCLK__KHZ 48000U
 #define CYDEV_BCLK__SYSCLK__MHZ 48U
 #define CYDEV_CHIP_DIE_LEOPARD 1u
-#define CYDEV_CHIP_DIE_PANTHER 19u
-#define CYDEV_CHIP_DIE_PSOC4A 11u
-#define CYDEV_CHIP_DIE_PSOC5LP 18u
+#define CYDEV_CHIP_DIE_PANTHER 18u
+#define CYDEV_CHIP_DIE_PSOC4A 10u
+#define CYDEV_CHIP_DIE_PSOC5LP 17u
 #define CYDEV_CHIP_DIE_TMA4 2u
 #define CYDEV_CHIP_DIE_UNKNOWN 0u
 #define CYDEV_CHIP_FAMILY_PSOC3 1u
@@ -743,23 +777,22 @@
 #define CYDEV_CHIP_FAMILY_USED CYDEV_CHIP_FAMILY_PSOC4
 #define CYDEV_CHIP_JTAG_ID 0x112D11A1u
 #define CYDEV_CHIP_MEMBER_3A 1u
-#define CYDEV_CHIP_MEMBER_4A 11u
-#define CYDEV_CHIP_MEMBER_4C 16u
-#define CYDEV_CHIP_MEMBER_4D 7u
+#define CYDEV_CHIP_MEMBER_4A 10u
+#define CYDEV_CHIP_MEMBER_4C 15u
+#define CYDEV_CHIP_MEMBER_4D 6u
 #define CYDEV_CHIP_MEMBER_4E 4u
-#define CYDEV_CHIP_MEMBER_4F 12u
+#define CYDEV_CHIP_MEMBER_4F 11u
 #define CYDEV_CHIP_MEMBER_4G 2u
-#define CYDEV_CHIP_MEMBER_4H 10u
-#define CYDEV_CHIP_MEMBER_4I 15u
-#define CYDEV_CHIP_MEMBER_4J 8u
-#define CYDEV_CHIP_MEMBER_4K 9u
-#define CYDEV_CHIP_MEMBER_4L 14u
-#define CYDEV_CHIP_MEMBER_4M 13u
-#define CYDEV_CHIP_MEMBER_4N 6u
-#define CYDEV_CHIP_MEMBER_4O 5u
+#define CYDEV_CHIP_MEMBER_4H 9u
+#define CYDEV_CHIP_MEMBER_4I 14u
+#define CYDEV_CHIP_MEMBER_4J 7u
+#define CYDEV_CHIP_MEMBER_4K 8u
+#define CYDEV_CHIP_MEMBER_4L 13u
+#define CYDEV_CHIP_MEMBER_4M 12u
+#define CYDEV_CHIP_MEMBER_4N 5u
 #define CYDEV_CHIP_MEMBER_4U 3u
-#define CYDEV_CHIP_MEMBER_5A 18u
-#define CYDEV_CHIP_MEMBER_5B 17u
+#define CYDEV_CHIP_MEMBER_5A 17u
+#define CYDEV_CHIP_MEMBER_5B 16u
 #define CYDEV_CHIP_MEMBER_UNKNOWN 0u
 #define CYDEV_CHIP_MEMBER_USED CYDEV_CHIP_MEMBER_4M
 #define CYDEV_CHIP_DIE_EXPECT CYDEV_CHIP_MEMBER_USED
@@ -800,7 +833,6 @@
 #define CYDEV_CHIP_REVISION_4L_PRODUCTION 0u
 #define CYDEV_CHIP_REVISION_4M_PRODUCTION 0u
 #define CYDEV_CHIP_REVISION_4N_PRODUCTION 0u
-#define CYDEV_CHIP_REVISION_4O_PRODUCTION 0u
 #define CYDEV_CHIP_REVISION_4U_PRODUCTION 0u
 #define CYDEV_CHIP_REVISION_5A_ES0 0u
 #define CYDEV_CHIP_REVISION_5A_ES1 1u
