@@ -3,11 +3,19 @@
 #include "cytypes.h"
 
 typedef enum BlueStates {
-    OFF,
-    ON,
-    BLINK,
-    BLECONTROL
+    OFF=0,
+    ON=1,
+    BLINK=2,
+    BLECONTROL=3
 } BlueStates;
+
+typedef enum BleStates {
+    BLEOFF,
+    BLEON,
+    BLESTART,
+    BLEADVERTISING,
+    BLECONNECTED
+} BleStates;
 
 void BLEIOT_Start();
 uint32 BLEIOT_getDirtyFlags();
@@ -15,25 +23,33 @@ uint32 BLEIOT_getDirtyFlags();
 
 void BLEIOT_sendUpdateBlue(BlueStates);
 BlueStates BLEIOT_readRemoteBlue();
+BlueStates BLEIOT_readLocalBlue();
 
 void BLEIOT_sendUpdateLed0(uint8);
 uint8 BLEIOT_readRemoteLed0();
+uint8 BLEIOT_readLocalLed0();
 
 void BLEIOT_sendUpdateLed1(uint8);
 uint8 BLEIOT_readRemoteLed1();
+uint8 BLEIOT_readLocalLed1();
+
+void BLEIOT_sendUpdateBleState(BleStates);
+BleStates BLEIOT_readLocalBleState();
+BleStates BLEIOT_readRemoteBleState();
 
 
-#define BLEIOT_FLAG_BLUE (0x01)
-#define BLEIOT_FLAG_LED0 (0x01<<1)
-#define BLEIOT_FLAG_LED1 (0x01<<2)
-#define BLEIOT_FLAG_BUTTON0 (0x01<<3)
-#define BLEIOT_FLAG_BUTTON1 (0x01<<4)
-#define BLEIOT_FLAG_TRIM (0x01<<5)
-#define BLEIOT_FLAG_LCD_CONTRAST (0x01<<6)
-#define BLEIOT_FLAG_DISPLAY (0x01<<7)
-#define BLEIOT_FLAG_TONE (0x01<<8)
-#define BLEIOT_FLAG_BLECONNECTED (0x01<<9)
-#define BLEIOT_FLAG_BOOTLOAD (0x01<<10)
+
+#define BLEIOT_FLAG_BLUE (1<<0)
+#define BLEIOT_FLAG_LED0 (1<<1)
+#define BLEIOT_FLAG_LED1 (1<<2)
+#define BLEIOT_FLAG_BUTTON0 (1<<3)
+#define BLEIOT_FLAG_BUTTON1 (1<<4)
+#define BLEIOT_FLAG_TRIM (1<<5)
+#define BLEIOT_FLAG_LCD_CONTRAST (1<<6)
+#define BLEIOT_FLAG_DISPLAY (1<<7)
+#define BLEIOT_FLAG_TONE (1<<8)
+#define BLEIOT_FLAG_BLESTATE (1<<9)
+#define BLEIOT_FLAG_BOOTLOAD (1<<10)
 
 
 typedef struct BLEIOT_SystemStatus {
@@ -47,7 +63,7 @@ typedef struct BLEIOT_SystemStatus {
     uint8 lcdContrast;
     uint16 display;
     uint16 tone;
-    uint8 bleConnected;
+    BleStates bleState;
     uint8 bootload;
 } __attribute__((packed)) BLEIOT_SystemStatus;
 

@@ -2,8 +2,7 @@
 
 int main()
 {
-    CyGlobalIntEnable; /* Enable global interrupts. */
-    
+    CyGlobalIntEnable;
     
     uint8 buff[] = {1,2,3,4};
     
@@ -44,13 +43,19 @@ int main()
                     BLEIOT_sendUpdateBlue(OFF);
                     P06_Write(1);
                 }
-                    
             }
             
             if(b0current == 1 && b0previous == 0)
             {
-                BLEIOT_sendUpdateBlue(BLINK);
-                
+                if(P06_Read())
+                {
+                    BLEIOT_sendUpdateBleState(BLEON);
+                }
+                else
+                {
+                    BLEIOT_sendUpdateBleState(BLEOFF);
+                }
+                P06_Write(!P06_Read());
             }
           
  
@@ -61,6 +66,27 @@ int main()
             CapSense_ScanEnabledWidgets();
         }
        
+        switch(BLEIOT_readRemoteBleState())
+        {
+            case BLEOFF:
+            case BLEON:
+            case BLESTART:
+                led0_Write(1);
+                led1_Write(1);
+                break;
+                
+            case BLEADVERTISING:
+                led0_Write(1);
+                led1_Write(0);
+                break;
+
+            case BLECONNECTED:
+                led0_Write(0);
+                led1_Write(1);
+                break;
+
+            
+        }
         //P06_Write(!BLEIOT_readRemoteBlue());
         led0_Write(!BLEIOT_readRemoteLed0());
         led1_Write(!BLEIOT_readRemoteLed1());      

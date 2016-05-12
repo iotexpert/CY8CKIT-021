@@ -4,7 +4,7 @@
 BLEIOT_SystemStatus BLEIOT_local;
 BLEIOT_SystemStatus BLEIOT_remote;
 
-uint8 BLEIOT_dirtyFlags=0;
+uint32 BLEIOT_dirtyFlags=0;
 
 int count;
 int BLEIOT_initVar=0;
@@ -32,6 +32,11 @@ BlueStates inline BLEIOT_readRemoteBlue()
     return BLEIOT_remote.blue;
 }
 
+BlueStates inline BLEIOT_readLocalBlue() 
+{
+    return BLEIOT_local.blue;
+}
+
 void BLEIOT_sendUpdateLed0(uint8 val)
 {
     // clear or set the dirty flag
@@ -48,6 +53,11 @@ void BLEIOT_sendUpdateLed0(uint8 val)
 uint8 inline BLEIOT_readRemoteLed0() 
 {
     return BLEIOT_remote.led0;
+}
+
+uint8 inline BLEIOT_readLocalLed0() 
+{
+    return BLEIOT_local.led0;
 }
 
 
@@ -68,6 +78,37 @@ uint8 inline BLEIOT_readRemoteLed1()
 {
     return BLEIOT_remote.led1;
 }
+
+uint8 inline BLEIOT_readLocalLed1() 
+{
+    return BLEIOT_local.led1;
+}
+
+
+
+void BLEIOT_sendUpdateBleState(BleStates val)
+{
+    // clear or set the dirty flag
+    if(BLEIOT_remote.bleState == val)
+        BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_BLESTATE);
+    else
+        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_BLESTATE);
+    
+        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_BLESTATE;
+    
+    BLEIOT_local.bleState = val;
+}
+
+BleStates inline BLEIOT_readRemoteBleState() 
+{
+    return BLEIOT_remote.bleState;
+}
+
+BleStates inline BLEIOT_readLocalBleState() 
+{
+    return BLEIOT_local.bleState;
+}
+
 
 
 void BLEIOT_TriggerSystem()
@@ -105,6 +146,9 @@ void BLEIOT_Start()
             CYASSERT(1);
 
     BLEIOT_local.blue = BLECONTROL;
+    BLEIOT_remote.blue = BLECONTROL;
+    BLEIOT_local.bleState = BLEOFF;
+    BLEIOT_remote.bleState = BLEOFF;
 
 }
 
@@ -134,10 +178,10 @@ void BLEIOT_Receive()
     else
         BLEIOT_dirtyFlags &= ~BLEIOT_FLAG_BLUE;
     
-    if(BLEIOT_local.bleConnected != BLEIOT_remote.bleConnected)
-        BLEIOT_dirtyFlags |= BLEIOT_FLAG_BLECONNECTED;
+    if(BLEIOT_local.bleState != BLEIOT_remote.bleState)
+        BLEIOT_dirtyFlags |= BLEIOT_FLAG_BLESTATE;
     else
-        BLEIOT_dirtyFlags &= ~BLEIOT_FLAG_BLECONNECTED;
+        BLEIOT_dirtyFlags &= ~BLEIOT_FLAG_BLESTATE;
     
     if(BLEIOT_local.button0 != BLEIOT_remote.button0)
         BLEIOT_dirtyFlags |= BLEIOT_FLAG_BUTTON0;
