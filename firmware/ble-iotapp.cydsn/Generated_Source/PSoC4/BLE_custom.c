@@ -41,6 +41,126 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                     0x0013u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
+
+            /* led0 characteristic */
+            {
+                0x0015u, /* Handle of the led0 characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x0016u, /* Handle of the Custom Descriptor descriptor */ 
+                    0x0017u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0018u, /* Handle of the Characteristic User Description descriptor */ 
+                }, 
+            },
+
+            /* led1 characteristic */
+            {
+                0x001Au, /* Handle of the led1 characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x001Bu, /* Handle of the Custom Descriptor descriptor */ 
+                    0x001Cu, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x001Du, /* Handle of the Characteristic User Description descriptor */ 
+                }, 
+            },
+
+            /* button0 characteristic */
+            {
+                0x001Fu, /* Handle of the button0 characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x0020u, /* Handle of the Custom Descriptor descriptor */ 
+                    0x0021u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0022u, /* Handle of the Characteristic User Description descriptor */ 
+                }, 
+            },
+
+            /* button1 characteristic */
+            {
+                0x0024u, /* Handle of the button1 characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x0025u, /* Handle of the Custom Descriptor descriptor */ 
+                    0x0026u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0027u, /* Handle of the Client Characteristic Configuration 2 descriptor */ 
+                }, 
+            },
+
+            /* tone characteristic */
+            {
+                0x0029u, /* Handle of the tone characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x002Au, /* Handle of the Custom Descriptor descriptor */ 
+                    0x002Bu, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x002Cu, /* Handle of the Characteristic User Description descriptor */ 
+                }, 
+            },
+
+            /* trim characteristic */
+            {
+                0x002Eu, /* Handle of the trim characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x002Fu, /* Handle of the Custom Descriptor descriptor */ 
+                    0x0030u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0031u, /* Handle of the Characteristic User Description descriptor */ 
+                }, 
+            },
+
+            /* contrast characteristic */
+            {
+                0x0033u, /* Handle of the contrast characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x0034u, /* Handle of the Custom Descriptor descriptor */ 
+                    0x0035u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0036u, /* Handle of the Characteristic User Description descriptor */ 
+                }, 
+            },
+
+            /* bootload characteristic */
+            {
+                0x0038u, /* Handle of the bootload characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x0039u, /* Handle of the Custom Descriptor descriptor */ 
+                    0x003Au, /* Handle of the Characteristic User Description descriptor */ 
+                    CYBLE_GATT_INVALID_ATTR_HANDLE_VALUE, 
+                }, 
+            },
+
+            /* display characteristic */
+            {
+                0x003Cu, /* Handle of the display characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x003Du, /* Handle of the Custom Descriptor descriptor */ 
+                    0x003Eu, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x003Fu, /* Handle of the Characteristic User Description descriptor */ 
+                }, 
+            },
+
+            /* Temperature characteristic */
+            {
+                0x0041u, /* Handle of the Temperature characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x0042u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    CYBLE_GATT_INVALID_ATTR_HANDLE_VALUE, 
+                    CYBLE_GATT_INVALID_ATTR_HANDLE_VALUE, 
+                }, 
+            },
         }, 
     },
 };

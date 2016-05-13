@@ -13,16 +13,23 @@ void BLEIOT_TriggerSystem(void);
 void BLEIOT_Transmit();
 void BLEIOT_Receive();
 
+void BLEIOT_sendUpdateUint8(uint32 mask,uint8 *ptrLocal,uint8* ptrRemote,uint8 val)
+{
+    if(*ptrRemote == val)
+        BLEIOT_dirtyFlags &= (~mask);
+ 
+    BLEIOT_local.updatedFlags |= mask;
+    *ptrLocal = val;
+}
+
+////////////////////////////////////////////////////////////////
+
 void BLEIOT_sendUpdateBlue(BlueStates val)
 {
-    // clear or set the dirty flag
     if(BLEIOT_remote.blue == val)
         BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_BLUE);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_BLUE);
-    
+ 
     BLEIOT_local.updatedFlags |= BLEIOT_FLAG_BLUE;
-    
     BLEIOT_local.blue = val;
 }
 
@@ -36,43 +43,29 @@ BlueStates inline BLEIOT_readLocalBlue()
     return BLEIOT_local.blue;
 }
 
-void BLEIOT_sendUpdateLed0(uint8 val)
-{
-    // clear or set the dirty flag
-    if(BLEIOT_remote.led0 == val)
-        BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_LED0);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_LED0);
-    
-        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_LED0;
-    
-    BLEIOT_local.led0 = val;
-}
+////////////////////////////////////////////////////////////////
 
+inline void BLEIOT_sendUpdateLed0(uint8 val)
+{
+    BLEIOT_sendUpdateUint8(BLEIOT_FLAG_LED0,&BLEIOT_local.led0,&BLEIOT_remote.led0,val);
+}
 uint8 inline BLEIOT_readRemoteLed0() 
 {
     return BLEIOT_remote.led0;
 }
-
 uint8 inline BLEIOT_readLocalLed0() 
 {
     return BLEIOT_local.led0;
 }
 
 
-void BLEIOT_sendUpdateLed1(uint8 val)
-{
-    // clear or set the dirty flag
-    if(BLEIOT_remote.led1 == val)
-        BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_LED1);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_LED1);
-    
-        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_LED1;
-    
-    BLEIOT_local.led1 = val;
-}
+////////////////////////////////////////////////////////////////
 
+inline void BLEIOT_sendUpdateLed1(uint8 val)
+{
+       BLEIOT_sendUpdateUint8(BLEIOT_FLAG_LED1,&BLEIOT_local.led1,&BLEIOT_remote.led1,val);
+}
+ 
 uint8 inline BLEIOT_readRemoteLed1() 
 {
     return BLEIOT_remote.led1;
@@ -88,14 +81,9 @@ uint8 inline BLEIOT_readLocalLed1()
 
 void BLEIOT_sendUpdateBleState(BleStates val)
 {
-    // clear or set the dirty flag
     if(BLEIOT_remote.bleState == val)
         BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_BLESTATE);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_BLESTATE);
-    
-        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_BLESTATE;
-    
+    BLEIOT_local.updatedFlags |= BLEIOT_FLAG_BLESTATE;
     BLEIOT_local.bleState = val;
 }
 
@@ -109,21 +97,12 @@ BleStates inline BLEIOT_readLocalBleState()
     return BLEIOT_local.bleState;
 }
 
-////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
 
-void BLEIOT_sendUpdateButton0(uint8 val)
+inline void BLEIOT_sendUpdateButton0(uint8 val)
 {
-    // clear or set the dirty flag
-    if(BLEIOT_remote.button0 == val)
-        BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_BUTTON0);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_BUTTON0);
-    
-        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_BUTTON0;
-    
-    BLEIOT_local.button0 = val;
+    BLEIOT_sendUpdateUint8(BLEIOT_FLAG_BUTTON0,&BLEIOT_local.button0,&BLEIOT_remote.button0,val);
 }
 
 uint8 inline BLEIOT_readRemoteButton0() 
@@ -136,21 +115,11 @@ uint8 inline BLEIOT_readLocalButton0()
     return BLEIOT_local.button0;
 }
 
-////////////////////////////////////////////////////////////////
 
 ////////////////////////////////////////////////////////////////
-
 void BLEIOT_sendUpdateButton1(uint8 val)
 {
-    // clear or set the dirty flag
-    if(BLEIOT_remote.button0 == val)
-        BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_BUTTON1);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_BUTTON1);
-    
-        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_BUTTON1;
-    
-    BLEIOT_local.button1 = val;
+    BLEIOT_sendUpdateUint8(BLEIOT_FLAG_BUTTON1,&BLEIOT_local.button1,&BLEIOT_remote.button1,val);
 }
 
 uint8 inline BLEIOT_readRemoteButton1() 
@@ -171,11 +140,8 @@ void BLEIOT_sendUpdateTrim(int16 val)
     // clear or set the dirty flag
     if(BLEIOT_remote.trim == val)
         BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_TRIM);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_TRIM);
     
-        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_TRIM;
-    
+    BLEIOT_local.updatedFlags |= BLEIOT_FLAG_TRIM;
     BLEIOT_local.trim = val;
 }
 
@@ -197,11 +163,8 @@ void BLEIOT_sendUpdateContrast(uint8 val)
     // clear or set the dirty flag
     if(BLEIOT_remote.contrast == val)
         BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_CONTRAST);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_CONTRAST);
     
-        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_CONTRAST;
-    
+    BLEIOT_local.updatedFlags |= BLEIOT_FLAG_CONTRAST;
     BLEIOT_local.contrast = val;
 }
 
@@ -221,10 +184,8 @@ void BLEIOT_sendUpdateDisplay(uint16 val)
     // clear or set the dirty flag
     if(BLEIOT_remote.display == val)
         BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_DISPLAY);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_DISPLAY);
     
-        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_DISPLAY;
+    BLEIOT_local.updatedFlags |= BLEIOT_FLAG_DISPLAY;
     
     BLEIOT_local.display = val;
 }
@@ -245,10 +206,8 @@ void BLEIOT_sendUpdateTone(uint16 val)
     // clear or set the dirty flag
     if(BLEIOT_remote.display == val)
         BLEIOT_dirtyFlags &= (~BLEIOT_FLAG_TONE);
-    else
-        BLEIOT_dirtyFlags |= (BLEIOT_FLAG_TONE);
     
-        BLEIOT_local.updatedFlags |= BLEIOT_FLAG_TONE;
+    BLEIOT_local.updatedFlags |= BLEIOT_FLAG_TONE;
     
     BLEIOT_local.tone = val;
 }

@@ -31,18 +31,10 @@ int main()
             
             if( b1current == 1 && b1previous==0)
             {                                
-                blueState = !blueState;
-                if(blueState)
-                {
-                    BLEIOT_sendUpdateBlue(ON);
-                    P06_Write(0);
-                    
-                }
-                else
-                {
-                    BLEIOT_sendUpdateBlue(OFF);
-                    P06_Write(1);
-                }
+            
+                BLEIOT_sendUpdateLed0(led0_Read());
+                led0_Write(!led0_Read());
+    
             }
             
             if(b0current == 1 && b0previous == 0)
@@ -58,6 +50,12 @@ int main()
                 P06_Write(!P06_Read());
             }
           
+            
+            if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_LED0)
+            {
+                led0_Write(!BLEIOT_readRemoteLed0());
+                BLEIOT_sendUpdateLed0(BLEIOT_readRemoteLed0());
+            }
  
 
             b0previous = b0current;
@@ -65,7 +63,7 @@ int main()
             CapSense_UpdateEnabledBaselines();
             CapSense_ScanEnabledWidgets();
         }
-       
+       /*
         switch(BLEIOT_readRemoteBleState())
         {
             case BLEOFF:
@@ -87,9 +85,11 @@ int main()
 
             
         }
+        */
+        
         //P06_Write(!BLEIOT_readRemoteBlue());
-        led0_Write(!BLEIOT_readRemoteLed0());
-        led1_Write(!BLEIOT_readRemoteLed1());      
+        //led0_Write(!BLEIOT_readRemoteLed0());
+        //led1_Write(!BLEIOT_readRemoteLed1());      
     }
 }
 

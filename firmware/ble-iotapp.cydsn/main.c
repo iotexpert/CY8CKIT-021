@@ -12,12 +12,23 @@
 #include <project.h>
 #include "BLEIOT_BLEIOT.h"
 
+typedef struct NotifyFlags {
+    uint8 blue;
+    uint8 led0;
+    uint8 led1;
+    uint8 button0;
+    uint8 button1;
+    
+} NotifyFlags;
+
+NotifyFlags notifyFlags;
+
 /***************************************************************
  * Function to update the LED state in the GATT database
  **************************************************************/
-void updateBlueLed(BlueStates val)
+void processBlueLed()
 {
-    switch(val)
+    switch(BLEIOT_readLocalBlue())
             {
                 case ON:
                     PWM_Stop();
@@ -51,19 +62,52 @@ void updateBlueLed(BlueStates val)
                     PWM_Start();
                 break;
             }
-            BLEIOT_sendUpdateBlue(BLEIOT_readRemoteBlue());
+}
 
+void updateBlueGattDB(uint8 flags)
+{
+    uint8 val = BLEIOT_readLocalBlue();
     
     //update the GATT Database
     CYBLE_GATTS_HANDLE_VALUE_NTF_T 	tempHandle;
    
-   
     if(CyBle_GetState() != CYBLE_STATE_CONNECTED)
         return;
+    
     tempHandle.attrHandle = CYBLE_CY8CKIT021_BLUE_CHAR_HANDLE;
   	tempHandle.value.val = (uint8 *) &val;
     tempHandle.value.len = 1;
-    CyBle_GattsWriteAttributeValue(&tempHandle,0,&cyBle_connHandle,CYBLE_GATT_DB_LOCALLY_INITIATED);  
+    CyBle_GattsWriteAttributeValue(&tempHandle,0,&cyBle_connHandle,flags);
+    // if peer initiated then write response.
+    if(flags == CYBLE_GATT_DB_PEER_INITIATED)
+        CyBle_GattsWriteRsp(cyBle_connHandle);
+    else if(notifyFlags.blue) // If notify & local initiated 
+    {
+        CyBle_GattsNotification(cyBle_connHandle,&tempHandle);
+    }    
+}
+
+void updateLed0GattDB(uint8 flags)
+{
+    uint8 val = BLEIOT_readLocalLed0();
+    
+    //update the GATT Database
+    CYBLE_GATTS_HANDLE_VALUE_NTF_T 	tempHandle;
+   
+    if(CyBle_GetState() != CYBLE_STATE_CONNECTED)
+        return;
+    
+    tempHandle.attrHandle = CYBLE_CY8CKIT021_LED0_CHAR_HANDLE;
+  	tempHandle.value.val = (uint8 *) &val;
+    tempHandle.value.len = 1;
+    CyBle_GattsWriteAttributeValue(&tempHandle,0,&cyBle_connHandle,flags);
+    // if peer initiated then write response.
+    if(flags == CYBLE_GATT_DB_PEER_INITIATED)
+        CyBle_GattsWriteRsp(cyBle_connHandle);
+    else if(notifyFlags.led0) // If notify & local initiated 
+    {
+        CyBle_GattsNotification(cyBle_connHandle,&tempHandle);
+    }    
 }
 
 /***************************************************************
@@ -79,20 +123,19 @@ void BleCallBack(uint32 event, void* eventParam)
         case CYBLE_EVT_STACK_ON:
         case CYBLE_EVT_GAP_DEVICE_DISCONNECTED:
             CyBle_GappStartAdvertisement(CYBLE_ADVERTISING_FAST);
-            updateBlueLed(BLEIOT_readLocalBlue());
             BLEIOT_sendUpdateBleState(BLEADVERTISING);
-            
+            processBlueLed();
         break;
             
         case CYBLE_EVT_GAPP_ADVERTISEMENT_START_STOP:
-            updateBlueLed(BLEIOT_readLocalBlue());
+            processBlueLed();
         break;
         
             
         case CYBLE_EVT_GAP_DEVICE_CONNECTED:
-            updateBlueLed(BLEIOT_readLocalBlue());
+            updateBlueGattDB(CYBLE_GATT_DB_LOCALLY_INITIATED);
             BLEIOT_sendUpdateBleState(BLECONNECTED);
- 
+            processBlueLed();
 		break;
 
         /* handle a write request */
@@ -102,10 +145,19 @@ void BleCallBack(uint32 event, void* eventParam)
             /* request write the LED value */
             if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_BLUE_CHAR_HANDLE)
             {
-                updateBlueLed(wrReqParam->handleValPair.value.val[0]);
-                CyBle_GattsWriteRsp(cyBle_connHandle);
-            }		
-			break;  
+                BLEIOT_sendUpdateBlue(wrReqParam->handleValPair.value.val[0]);
+                processBlueLed();
+                updateBlueGattDB(CYBLE_GATT_DB_PEER_INITIATED);    
+            }
+
+            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_LED0_CHAR_HANDLE)
+            {
+                BLEIOT_sendUpdateLed0(wrReqParam->handleValPair.value.val[0]);
+                updateLed0GattDB(CYBLE_GATT_DB_PEER_INITIATED);
+            }
+
+            
+	    break;  
         
         default:
             break;
@@ -119,48 +171,53 @@ int main()
 
     CyGlobalIntEnable;
     BLEIOT_Start();
+    processBlueLed();
     
-    updateBlueLed(BLEIOT_readLocalBlue());
-    
-    //CyBle_Start(BleCallBack);
 
     for(;;)
     {
-        
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLESTATE)
         {
             if(BLEIOT_readRemoteBleState() == BLEOFF)
             {
                 CyBle_Stop();
                 BLEIOT_sendUpdateBleState(BLEOFF);
-                updateBlueLed(BLEIOT_readLocalBlue());
+                processBlueLed();
             }
             if(BLEIOT_readRemoteBleState() == BLEON && BLEIOT_readLocalBleState() == BLEOFF)
             {
                 CyBle_Start(BleCallBack);
                 BLEIOT_sendUpdateBleState(BLESTART);
             }
-            
         }
         
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_LED0)
+        {
+            BLEIOT_sendUpdateLed0(BLEIOT_readRemoteLed0());
+            updateLed0GattDB(CYBLE_GATT_DB_LOCALLY_INITIATED);
+        }
+        
+        #ifndef BootLoadable__DISABLED
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BOOTLOAD)
         {
             // enter the bootloader
+            Bootloable_load();
         }
+        #endif
         
-        
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLUE)
+        {
+            BLEIOT_sendUpdateBlue(BLEIOT_readRemoteBlue());
+            processBlueLed();
+            updateBlueGattDB(CYBLE_GATT_DB_LOCALLY_INITIATED);
+        }
+       
         if(BLEIOT_readLocalBleState() != BLEOFF)
         {
             CyBle_ProcessEvents();
             CyBle_EnterLPM(CYBLE_BLESS_DEEPSLEEP);
         }
-        
-       
-        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLUE)
-        {
-            updateBlueLed(BLEIOT_readRemoteBlue());
-        }
-       
+     
     }
      
 }
