@@ -8,7 +8,6 @@ uint32 BLEIOT_dirtyFlags=0;
 int count;
 int BLEIOT_initVar=0;
 
-
 void BLEIOT_TriggerSystem(void);
 void BLEIOT_Transmit();
 void BLEIOT_Receive();
@@ -173,7 +172,7 @@ uint8 inline BLEIOT_readRemoteContrast()
     return BLEIOT_remote.contrast;
 }
 
-uint8 inline BLEIOT_readLocalContast() 
+uint8 inline BLEIOT_readLocalContrast() 
 {
     return BLEIOT_local.contrast;
 }

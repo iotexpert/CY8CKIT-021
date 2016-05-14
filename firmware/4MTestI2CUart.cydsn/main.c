@@ -9,6 +9,7 @@ int main()
     CapSense_Start();
     CapSense_InitializeEnabledBaselines();
     CapSense_ScanEnabledWidgets();
+    
 
     BLEIOT_Start();
     EZI2C_Start();
@@ -21,6 +22,11 @@ int main()
     led1_Write(!blueState);
     
     P06_Write(1); // turn it off
+    
+    LCD_Start();
+    LCD_SetContrast(20);
+    BLEIOT_sendUpdateContrast(20);
+    LCD_Write7SegNumber_0(1234,0,0);
     
     for(;;)
     {
@@ -63,33 +69,7 @@ int main()
             CapSense_UpdateEnabledBaselines();
             CapSense_ScanEnabledWidgets();
         }
-       /*
-        switch(BLEIOT_readRemoteBleState())
-        {
-            case BLEOFF:
-            case BLEON:
-            case BLESTART:
-                led0_Write(1);
-                led1_Write(1);
-                break;
-                
-            case BLEADVERTISING:
-                led0_Write(1);
-                led1_Write(0);
-                break;
-
-            case BLECONNECTED:
-                led0_Write(0);
-                led1_Write(1);
-                break;
-
             
-        }
-        */
-        
-        //P06_Write(!BLEIOT_readRemoteBlue());
-        //led0_Write(!BLEIOT_readRemoteLed0());
-        //led1_Write(!BLEIOT_readRemoteLed1());      
     }
 }
 

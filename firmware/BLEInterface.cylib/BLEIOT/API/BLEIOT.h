@@ -49,8 +49,8 @@ void BLEIOT_sendUpdateTrim(int16);
 int16 BLEIOT_readLocalTrim();
 int16 BLEIOT_readRemoteTrim();
 
-void BLEIOT_sendUpdateLcdContrast(uint8);
-uint8 BLEIOT_readLocalLcdContrast();
+void BLEIOT_sendUpdateContrast(uint8);
+uint8 BLEIOT_readLocalContrast();
 uint8 BLEIOT_readRemoteContrast();
 
 void BLEIOT_sendUpdateDisplay(uint16);
@@ -91,4 +91,3 @@ typedef struct BLEIOT_SystemStatus {
 } __attribute__((packed)) BLEIOT_SystemStatus;
 
 #endif
-    
