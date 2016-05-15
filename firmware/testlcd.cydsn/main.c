@@ -11,8 +11,13 @@
 */
 #include <project.h>
 
+uint8 abc[] = {01,02,03,04};
+
 int main()
 {
+    
+    
+    
     CyGlobalIntEnable; /* Enable global interrupts. */
     LCD_Start();
     
@@ -27,7 +32,14 @@ int main()
     capsense_InitializeEnabledBaselines();
     capsense_ScanEnabledWidgets();
     
- 
+
+    uint16 *v1;
+
+    v1 = &abc[1];
+    LCD_Write7SegNumber_0(*v1,0,0);
+    
+    
+    
     /* Place your initialization/startup code here (e.g. MyInst_Start()) */
     LCD_ClearDisplay();
     for(;;)
@@ -61,7 +73,6 @@ int main()
         capsense_UpdateEnabledBaselines();
         capsense_ScanEnabledWidgets();
         }
-        LCD_Write7SegNumber_0(contrast,0,0);        
     }
 }
 

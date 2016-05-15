@@ -31,6 +31,8 @@ void BLEIOT_sendUpdateTrim(int16);
 void BLEIOT_sendUpdateContrast(uint8);
 void BLEIOT_sendUpdateDisplay(uint16);
 void BLEIOT_sendUpdateTone(uint16);
+void BLEIOT_sendUpdateTemperature(int16);
+
 
 #define BLEIOT_FLAG_BLUE (1<<0)
 #define BLEIOT_FLAG_LED0 (1<<1)
@@ -43,6 +45,7 @@ void BLEIOT_sendUpdateTone(uint16);
 #define BLEIOT_FLAG_TONE (1<<8)
 #define BLEIOT_FLAG_BLESTATE (1<<9)
 #define BLEIOT_FLAG_BOOTLOAD (1<<10)
+#define BLEIOT_FLAG_TEMPERATURE (1<<11)
 
 
 typedef struct BLEIOT_SystemStatus {
@@ -58,9 +61,13 @@ typedef struct BLEIOT_SystemStatus {
     uint16 tone;
     BleStates bleState;
     uint8 bootload;
+    int16 temperature;
 } __attribute__((packed)) BLEIOT_SystemStatus;
 
 extern BLEIOT_SystemStatus BLEIOT_local;
 extern BLEIOT_SystemStatus BLEIOT_remote;
+extern uint32 BLEIOT_dirtyFlags;
+#define BLEIOT_getDirtyFlags() (BLEIOT_dirtyFlags)
+
 
 #endif

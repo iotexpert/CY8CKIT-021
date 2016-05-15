@@ -1,6 +1,19 @@
 #include <project.h>
 
 
+void buzzerPlay(int16 val)
+{
+     if(val == 0)
+     {
+        PWM_Stop();
+     }
+            
+     int period = (155 * val)/10;
+           
+     PWM_Start();
+     PWM_WritePeriod(period);
+     PWM_WriteCompare(period>>1);
+}
 
 int main()
 {
@@ -32,7 +45,11 @@ int main()
     LCD_Start();
     LCD_SetContrast(20);
     BLEIOT_sendUpdateContrast(20);
+    BLEIOT_sendUpdateTemperature(123);
+    
     LCD_Write7SegNumber_0(1234,0,0);
+    
+    int16 temperature = 10;
     
     
     for(;;)
@@ -43,6 +60,7 @@ int main()
             if(BLEIOT_remote.bleState == BLEOFF)
             {
                 BLEIOT_sendUpdateBleState(BLEON);
+                
             }
             else
             {
@@ -64,12 +82,49 @@ int main()
             if(b0current == 1 && b0previous == 0)
             {
                 BLEIOT_sendUpdateLed0(!BLEIOT_local.led0);  
+                
                 led0_Write(!BLEIOT_local.led0);
+                temperature = temperature + 10;
+                
+                BLEIOT_sendUpdateTemperature(temperature);
+                LCD_Write7SegNumber_0(temperature,0,1);
+                BLEIOT_sendUpdateDisplay(temperature);
+                
+                LCD_SetContrast(temperature);
+                BLEIOT_sendUpdateContrast(temperature);
+                
+                BLEIOT_sendUpdateTrim(temperature);
+                
             }
             if( b1current == 1 && b1previous==0)
             {   
                 BLEIOT_sendUpdateLed1(!BLEIOT_local.led1);
                 led1_Write(!BLEIOT_local.led1);
+                
+                temperature = temperature - 10;
+                BLEIOT_sendUpdateTemperature(temperature);
+                
+                
+                LCD_Write7SegNumber_0(temperature,0,1);
+                BLEIOT_sendUpdateDisplay(temperature);
+                
+                LCD_SetContrast(temperature);
+                BLEIOT_sendUpdateContrast(temperature);
+                
+                BLEIOT_sendUpdateTrim(temperature);
+                
+                if(BLEIOT_local.led1)
+                {
+                    
+                    BLEIOT_sendUpdateTone(440);
+                    buzzerPlay(BLEIOT_local.tone);
+                }
+                else
+                {
+                    
+                    BLEIOT_sendUpdateTone(0);
+                    buzzerPlay(BLEIOT_local.tone);
+                }   
             }
       
             b0previous = b0current;
@@ -101,23 +156,13 @@ int main()
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_DISPLAY)
         {
             BLEIOT_sendUpdateDisplay(BLEIOT_remote.display);
-            LCD_Write7SegNumber_0(BLEIOT_local.display,0,0);
+            LCD_Write7SegNumber_0(BLEIOT_local.display,0,1);
         }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_TONE)
         {
             BLEIOT_sendUpdateTone(BLEIOT_remote.tone);
-            
-            if(BLEIOT_remote.tone)
-            {
-                int period = 3000000/BLEIOT_remote.tone;
-               
-                PWM_Start();
-                PWM_WritePeriod(period);
-                PWM_WriteCompare(period>>1);
-            }
-            else
-                PWM_Stop();
+           buzzerPlay(BLEIOT_local.tone);
         }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLUE)

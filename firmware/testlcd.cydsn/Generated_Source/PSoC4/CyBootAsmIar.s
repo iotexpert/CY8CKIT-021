@@ -1,11 +1,12 @@
 ;-------------------------------------------------------------------------------
-; \file CyBootAsmIar.s
-; \version 5.40
+; FILENAME: CyBootAsmIar.s
+; Version 5.30
 ;
-; \brief Assembly routines for IAR Embedded Workbench IDE.
+;  DESCRIPTION:
+;    Assembly routines for IAR Embedded Workbench IDE.
 ;
 ;-------------------------------------------------------------------------------
-; Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
+; Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
 ; You may use this file only in accordance with the license, terms, conditions,
 ; disclaimers, and limitations in the end user license agreement accompanying
 ; the software package with which this file was provided.
@@ -17,8 +18,13 @@
     PUBLIC CyExitCriticalSection
     THUMB
     INCLUDE cyfitter.h
-
-
+;Create temporary defines as a workaround for compiler behavior
+#ifndef CYIPBLOCK_m0s8cpussv2_VERSION
+  #define CYIPBLOCK_m0s8cpussv2_VERSION 0
+#endif
+#ifndef CYIPBLOCK_m0s8srssv2_VERSION
+  #define CYIPBLOCK_m0s8srssv2_VERSION 0
+#endif
 ;-------------------------------------------------------------------------------
 ; Function Name: CyDelayCycles
 ;-------------------------------------------------------------------------------
@@ -39,28 +45,16 @@ CyDelayCycles:
     ADDS r0, r0, #2
     LSRS r0, r0, #2
     BEQ CyDelayCycles_done
-    #ifdef CYIPBLOCK_m0s8cpuss_VERSION
-        NOP                     ;    1    2    Loop alignment padding
+    #if ((CYIPBLOCK_m0s8cpussv2_VERSION == 1) && ((CYIPBLOCK_m0s8srssv2_VERSION == 1) || (CYIPBLOCK_m0s8srssv2_VERSION == 2)))
+        ; If device is using CPUSSv2 and SRSSv2 leave loop unaligned
     #else
-        #ifdef CYIPBLOCK_s8srsslt_VERSION
-            #ifdef CYIPBLOCK_m0s8cpussv2_VERSION
-                NOP             ;    1    2    Loop alignment padding
-            #endif
-        #endif
-        ;Leave loop unaligned
+        NOP
     #endif
 CyDelayCycles_loop:
-    #ifdef CYDEV_CM0P_BASE
-        ADDS r0, r0, #1
-        SUBS r0, r0, #2
-        BNE CyDelayCycles_loop
-        NOP
-    #else
-        SUBS r0, r0, #1
-        BNE CyDelayCycles_loop
-        NOP
-        NOP
-    #endif
+    SUBS r0, r0, #1
+    BNE CyDelayCycles_loop
+    NOP
+    NOP
 CyDelayCycles_done:
     BX lr
 

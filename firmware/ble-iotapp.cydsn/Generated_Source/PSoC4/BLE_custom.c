@@ -36,7 +36,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0011u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0011u, /* Handle of the CCCD descriptor */ 
                     0x0012u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
@@ -47,7 +47,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0015u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0015u, /* Handle of the CCCD descriptor */ 
                     0x0016u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
@@ -58,7 +58,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0019u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0019u, /* Handle of the CCCD descriptor */ 
                     0x001Au, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
@@ -69,7 +69,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x001Du, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x001Du, /* Handle of the CCCD descriptor */ 
                     0x001Eu, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
@@ -80,7 +80,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0021u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0021u, /* Handle of the CCCD descriptor */ 
                     0x0022u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
@@ -91,7 +91,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0025u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0025u, /* Handle of the CCCD descriptor */ 
                     0x0026u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
@@ -102,7 +102,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0029u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0029u, /* Handle of the CCCD descriptor */ 
                     0x002Au, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
@@ -113,7 +113,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x002Du, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x002Du, /* Handle of the CCCD descriptor */ 
                     0x002Eu, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
@@ -135,7 +135,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0034u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0034u, /* Handle of the CCCD descriptor */ 
                     0x0035u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
@@ -146,7 +146,7 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0038u, /* Handle of the Client Characteristic Configuration descriptor */ 
+                    0x0038u, /* Handle of the CCCD descriptor */ 
                     0x0039u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },

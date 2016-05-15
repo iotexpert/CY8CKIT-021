@@ -42,6 +42,7 @@
 #include "BLE_custom.h"
 #include "PWM.h"
 #include "Clock_1.h"
+#include "Bootloadable.h"
 #include "BLEIOT_UART_SCBCLK.h"
 #include "BLEIOT_UART_tx.h"
 #include "BLEIOT_UART_tx_aliases.h"
