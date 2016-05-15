@@ -22,45 +22,15 @@ uint32 BLEIOT_getDirtyFlags();
 
 
 void BLEIOT_sendUpdateBlue(BlueStates);
-BlueStates BLEIOT_readRemoteBlue();
-BlueStates BLEIOT_readLocalBlue();
-
 void BLEIOT_sendUpdateLed0(uint8);
-uint8 BLEIOT_readRemoteLed0();
-uint8 BLEIOT_readLocalLed0();
-
 void BLEIOT_sendUpdateLed1(uint8);
-uint8 BLEIOT_readRemoteLed1();
-uint8 BLEIOT_readLocalLed1();
-
 void BLEIOT_sendUpdateBleState(BleStates);
-BleStates BLEIOT_readLocalBleState();
-BleStates BLEIOT_readRemoteBleState();
-
 void BLEIOT_sendUpdateButton0(uint8);
-uint8 BLEIOT_readLocalButton0();
-uint8 BLEIOT_readRemoteButton0();
-
 void BLEIOT_sendUpdateButton1(uint8);
-uint8 BLEIOT_readLocalButton1();
-uint8 BLEIOT_readRemoteButton1();
-
 void BLEIOT_sendUpdateTrim(int16);
-int16 BLEIOT_readLocalTrim();
-int16 BLEIOT_readRemoteTrim();
-
 void BLEIOT_sendUpdateContrast(uint8);
-uint8 BLEIOT_readLocalContrast();
-uint8 BLEIOT_readRemoteContrast();
-
 void BLEIOT_sendUpdateDisplay(uint16);
-uint16 BLEIOT_readLocalDisplay();
-uint16 BLEIOT_readRemoteDisplay();
-
 void BLEIOT_sendUpdateTone(uint16);
-uint16 BLEIOT_readLocalTone();
-uint16 BLEIOT_readRemoteTone();
-
 
 #define BLEIOT_FLAG_BLUE (1<<0)
 #define BLEIOT_FLAG_LED0 (1<<1)
@@ -89,5 +59,8 @@ typedef struct BLEIOT_SystemStatus {
     BleStates bleState;
     uint8 bootload;
 } __attribute__((packed)) BLEIOT_SystemStatus;
+
+extern BLEIOT_SystemStatus BLEIOT_local;
+extern BLEIOT_SystemStatus BLEIOT_remote;
 
 #endif
