@@ -12,7 +12,6 @@
 <v>.\I2C_Bootloader.cydsn\I2C_Bootloader.cyprj</v>
 <v>.\ble-bootloader.cydsn\ble-bootloader.cyprj</v>
 <v>.\BLEInterface.cylib\BLEInterface.cyprj</v>
-<v>.\testlcd.cydsn\testlcd.cyprj</v>
 </projects>
 <workspace_id v="8f071ebc-6bce-4fa7-85d4-1732aa674a3e" />
 <WriteAppVersionLastSavedWith v="3.3.0.7343" />
