@@ -70,9 +70,7 @@ void updateGattDB(uint8 *val,int size,uint8 notify, CYBLE_GATT_DB_ATTR_HANDLE_T 
 {
     
     // this little block of code doesnt make me happy... 
-    /*
-    
-    
+   
     switch(CyBle_GetState())
     {
         case CYBLE_STATE_ADVERTISING:
@@ -87,11 +85,12 @@ void updateGattDB(uint8 *val,int size,uint8 notify, CYBLE_GATT_DB_ATTR_HANDLE_T 
             return;
     }
         
-     */
+    /*
     if(BLEIOT_local.bleState == BLEOFF)
     {
         return;
     }
+    */
     //update the GATT Database
     CYBLE_GATTS_HANDLE_VALUE_NTF_T 	tempHandle;
     tempHandle.attrHandle = handle;
@@ -140,8 +139,8 @@ void BleCallBack(uint32 event, void* eventParam)
             
             BLEIOT_sendUpdateBleState(BLECONNECTED);
             processBlueLed();
-		break;
-        case CYBLE_EVT_GATT_CONNECT_IND:
+		//break;
+        //case CYBLE_EVT_GATT_CONNECT_IND:
             updateGattDB((uint8 *)&BLEIOT_local.blue,sizeof(BLEIOT_local.blue),notifyFlags.blue,CYBLE_CY8CKIT021_BLUE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
             updateGattDB(&BLEIOT_local.led0,sizeof(BLEIOT_local.led0),notifyFlags.led0,CYBLE_CY8CKIT021_LED0_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
             updateGattDB(&BLEIOT_local.led1,sizeof(BLEIOT_local.led1),notifyFlags.led1,CYBLE_CY8CKIT021_LED1_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
