@@ -61,6 +61,8 @@ int main()
     
     int16 temperature = 10;
     
+    adc_Start();
+    adc_StartConvert();
     
     for(;;)
     {
@@ -104,6 +106,8 @@ int main()
                 BLEIOT_updateContrast(temperature);
                 
                 BLEIOT_updateTrim(temperature);
+                
+                BLEIOT_updatePot(0x0102);
                 
             }
             if( b1current == 1 && b1previous==0)
@@ -179,6 +183,21 @@ int main()
             BLEIOT_updateTone(BLEIOT_remote.tone);
            buzzerPlay(BLEIOT_local.tone);
         }
+        
+        
+        //BLEIOT_updatePot(0x0102);
+        
+        
+        if(adc_IsEndConversion(adc_RETURN_STATUS))
+        {
+            int16 result = adc_GetResult16(0);
+            int16 mv = adc_CountsTo_mVolts(0,result);
+            //int16 result = adc_CountsTo_mVolts(adc_GetResult16(0),0);
+            
+            BLEIOT_updatePot(mv);
+            LCD_Write7SegNumber_0(mv,0,1);
+        }
+        
         
         
     }

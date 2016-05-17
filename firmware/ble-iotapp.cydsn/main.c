@@ -92,8 +92,10 @@ void updateGattDB(uint8 *val,int size,uint8 notify, CYBLE_GATT_DB_ATTR_HANDLE_T 
   	tempHandle.value.val = val;
     tempHandle.value.len = size;
     CYBLE_GATT_ERR_CODE_T ret = CyBle_GattsWriteAttributeValue(&tempHandle,0,&cyBle_connHandle,flags);
-    if(ret != CYBLE_GATT_ERR_NONE)
+    if(ret != CYBLE_GATT_ERR_NONE) // this is really not a good place to be.
     {
+        return;
+        
         CYASSERT(0);
         while(1);
     }
