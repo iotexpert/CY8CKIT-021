@@ -39,7 +39,7 @@
 #define CY_METADATA_SIZE                64
 
 #define CY_APPL_FOR_STACK_AND_COPIER    0
-#define CY_CHECKSUM_EXCLUDE_SIZE        AlignExpr(745, CY_FLASH_ROW_SIZE)
+#define CY_CHECKSUM_EXCLUDE_SIZE        AlignExpr(755, CY_FLASH_ROW_SIZE)
 #define CY_APPL_NUM                     1
 #define CY_APPL_MAX                     1
 
@@ -136,7 +136,7 @@ APPLICATION APPL_START (CY_FLASH_SIZE - APPL_START)
 *******************************************************************************/
 #if ((CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLE) || (CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER))
 
-    #if (745 != 0)
+    #if (755 != 0)
 
         /* General case */
         #if ((CYDEV_IS_EXPORTING_CODE == 0) && (CYDEV_IS_IMPORTING_CODE == 0))
@@ -169,7 +169,7 @@ APPLICATION APPL_START (CY_FLASH_SIZE - APPL_START)
             }
         }
 
-    #endif /* (745 != 0) */
+    #endif /* (755 != 0) */
 
 #endif
 

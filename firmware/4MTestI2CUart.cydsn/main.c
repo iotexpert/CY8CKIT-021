@@ -67,14 +67,14 @@ int main()
         
         if(buttonPrevious && (button_Read() == 0))
         {          
-            if(BLEIOT_remote.bleState == BLEOFF)
+            if(BLEIOT_remote.bleState == BLEIOT_BLEOFF)
             {
-                BLEIOT_updateBleState(BLEON);
+                BLEIOT_updateBleState(BLEIOT_BLEON);
                 
             }
             else
             {
-                BLEIOT_updateBleState(BLEOFF);        
+                BLEIOT_updateBleState(BLEIOT_BLEOFF);        
             }
         }
         buttonPrevious = button_Read();
@@ -143,6 +143,11 @@ int main()
             CapSense_UpdateEnabledBaselines();
             CapSense_ScanEnabledWidgets();
         }
+
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLUE)
+        {
+            BLEIOT_updateBlue(BLEIOT_remote.blue);
+        }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_LED0)
         {
@@ -175,10 +180,6 @@ int main()
            buzzerPlay(BLEIOT_local.tone);
         }
         
-        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLUE)
-        {
-            BLEIOT_updateBlue(BLEIOT_remote.blue);
-        }
         
     }
 }

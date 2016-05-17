@@ -89,18 +89,6 @@ CYBLE_STATE_T cyBle_state;
             0x00u, 0x00u, 
             0x00u, 0x00u, 
             0x00u, 0x00u, 
-        },
-        {
-            0x00u, 0x00u, 
-            0x00u, 0x00u, 
-            0x00u, 0x00u, 
-            0x00u, 0x00u, 
-            0x00u, 0x00u, 
-            0x00u, 0x00u, 
-            0x00u, 0x00u, 
-            0x00u, 0x00u, 
-            0x00u, 0x00u, 
-            0x00u, 0x00u, 
             0x00u, 0x00u, 
         },
         {
@@ -115,6 +103,21 @@ CYBLE_STATE_T cyBle_state;
             0x00u, 0x00u, 
             0x00u, 0x00u, 
             0x00u, 0x00u, 
+            0x00u, 0x00u, 
+        },
+        {
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
+            0x00u, 0x00u, 
         },
         {
             0x00u, 0x00u, 
@@ -128,8 +131,10 @@ CYBLE_STATE_T cyBle_state;
             0x00u, 0x00u, 
             0x00u, 0x00u, 
             0x00u, 0x00u, 
+            0x00u, 0x00u, 
         },
         {
+            0x00u, 0x00u, 
             0x00u, 0x00u, 
             0x00u, 0x00u, 
             0x00u, 0x00u, 
@@ -142,7 +147,7 @@ CYBLE_STATE_T cyBle_state;
             0x00u, 0x00u, 
             0x00u, 0x00u, 
         }}, 
-        0x16u, /* CYBLE_GATT_DB_CCCD_COUNT */ 
+        0x18u, /* CYBLE_GATT_DB_CCCD_COUNT */ 
         0x05u, /* CYBLE_GAP_MAX_BONDED_DEVICE */ 
     };
 #endif /* (CYBLE_MODE_PROFILE) */
@@ -158,7 +163,7 @@ CYBLE_STATE_T cyBle_state;
     0x000Du,    /* Handle of the Client Characteristic Configuration descriptor */
 };
     
-    static uint8 cyBle_attValues[0xA6u] = {
+    static uint8 cyBle_attValues[0xC0u] = {
     /* Device Name */
     (uint8)'0', (uint8)'2', (uint8)'1', (uint8)'A', (uint8)'R', (uint8)'H', 
 
@@ -173,6 +178,13 @@ CYBLE_STATE_T cyBle_state;
 
     /* Service Changed */
     0x00u, 0x00u, 0x00u, 0x00u, 
+
+    /* bootload */
+    0x00u, 
+
+    /* Characteristic User Description */
+    (uint8)'S', (uint8)'t', (uint8)'a', (uint8)'r', (uint8)'t', (uint8)' ', (uint8)'B', (uint8)'o', (uint8)'o', (uint8)'t',
+(uint8)'l', (uint8)'o', (uint8)'a', (uint8)'d', 
 
     /* blue */
     0x00u, 
@@ -207,13 +219,6 @@ CYBLE_STATE_T cyBle_state;
     (uint8)'B', (uint8)'u', (uint8)'t', (uint8)'t', (uint8)'o', (uint8)'n', (uint8)'1', (uint8)' ', (uint8)'S', (uint8)'t',
 (uint8)'a', (uint8)'t', (uint8)'e', 
 
-    /* tone */
-    0x00u, 0x00u, 
-
-    /* Characteristic User Description */
-    (uint8)'B', (uint8)'u', (uint8)'z', (uint8)'z', (uint8)'e', (uint8)'r', (uint8)' ', (uint8)'T', (uint8)'o', (uint8)'n',
-(uint8)'e', 
-
     /* trim */
     0x00u, 0x00u, 
 
@@ -228,18 +233,18 @@ CYBLE_STATE_T cyBle_state;
     (uint8)'L', (uint8)'C', (uint8)'D', (uint8)' ', (uint8)'C', (uint8)'o', (uint8)'n', (uint8)'t', (uint8)'r', (uint8)'a',
 (uint8)'s', (uint8)'t', 
 
-    /* bootload */
-    0x00u, 
-
-    /* Characteristic User Description */
-    (uint8)'S', (uint8)'t', (uint8)'a', (uint8)'r', (uint8)'t', (uint8)' ', (uint8)'B', (uint8)'o', (uint8)'o', (uint8)'t',
-(uint8)'l', (uint8)'o', (uint8)'a', (uint8)'d', 
-
     /* display */
     0x00u, 0x00u, 
 
     /* Characteristic User Description */
     (uint8)'D', (uint8)'i', (uint8)'s', (uint8)'p', (uint8)'l', (uint8)'a', (uint8)'y', 
+
+    /* tone */
+    0x00u, 0x00u, 
+
+    /* Characteristic User Description */
+    (uint8)'B', (uint8)'u', (uint8)'z', (uint8)'z', (uint8)'e', (uint8)'r', (uint8)' ', (uint8)'T', (uint8)'o', (uint8)'n',
+(uint8)'e', 
 
     /* temperature */
     0x00u, 0x00u, 
@@ -248,6 +253,14 @@ CYBLE_STATE_T cyBle_state;
     (uint8)'T', (uint8)'e', (uint8)'m', (uint8)'p', (uint8)'e', (uint8)'r', (uint8)'a', (uint8)'t', (uint8)'u', (uint8)'r',
 (uint8)'e', 
 
+    /* pot */
+    0x00u, 0x00u, 
+
+    /* Characteristic User Description */
+    (uint8)'P', (uint8)'o', (uint8)'t', (uint8)'e', (uint8)'n', (uint8)'t', (uint8)'i', (uint8)'o', (uint8)'m', (uint8)'e',
+(uint8)'t', (uint8)'e', (uint8)'r', (uint8)' ', (uint8)'V', (uint8)'o', (uint8)'l', (uint8)'t', (uint8)'a', (uint8)'g',
+(uint8)'e', (uint8)' ', (uint8)'m', (uint8)'v', 
+
 };
 #if(CYBLE_GATT_DB_CCCD_COUNT != 0u)
 uint8 cyBle_attValuesCCCD[CYBLE_GATT_DB_CCCD_COUNT];
@@ -255,6 +268,8 @@ uint8 cyBle_attValuesCCCD[CYBLE_GATT_DB_CCCD_COUNT];
 
 const uint8 cyBle_attUuid128[][16u] = {
     /* CY8CKIT021 */
+    { 0x00u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
+    /* bootload */
     { 0x00u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
     /* blue */
     { 0x01u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
@@ -266,15 +281,15 @@ const uint8 cyBle_attUuid128[][16u] = {
     { 0x04u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
     /* button1 */
     { 0x05u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
-    /* tone */
-    { 0x06u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
     /* trim */
-    { 0x07u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
+    { 0x06u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
     /* contrast */
-    { 0x08u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
-    /* bootload */
-    { 0x09u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
+    { 0x07u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
     /* display */
+    { 0x08u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
+    /* tone */
+    { 0x09u, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
+    /* pot */
     { 0x0Au, 0x34u, 0x9Bu, 0x5Fu, 0x80u, 0x00u, 0x00u, 0x80u, 0x00u, 0x10u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u, 0x00u },
 };
 
@@ -286,51 +301,55 @@ CYBLE_GATTS_ATT_GEN_VAL_LEN_T cyBle_attValuesLen[CYBLE_GATT_DB_ATT_VAL_COUNT] = 
     { 0x0004u, (void *)&cyBle_attValues[17] }, /* Service Changed */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[0] }, /* Client Characteristic Configuration */
     { 0x0010u, (void *)&cyBle_attUuid128[0] }, /* CY8CKIT021 UUID */
-    { 0x0010u, (void *)&cyBle_attUuid128[1] }, /* blue UUID */
-    { 0x0001u, (void *)&cyBle_attValues[21] }, /* blue */
-    { 0x0002u, (void *)&cyBle_attValuesCCCD[2] }, /* CCCD */
+    { 0x0010u, (void *)&cyBle_attUuid128[1] }, /* bootload UUID */
+    { 0x0001u, (void *)&cyBle_attValues[21] }, /* bootload */
     { 0x000Eu, (void *)&cyBle_attValues[22] }, /* Characteristic User Description */
-    { 0x0010u, (void *)&cyBle_attUuid128[2] }, /* led0 UUID */
-    { 0x0001u, (void *)&cyBle_attValues[36] }, /* led0 */
+    { 0x0010u, (void *)&cyBle_attUuid128[2] }, /* blue UUID */
+    { 0x0001u, (void *)&cyBle_attValues[36] }, /* blue */
+    { 0x0002u, (void *)&cyBle_attValuesCCCD[2] }, /* CCCD */
+    { 0x000Eu, (void *)&cyBle_attValues[37] }, /* Characteristic User Description */
+    { 0x0010u, (void *)&cyBle_attUuid128[3] }, /* led0 UUID */
+    { 0x0001u, (void *)&cyBle_attValues[51] }, /* led0 */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[4] }, /* CCCD */
-    { 0x000Au, (void *)&cyBle_attValues[37] }, /* Characteristic User Description */
-    { 0x0010u, (void *)&cyBle_attUuid128[3] }, /* led1 UUID */
-    { 0x0001u, (void *)&cyBle_attValues[47] }, /* led1 */
+    { 0x000Au, (void *)&cyBle_attValues[52] }, /* Characteristic User Description */
+    { 0x0010u, (void *)&cyBle_attUuid128[4] }, /* led1 UUID */
+    { 0x0001u, (void *)&cyBle_attValues[62] }, /* led1 */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[6] }, /* CCCD */
-    { 0x000Au, (void *)&cyBle_attValues[48] }, /* Characteristic User Description */
-    { 0x0010u, (void *)&cyBle_attUuid128[4] }, /* button0 UUID */
-    { 0x0001u, (void *)&cyBle_attValues[58] }, /* button0 */
+    { 0x000Au, (void *)&cyBle_attValues[63] }, /* Characteristic User Description */
+    { 0x0010u, (void *)&cyBle_attUuid128[5] }, /* button0 UUID */
+    { 0x0001u, (void *)&cyBle_attValues[73] }, /* button0 */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[8] }, /* CCCD */
-    { 0x000Du, (void *)&cyBle_attValues[59] }, /* Characteristic User Description */
-    { 0x0010u, (void *)&cyBle_attUuid128[5] }, /* button1 UUID */
-    { 0x0001u, (void *)&cyBle_attValues[72] }, /* button1 */
+    { 0x000Du, (void *)&cyBle_attValues[74] }, /* Characteristic User Description */
+    { 0x0010u, (void *)&cyBle_attUuid128[6] }, /* button1 UUID */
+    { 0x0001u, (void *)&cyBle_attValues[87] }, /* button1 */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[10] }, /* CCCD */
-    { 0x000Du, (void *)&cyBle_attValues[73] }, /* Characteristic User Description */
-    { 0x0010u, (void *)&cyBle_attUuid128[6] }, /* tone UUID */
-    { 0x0002u, (void *)&cyBle_attValues[86] }, /* tone */
-    { 0x0002u, (void *)&cyBle_attValuesCCCD[12] }, /* CCCD */
-    { 0x000Bu, (void *)&cyBle_attValues[88] }, /* Characteristic User Description */
+    { 0x000Du, (void *)&cyBle_attValues[88] }, /* Characteristic User Description */
     { 0x0010u, (void *)&cyBle_attUuid128[7] }, /* trim UUID */
-    { 0x0002u, (void *)&cyBle_attValues[99] }, /* trim */
-    { 0x0002u, (void *)&cyBle_attValuesCCCD[14] }, /* CCCD */
-    { 0x000Fu, (void *)&cyBle_attValues[101] }, /* Characteristic User Description */
+    { 0x0002u, (void *)&cyBle_attValues[101] }, /* trim */
+    { 0x0002u, (void *)&cyBle_attValuesCCCD[12] }, /* CCCD */
+    { 0x000Fu, (void *)&cyBle_attValues[103] }, /* Characteristic User Description */
     { 0x0010u, (void *)&cyBle_attUuid128[8] }, /* contrast UUID */
-    { 0x0001u, (void *)&cyBle_attValues[116] }, /* contrast */
+    { 0x0001u, (void *)&cyBle_attValues[118] }, /* contrast */
+    { 0x0002u, (void *)&cyBle_attValuesCCCD[14] }, /* CCCD */
+    { 0x000Cu, (void *)&cyBle_attValues[119] }, /* Characteristic User Description */
+    { 0x0010u, (void *)&cyBle_attUuid128[9] }, /* display UUID */
+    { 0x0002u, (void *)&cyBle_attValues[131] }, /* display */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[16] }, /* CCCD */
-    { 0x000Cu, (void *)&cyBle_attValues[117] }, /* Characteristic User Description */
-    { 0x0010u, (void *)&cyBle_attUuid128[9] }, /* bootload UUID */
-    { 0x0001u, (void *)&cyBle_attValues[129] }, /* bootload */
-    { 0x000Eu, (void *)&cyBle_attValues[130] }, /* Characteristic User Description */
-    { 0x0010u, (void *)&cyBle_attUuid128[10] }, /* display UUID */
-    { 0x0002u, (void *)&cyBle_attValues[144] }, /* display */
+    { 0x0007u, (void *)&cyBle_attValues[133] }, /* Characteristic User Description */
+    { 0x0010u, (void *)&cyBle_attUuid128[10] }, /* tone UUID */
+    { 0x0002u, (void *)&cyBle_attValues[140] }, /* tone */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[18] }, /* CCCD */
-    { 0x0007u, (void *)&cyBle_attValues[146] }, /* Characteristic User Description */
+    { 0x000Bu, (void *)&cyBle_attValues[142] }, /* Characteristic User Description */
     { 0x0002u, (void *)&cyBle_attValues[153] }, /* temperature */
     { 0x0002u, (void *)&cyBle_attValuesCCCD[20] }, /* CCCD */
     { 0x000Bu, (void *)&cyBle_attValues[155] }, /* Characteristic User Description */
+    { 0x0010u, (void *)&cyBle_attUuid128[11] }, /* pot UUID */
+    { 0x0002u, (void *)&cyBle_attValues[166] }, /* pot */
+    { 0x0002u, (void *)&cyBle_attValuesCCCD[22] }, /* CCCD */
+    { 0x0018u, (void *)&cyBle_attValues[168] }, /* Characteristic User Description */
 };
 
-const CYBLE_GATTS_DB_T cyBle_gattDB[0x39u] = {
+const CYBLE_GATTS_DB_T cyBle_gattDB[0x3Du] = {
     { 0x0001u, 0x2800u /* Primary service                     */, 0x00000001u /*           */, 0x0009u, {{0x1800u, NULL}}                           },
     { 0x0002u, 0x2803u /* Characteristic                      */, 0x00000201u /* rd        */, 0x0003u, {{0x2A00u, NULL}}                           },
     { 0x0003u, 0x2A00u /* Device Name                         */, 0x00000201u /* rd        */, 0x0003u, {{0x0006u, (void *)&cyBle_attValuesLen[0]}} },
@@ -344,50 +363,54 @@ const CYBLE_GATTS_DB_T cyBle_gattDB[0x39u] = {
     { 0x000Bu, 0x2803u /* Characteristic                      */, 0x00002001u /* ind       */, 0x000Du, {{0x2A05u, NULL}}                           },
     { 0x000Cu, 0x2A05u /* Service Changed                     */, 0x00002000u /* ind       */, 0x000Du, {{0x0004u, (void *)&cyBle_attValuesLen[4]}} },
     { 0x000Du, 0x2902u /* Client Characteristic Configuration */, 0x00000A04u /* rd,wr     */, 0x000Du, {{0x0002u, (void *)&cyBle_attValuesLen[5]}} },
-    { 0x000Eu, 0x2800u /* Primary service                     */, 0x00080001u /*           */, 0x0039u, {{0x0010u, (void *)&cyBle_attValuesLen[6]}} },
-    { 0x000Fu, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x0012u, {{0x0010u, (void *)&cyBle_attValuesLen[7]}} },
-    { 0x0010u, 0x0000u /* blue                                */, 0x00091A04u /* rd,wr,ntf */, 0x0012u, {{0x0001u, (void *)&cyBle_attValuesLen[8]}} },
-    { 0x0011u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0011u, {{0x0002u, (void *)&cyBle_attValuesLen[9]}} },
-    { 0x0012u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0012u, {{0x000Eu, (void *)&cyBle_attValuesLen[10]}} },
-    { 0x0013u, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x0016u, {{0x0010u, (void *)&cyBle_attValuesLen[11]}} },
-    { 0x0014u, 0x0000u /* led0                                */, 0x00091A04u /* rd,wr,ntf */, 0x0016u, {{0x0001u, (void *)&cyBle_attValuesLen[12]}} },
-    { 0x0015u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0015u, {{0x0002u, (void *)&cyBle_attValuesLen[13]}} },
-    { 0x0016u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0016u, {{0x000Au, (void *)&cyBle_attValuesLen[14]}} },
-    { 0x0017u, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x001Au, {{0x0010u, (void *)&cyBle_attValuesLen[15]}} },
-    { 0x0018u, 0x0000u /* led1                                */, 0x00091A04u /* rd,wr,ntf */, 0x001Au, {{0x0001u, (void *)&cyBle_attValuesLen[16]}} },
-    { 0x0019u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0019u, {{0x0002u, (void *)&cyBle_attValuesLen[17]}} },
-    { 0x001Au, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x001Au, {{0x000Au, (void *)&cyBle_attValuesLen[18]}} },
-    { 0x001Bu, 0x2803u /* Characteristic                      */, 0x00001201u /* rd,ntf    */, 0x001Eu, {{0x0010u, (void *)&cyBle_attValuesLen[19]}} },
-    { 0x001Cu, 0x0000u /* button0                             */, 0x00091201u /* rd,ntf    */, 0x001Eu, {{0x0001u, (void *)&cyBle_attValuesLen[20]}} },
-    { 0x001Du, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x001Du, {{0x0002u, (void *)&cyBle_attValuesLen[21]}} },
-    { 0x001Eu, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x001Eu, {{0x000Du, (void *)&cyBle_attValuesLen[22]}} },
-    { 0x001Fu, 0x2803u /* Characteristic                      */, 0x00001201u /* rd,ntf    */, 0x0022u, {{0x0010u, (void *)&cyBle_attValuesLen[23]}} },
-    { 0x0020u, 0x0000u /* button1                             */, 0x00091201u /* rd,ntf    */, 0x0022u, {{0x0001u, (void *)&cyBle_attValuesLen[24]}} },
-    { 0x0021u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0021u, {{0x0002u, (void *)&cyBle_attValuesLen[25]}} },
-    { 0x0022u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0022u, {{0x000Du, (void *)&cyBle_attValuesLen[26]}} },
-    { 0x0023u, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x0026u, {{0x0010u, (void *)&cyBle_attValuesLen[27]}} },
-    { 0x0024u, 0x0000u /* tone                                */, 0x00091A04u /* rd,wr,ntf */, 0x0026u, {{0x0002u, (void *)&cyBle_attValuesLen[28]}} },
-    { 0x0025u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0025u, {{0x0002u, (void *)&cyBle_attValuesLen[29]}} },
-    { 0x0026u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0026u, {{0x000Bu, (void *)&cyBle_attValuesLen[30]}} },
-    { 0x0027u, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x002Au, {{0x0010u, (void *)&cyBle_attValuesLen[31]}} },
-    { 0x0028u, 0x0000u /* trim                                */, 0x00091A04u /* rd,wr,ntf */, 0x002Au, {{0x0002u, (void *)&cyBle_attValuesLen[32]}} },
-    { 0x0029u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0029u, {{0x0002u, (void *)&cyBle_attValuesLen[33]}} },
-    { 0x002Au, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x002Au, {{0x000Fu, (void *)&cyBle_attValuesLen[34]}} },
-    { 0x002Bu, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x002Eu, {{0x0010u, (void *)&cyBle_attValuesLen[35]}} },
-    { 0x002Cu, 0x0000u /* contrast                            */, 0x00091A04u /* rd,wr,ntf */, 0x002Eu, {{0x0001u, (void *)&cyBle_attValuesLen[36]}} },
-    { 0x002Du, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x002Du, {{0x0002u, (void *)&cyBle_attValuesLen[37]}} },
-    { 0x002Eu, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x002Eu, {{0x000Cu, (void *)&cyBle_attValuesLen[38]}} },
-    { 0x002Fu, 0x2803u /* Characteristic                      */, 0x00000A01u /* rd,wr     */, 0x0031u, {{0x0010u, (void *)&cyBle_attValuesLen[39]}} },
-    { 0x0030u, 0x0000u /* bootload                            */, 0x00090A04u /* rd,wr     */, 0x0031u, {{0x0001u, (void *)&cyBle_attValuesLen[40]}} },
-    { 0x0031u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0031u, {{0x000Eu, (void *)&cyBle_attValuesLen[41]}} },
+    { 0x000Eu, 0x2800u /* Primary service                     */, 0x00080001u /*           */, 0x003Du, {{0x0010u, (void *)&cyBle_attValuesLen[6]}} },
+    { 0x000Fu, 0x2803u /* Characteristic                      */, 0x00000A01u /* rd,wr     */, 0x0011u, {{0x0010u, (void *)&cyBle_attValuesLen[7]}} },
+    { 0x0010u, 0x0000u /* bootload                            */, 0x00090A04u /* rd,wr     */, 0x0011u, {{0x0001u, (void *)&cyBle_attValuesLen[8]}} },
+    { 0x0011u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0011u, {{0x000Eu, (void *)&cyBle_attValuesLen[9]}} },
+    { 0x0012u, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x0015u, {{0x0010u, (void *)&cyBle_attValuesLen[10]}} },
+    { 0x0013u, 0x0000u /* blue                                */, 0x00091A04u /* rd,wr,ntf */, 0x0015u, {{0x0001u, (void *)&cyBle_attValuesLen[11]}} },
+    { 0x0014u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0014u, {{0x0002u, (void *)&cyBle_attValuesLen[12]}} },
+    { 0x0015u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0015u, {{0x000Eu, (void *)&cyBle_attValuesLen[13]}} },
+    { 0x0016u, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x0019u, {{0x0010u, (void *)&cyBle_attValuesLen[14]}} },
+    { 0x0017u, 0x0000u /* led0                                */, 0x00091A04u /* rd,wr,ntf */, 0x0019u, {{0x0001u, (void *)&cyBle_attValuesLen[15]}} },
+    { 0x0018u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0018u, {{0x0002u, (void *)&cyBle_attValuesLen[16]}} },
+    { 0x0019u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0019u, {{0x000Au, (void *)&cyBle_attValuesLen[17]}} },
+    { 0x001Au, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x001Du, {{0x0010u, (void *)&cyBle_attValuesLen[18]}} },
+    { 0x001Bu, 0x0000u /* led1                                */, 0x00091A04u /* rd,wr,ntf */, 0x001Du, {{0x0001u, (void *)&cyBle_attValuesLen[19]}} },
+    { 0x001Cu, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x001Cu, {{0x0002u, (void *)&cyBle_attValuesLen[20]}} },
+    { 0x001Du, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x001Du, {{0x000Au, (void *)&cyBle_attValuesLen[21]}} },
+    { 0x001Eu, 0x2803u /* Characteristic                      */, 0x00001201u /* rd,ntf    */, 0x0021u, {{0x0010u, (void *)&cyBle_attValuesLen[22]}} },
+    { 0x001Fu, 0x0000u /* button0                             */, 0x00091201u /* rd,ntf    */, 0x0021u, {{0x0001u, (void *)&cyBle_attValuesLen[23]}} },
+    { 0x0020u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0020u, {{0x0002u, (void *)&cyBle_attValuesLen[24]}} },
+    { 0x0021u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0021u, {{0x000Du, (void *)&cyBle_attValuesLen[25]}} },
+    { 0x0022u, 0x2803u /* Characteristic                      */, 0x00001201u /* rd,ntf    */, 0x0025u, {{0x0010u, (void *)&cyBle_attValuesLen[26]}} },
+    { 0x0023u, 0x0000u /* button1                             */, 0x00091201u /* rd,ntf    */, 0x0025u, {{0x0001u, (void *)&cyBle_attValuesLen[27]}} },
+    { 0x0024u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0024u, {{0x0002u, (void *)&cyBle_attValuesLen[28]}} },
+    { 0x0025u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0025u, {{0x000Du, (void *)&cyBle_attValuesLen[29]}} },
+    { 0x0026u, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x0029u, {{0x0010u, (void *)&cyBle_attValuesLen[30]}} },
+    { 0x0027u, 0x0000u /* trim                                */, 0x00091A04u /* rd,wr,ntf */, 0x0029u, {{0x0002u, (void *)&cyBle_attValuesLen[31]}} },
+    { 0x0028u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0028u, {{0x0002u, (void *)&cyBle_attValuesLen[32]}} },
+    { 0x0029u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0029u, {{0x000Fu, (void *)&cyBle_attValuesLen[33]}} },
+    { 0x002Au, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x002Du, {{0x0010u, (void *)&cyBle_attValuesLen[34]}} },
+    { 0x002Bu, 0x0000u /* contrast                            */, 0x00091A04u /* rd,wr,ntf */, 0x002Du, {{0x0001u, (void *)&cyBle_attValuesLen[35]}} },
+    { 0x002Cu, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x002Cu, {{0x0002u, (void *)&cyBle_attValuesLen[36]}} },
+    { 0x002Du, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x002Du, {{0x000Cu, (void *)&cyBle_attValuesLen[37]}} },
+    { 0x002Eu, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x0031u, {{0x0010u, (void *)&cyBle_attValuesLen[38]}} },
+    { 0x002Fu, 0x0000u /* display                             */, 0x00091A04u /* rd,wr,ntf */, 0x0031u, {{0x0002u, (void *)&cyBle_attValuesLen[39]}} },
+    { 0x0030u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0030u, {{0x0002u, (void *)&cyBle_attValuesLen[40]}} },
+    { 0x0031u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0031u, {{0x0007u, (void *)&cyBle_attValuesLen[41]}} },
     { 0x0032u, 0x2803u /* Characteristic                      */, 0x00001A01u /* rd,wr,ntf */, 0x0035u, {{0x0010u, (void *)&cyBle_attValuesLen[42]}} },
-    { 0x0033u, 0x0000u /* display                             */, 0x00091A04u /* rd,wr,ntf */, 0x0035u, {{0x0002u, (void *)&cyBle_attValuesLen[43]}} },
+    { 0x0033u, 0x0000u /* tone                                */, 0x00091A04u /* rd,wr,ntf */, 0x0035u, {{0x0002u, (void *)&cyBle_attValuesLen[43]}} },
     { 0x0034u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0034u, {{0x0002u, (void *)&cyBle_attValuesLen[44]}} },
-    { 0x0035u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0035u, {{0x0007u, (void *)&cyBle_attValuesLen[45]}} },
+    { 0x0035u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0035u, {{0x000Bu, (void *)&cyBle_attValuesLen[45]}} },
     { 0x0036u, 0x2803u /* Characteristic                      */, 0x00001201u /* rd,ntf    */, 0x0039u, {{0x2A6Eu, NULL}}                           },
     { 0x0037u, 0x2A6Eu /* temperature                         */, 0x00011201u /* rd,ntf    */, 0x0039u, {{0x0002u, (void *)&cyBle_attValuesLen[46]}} },
     { 0x0038u, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x0038u, {{0x0002u, (void *)&cyBle_attValuesLen[47]}} },
     { 0x0039u, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x0039u, {{0x000Bu, (void *)&cyBle_attValuesLen[48]}} },
+    { 0x003Au, 0x2803u /* Characteristic                      */, 0x00001201u /* rd,ntf    */, 0x003Du, {{0x0010u, (void *)&cyBle_attValuesLen[49]}} },
+    { 0x003Bu, 0x0000u /* pot                                 */, 0x00091201u /* rd,ntf    */, 0x003Du, {{0x0002u, (void *)&cyBle_attValuesLen[50]}} },
+    { 0x003Cu, 0x2902u /* CCCD                                */, 0x00010A04u /* rd,wr     */, 0x003Cu, {{0x0002u, (void *)&cyBle_attValuesLen[51]}} },
+    { 0x003Du, 0x2901u /* Characteristic User Description     */, 0x00010201u /* rd        */, 0x003Du, {{0x0018u, (void *)&cyBle_attValuesLen[52]}} },
 };
 
 

@@ -23,7 +23,12 @@ void BLEIOT_update(uint32 mask,void *local,void *remote,void *newVal,int size)
     memcpy(local,newVal,size);
 }
 
-inline void BLEIOT_updateBlue(BlueStates val)
+inline void BLEIOT_updateBootload(uint8 val)
+{
+    BLEIOT_update(BLEIOT_FLAG_BOOTLOAD,&BLEIOT_local.bootload,&BLEIOT_remote.bootload,&val,sizeof(BLEIOT_remote.bootload));
+}
+
+inline void BLEIOT_updateBlue(BLEIOT_BlueStates val)
 {
     BLEIOT_update(BLEIOT_FLAG_BLUE,&BLEIOT_local.blue,&BLEIOT_remote.blue,&val,sizeof(BLEIOT_local.blue));
 }
@@ -36,10 +41,6 @@ inline void BLEIOT_updateLed0(uint8 val)
 inline void BLEIOT_updateLed1(uint8 val)
 {
     BLEIOT_update(BLEIOT_FLAG_LED1,&BLEIOT_local.led1,&BLEIOT_remote.led1,&val,sizeof(BLEIOT_local.led1));
-}
-inline void BLEIOT_updateBleState(BleStates val)
-{
-    BLEIOT_update(BLEIOT_FLAG_BLESTATE,&BLEIOT_local.bleState,&BLEIOT_remote.bleState,&val,sizeof(BLEIOT_remote.bleState));
 }
 inline void BLEIOT_updateButton0(uint8 val)
 {
@@ -55,13 +56,6 @@ inline void BLEIOT_updateTrim(int16 val)
 {
     BLEIOT_update(BLEIOT_FLAG_TRIM,&BLEIOT_local.trim,&BLEIOT_remote.trim,&val,sizeof(BLEIOT_remote.trim));
 }
-
-
-inline void BLEIOT_updateTemperature(int16 val)
-{
-    BLEIOT_update(BLEIOT_FLAG_TEMPERATURE,&BLEIOT_local.temperature,&BLEIOT_remote.temperature,&val,sizeof(BLEIOT_remote.temperature));
-}
-
 inline void BLEIOT_updateContrast(uint8 val)
 {
     BLEIOT_update(BLEIOT_FLAG_CONTRAST,&BLEIOT_local.contrast,&BLEIOT_remote.contrast,&val,sizeof(BLEIOT_remote.contrast));
@@ -77,10 +71,22 @@ inline void BLEIOT_updateTone(uint16 val)
     BLEIOT_update(BLEIOT_FLAG_TONE,&BLEIOT_local.tone,&BLEIOT_remote.tone,&val,sizeof(BLEIOT_remote.tone));
 }
 
-inline void BLEIOT_updateBootload(uint8 val)
+inline void BLEIOT_updateBleState(BLEIOT_BleStates val)
 {
-    BLEIOT_update(BLEIOT_FLAG_BOOTLOAD,&BLEIOT_local.bootload,&BLEIOT_remote.bootload,&val,sizeof(BLEIOT_remote.bootload));
+    BLEIOT_update(BLEIOT_FLAG_BLESTATE,&BLEIOT_local.bleState,&BLEIOT_remote.bleState,&val,sizeof(BLEIOT_remote.bleState));
 }
+
+inline void BLEIOT_updateTemperature(int16 val)
+{
+    BLEIOT_update(BLEIOT_FLAG_TEMPERATURE,&BLEIOT_local.temperature,&BLEIOT_remote.temperature,&val,sizeof(BLEIOT_remote.temperature));
+}
+
+inline void BLEIOT_updatePot(int16 val)
+{
+    BLEIOT_update(BLEIOT_FLAG_POT,&BLEIOT_local.pot,&BLEIOT_remote.pot,&val,sizeof(BLEIOT_remote.pot));
+}
+
+
 
 ////////////////////////////////////////////////////////////////
 
@@ -118,10 +124,10 @@ void BLEIOT_Start()
     if(BLEIOT_initVar == 0) // this can only happen if all of the systick vectors are taken
             CYASSERT(1);
 
-    BLEIOT_local.blue = BLECONTROL;
-    BLEIOT_remote.blue = BLECONTROL;
-    BLEIOT_local.bleState = BLEOFF;
-    BLEIOT_remote.bleState = BLEOFF;
+    BLEIOT_local.blue = BLEIOT_BLECONTROL;
+    BLEIOT_remote.blue = BLEIOT_BLECONTROL;
+    BLEIOT_local.bleState = BLEIOT_BLEOFF;
+    BLEIOT_remote.bleState = BLEIOT_BLEOFF;
 }
 
 void BLEIOT_Transmit()
@@ -160,14 +166,15 @@ void BLEIOT_Receive()
     }
     BLEIOT_updateDirtyFlags(&BLEIOT_local.bootload,&BLEIOT_remote.bootload,BLEIOT_FLAG_BOOTLOAD,sizeof(BLEIOT_remote.bootload));  
     BLEIOT_updateDirtyFlags(&BLEIOT_local.blue,&BLEIOT_remote.blue,BLEIOT_FLAG_BLUE,sizeof(BLEIOT_remote.blue));
-    BLEIOT_updateDirtyFlags(&BLEIOT_local.bleState,&BLEIOT_remote.bleState,BLEIOT_FLAG_BLESTATE,sizeof(BLEIOT_remote.bleState));
     BLEIOT_updateDirtyFlags(&BLEIOT_local.led0,&BLEIOT_remote.led0,BLEIOT_FLAG_LED0,sizeof(BLEIOT_remote.led0));
     BLEIOT_updateDirtyFlags(&BLEIOT_local.led1,&BLEIOT_remote.led1,BLEIOT_FLAG_LED1,sizeof(BLEIOT_remote.led1));
     BLEIOT_updateDirtyFlags(&BLEIOT_local.button0,&BLEIOT_remote.button0,BLEIOT_FLAG_BUTTON0,sizeof(BLEIOT_remote.button0));
     BLEIOT_updateDirtyFlags(&BLEIOT_local.button1,&BLEIOT_remote.button1,BLEIOT_FLAG_BUTTON1,sizeof(BLEIOT_remote.button1));
-    BLEIOT_updateDirtyFlags(&BLEIOT_local.display,&BLEIOT_remote.display,BLEIOT_FLAG_DISPLAY,sizeof(BLEIOT_remote.display));
-    BLEIOT_updateDirtyFlags(&BLEIOT_local.contrast,&BLEIOT_remote.contrast,BLEIOT_FLAG_CONTRAST,sizeof(BLEIOT_remote.contrast));
-    BLEIOT_updateDirtyFlags(&BLEIOT_local.tone,&BLEIOT_remote.tone,BLEIOT_FLAG_TONE,sizeof(BLEIOT_remote.tone));
     BLEIOT_updateDirtyFlags(&BLEIOT_local.trim,&BLEIOT_remote.trim,BLEIOT_FLAG_TRIM,sizeof(BLEIOT_remote.trim));
+    BLEIOT_updateDirtyFlags(&BLEIOT_local.contrast,&BLEIOT_remote.contrast,BLEIOT_FLAG_CONTRAST,sizeof(BLEIOT_remote.contrast));
+    BLEIOT_updateDirtyFlags(&BLEIOT_local.display,&BLEIOT_remote.display,BLEIOT_FLAG_DISPLAY,sizeof(BLEIOT_remote.display));
+    BLEIOT_updateDirtyFlags(&BLEIOT_local.tone,&BLEIOT_remote.tone,BLEIOT_FLAG_TONE,sizeof(BLEIOT_remote.tone));
+    BLEIOT_updateDirtyFlags(&BLEIOT_local.bleState,&BLEIOT_remote.bleState,BLEIOT_FLAG_BLESTATE,sizeof(BLEIOT_remote.bleState));
     BLEIOT_updateDirtyFlags(&BLEIOT_local.temperature,&BLEIOT_remote.temperature,BLEIOT_FLAG_TEMPERATURE,sizeof(BLEIOT_remote.temperature));
+    BLEIOT_updateDirtyFlags(&BLEIOT_local.pot,&BLEIOT_remote.pot,BLEIOT_FLAG_POT,sizeof(BLEIOT_remote.pot));
 }

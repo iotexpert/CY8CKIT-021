@@ -30,108 +30,108 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
         0x000Eu, /* Handle of the CY8CKIT021 service */ 
         {
 
-            /* blue characteristic */
+            /* bootload characteristic */
             {
-                0x0010u, /* Handle of the blue characteristic */ 
+                0x0010u, /* Handle of the bootload characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0011u, /* Handle of the CCCD descriptor */ 
-                    0x0012u, /* Handle of the Characteristic User Description descriptor */ 
+                    0x0011u, /* Handle of the Characteristic User Description descriptor */ 
+                    CYBLE_GATT_INVALID_ATTR_HANDLE_VALUE, 
+                }, 
+            },
+
+            /* blue characteristic */
+            {
+                0x0013u, /* Handle of the blue characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x0014u, /* Handle of the CCCD descriptor */ 
+                    0x0015u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
 
             /* led0 characteristic */
             {
-                0x0014u, /* Handle of the led0 characteristic */ 
+                0x0017u, /* Handle of the led0 characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0015u, /* Handle of the CCCD descriptor */ 
-                    0x0016u, /* Handle of the Characteristic User Description descriptor */ 
+                    0x0018u, /* Handle of the CCCD descriptor */ 
+                    0x0019u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
 
             /* led1 characteristic */
             {
-                0x0018u, /* Handle of the led1 characteristic */ 
+                0x001Bu, /* Handle of the led1 characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0019u, /* Handle of the CCCD descriptor */ 
-                    0x001Au, /* Handle of the Characteristic User Description descriptor */ 
+                    0x001Cu, /* Handle of the CCCD descriptor */ 
+                    0x001Du, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
 
             /* button0 characteristic */
             {
-                0x001Cu, /* Handle of the button0 characteristic */ 
+                0x001Fu, /* Handle of the button0 characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
-                    0x001Du, /* Handle of the CCCD descriptor */ 
-                    0x001Eu, /* Handle of the Characteristic User Description descriptor */ 
+                    0x0020u, /* Handle of the CCCD descriptor */ 
+                    0x0021u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
 
             /* button1 characteristic */
             {
-                0x0020u, /* Handle of the button1 characteristic */ 
+                0x0023u, /* Handle of the button1 characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0021u, /* Handle of the CCCD descriptor */ 
-                    0x0022u, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* tone characteristic */
-            {
-                0x0024u, /* Handle of the tone characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x0025u, /* Handle of the CCCD descriptor */ 
-                    0x0026u, /* Handle of the Characteristic User Description descriptor */ 
+                    0x0024u, /* Handle of the CCCD descriptor */ 
+                    0x0025u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
 
             /* trim characteristic */
             {
-                0x0028u, /* Handle of the trim characteristic */ 
+                0x0027u, /* Handle of the trim characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
-                    0x0029u, /* Handle of the CCCD descriptor */ 
-                    0x002Au, /* Handle of the Characteristic User Description descriptor */ 
+                    0x0028u, /* Handle of the CCCD descriptor */ 
+                    0x0029u, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
 
             /* contrast characteristic */
             {
-                0x002Cu, /* Handle of the contrast characteristic */ 
+                0x002Bu, /* Handle of the contrast characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
-                    0x002Du, /* Handle of the CCCD descriptor */ 
-                    0x002Eu, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* bootload characteristic */
-            {
-                0x0030u, /* Handle of the bootload characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x0031u, /* Handle of the Characteristic User Description descriptor */ 
-                    CYBLE_GATT_INVALID_ATTR_HANDLE_VALUE, 
+                    0x002Cu, /* Handle of the CCCD descriptor */ 
+                    0x002Du, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
 
             /* display characteristic */
             {
-                0x0033u, /* Handle of the display characteristic */ 
+                0x002Fu, /* Handle of the display characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x0030u, /* Handle of the CCCD descriptor */ 
+                    0x0031u, /* Handle of the Characteristic User Description descriptor */ 
+                }, 
+            },
+
+            /* tone characteristic */
+            {
+                0x0033u, /* Handle of the tone characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
@@ -148,6 +148,17 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 {
                     0x0038u, /* Handle of the CCCD descriptor */ 
                     0x0039u, /* Handle of the Characteristic User Description descriptor */ 
+                }, 
+            },
+
+            /* pot characteristic */
+            {
+                0x003Bu, /* Handle of the pot characteristic */ 
+                
+                /* Array of Descriptors handles */
+                {
+                    0x003Cu, /* Handle of the CCCD descriptor */ 
+                    0x003Du, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
         }, 

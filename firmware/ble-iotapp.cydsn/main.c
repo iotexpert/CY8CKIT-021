@@ -7,11 +7,12 @@ typedef struct NotifyFlags {
     uint8 led1;
     uint8 button0;
     uint8 button1;
-    uint8 contrast;
     uint8 trim;
+    uint8 contrast;
     uint8 display;
     uint8 tone;
     uint8 temperature;
+    uint8 pot;
     
 } NotifyFlags;
 
@@ -32,15 +33,15 @@ void processBlueLed()
 {
     switch(BLEIOT_local.blue)
             {
-                case ON:
+                case BLEIOT_ON:
                     PWM_Stop();
                     blue_Write(1); // in HW mode sw reg is OE.. output enable=on to drive active low
                     break;
-                case OFF:
+                case BLEIOT_OFF:
                     PWM_Stop();
                     blue_Write(0); // in HW mode sw reg is OE.. output enable=off to drive tristate output
                 break;
-                case BLECONTROL:
+                case BLEIOT_BLECONTROL:
                     if(CyBle_GetState() == CYBLE_STATE_CONNECTED)
                     {
                         PWM_Stop();
@@ -59,7 +60,7 @@ void processBlueLed()
                         //blue_Write(0); // in HW mode sw reg is OE.. output enable=off to drive tristate output
                     }
                 break;
-                case BLINK:
+                case BLEIOT_BLINK:
                     blue_Write(1); // turn the OE back on
                     PWM_Start();
                 break;
@@ -119,7 +120,7 @@ void BleCallBack(uint32 event, void* eventParam)
         case CYBLE_EVT_STACK_ON:
         case CYBLE_EVT_GAP_DEVICE_DISCONNECTED:
             CyBle_GappStartAdvertisement(CYBLE_ADVERTISING_FAST);
-            BLEIOT_updateBleState(BLEADVERTISING);
+            BLEIOT_updateBleState(BLEIOT_BLEADVERTISING);
             processBlueLed();
             memset(&notifyFlags,0,sizeof(notifyFlags));
         break;
@@ -131,7 +132,7 @@ void BleCallBack(uint32 event, void* eventParam)
             
         case CYBLE_EVT_GAP_DEVICE_CONNECTED:           
             
-            BLEIOT_updateBleState(BLECONNECTED);
+            BLEIOT_updateBleState(BLEIOT_BLECONNECTED);
             processBlueLed();
 		   
             updateGattDB((uint8 *)&BLEIOT_local.blue,sizeof(BLEIOT_local.blue),notifyFlags.blue,CYBLE_CY8CKIT021_BLUE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
@@ -143,13 +144,26 @@ void BleCallBack(uint32 event, void* eventParam)
             updateGattDB(&BLEIOT_local.contrast,sizeof(BLEIOT_local.contrast),notifyFlags.contrast,CYBLE_CY8CKIT021_CONTRAST_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);            
             updateGattDB((uint8 *)&BLEIOT_local.display,sizeof(BLEIOT_local.display),notifyFlags.trim,CYBLE_CY8CKIT021_DISPLAY_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
             updateGattDB((uint8 *)&BLEIOT_local.tone,sizeof(BLEIOT_local.tone),notifyFlags.tone,CYBLE_CY8CKIT021_TONE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
-       
+            updateGattDB((uint8 *)&BLEIOT_local.temperature,(BLEIOT_local.temperature),notifyFlags.temperature,CYBLE_CY8CKIT021_TEMPERATURE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
+            updateGattDB((uint8 *)&BLEIOT_local.pot,(BLEIOT_local.pot),notifyFlags.pot,CYBLE_CY8CKIT021_POT_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
         break;
             
 
         case CYBLE_EVT_GATTS_WRITE_REQ:
             wrReqParam = (CYBLE_GATTS_WRITE_REQ_PARAM_T *) eventParam;
 			
+            // Bootload
+            #ifndef BootLoadable__DISABLED
+      
+            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_BOOTLOAD_CHAR_HANDLE)
+            {
+                if(wrReqParam->handleValPair.value.val[0])
+                    Bootloadable_Load();
+              
+            }
+            #endif
+         
+            
             /// BLUE
             if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_BLUE_CHAR_HANDLE)
             {
@@ -190,30 +204,21 @@ void BleCallBack(uint32 event, void* eventParam)
                 notifyFlags.led1 = wrReqParam->handleValPair.value.val[0];
                 CyBle_GattsWriteRsp(cyBle_connHandle);
             }
-           
-            // Contrast
-            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_CONTRAST_CHAR_HANDLE)
-            {
-                BLEIOT_updateContrast(wrReqParam->handleValPair.value.val[0]);
-                updateGattDB(wrReqParam->handleValPair.value.val,1,notifyFlags.contrast,CYBLE_CY8CKIT021_CONTRAST_CHAR_HANDLE,CYBLE_GATT_DB_PEER_INITIATED);
-            }
             
-            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_CONTRAST_CCCD_DESC_HANDLE)
+            // BUTTON 0
+            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_BUTTON0_CCCD_DESC_HANDLE)
             {
-                notifyFlags.contrast = wrReqParam->handleValPair.value.val[0];
+                notifyFlags.button0 = wrReqParam->handleValPair.value.val[0];
                 CyBle_GattsWriteRsp(cyBle_connHandle);
             }
-            
-            #ifndef BootLoadable__DISABLED
-      
-            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_BOOTLOAD_CHAR_HANDLE)
+           
+            // BUTTON 1
+            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_BUTTON1_CCCD_DESC_HANDLE)
             {
-                if(wrReqParam->handleValPair.value.val[0])
-                    Bootloadable_Load();
-              
+                notifyFlags.button1 = wrReqParam->handleValPair.value.val[0];
+                CyBle_GattsWriteRsp(cyBle_connHandle);
             }
-            #endif
-         
+
             // TRIM
             if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_TRIM_CHAR_HANDLE)
             {
@@ -227,6 +232,21 @@ void BleCallBack(uint32 event, void* eventParam)
                 notifyFlags.trim = wrReqParam->handleValPair.value.val[0];
                 CyBle_GattsWriteRsp(cyBle_connHandle);
             }
+            
+            
+            // Contrast
+            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_CONTRAST_CHAR_HANDLE)
+            {
+                BLEIOT_updateContrast(wrReqParam->handleValPair.value.val[0]);
+                updateGattDB(wrReqParam->handleValPair.value.val,1,notifyFlags.contrast,CYBLE_CY8CKIT021_CONTRAST_CHAR_HANDLE,CYBLE_GATT_DB_PEER_INITIATED);
+            }
+            
+            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_CONTRAST_CCCD_DESC_HANDLE)
+            {
+                notifyFlags.contrast = wrReqParam->handleValPair.value.val[0];
+                CyBle_GattsWriteRsp(cyBle_connHandle);
+            }
+            
             
             // DISPLAY
     
@@ -256,27 +276,22 @@ void BleCallBack(uint32 event, void* eventParam)
                 CyBle_GattsWriteRsp(cyBle_connHandle);
             }
             
-           // BUTTON 0
-            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_BUTTON0_CCCD_DESC_HANDLE)
-            {
-                notifyFlags.button0 = wrReqParam->handleValPair.value.val[0];
-                CyBle_GattsWriteRsp(cyBle_connHandle);
-            }
            
-            // BUTTON 1
-            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_BUTTON1_CCCD_DESC_HANDLE)
-            {
-                notifyFlags.button1 = wrReqParam->handleValPair.value.val[0];
-                CyBle_GattsWriteRsp(cyBle_connHandle);
-            }
-
              // TEMPERTATURE
             if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_TEMPERATURE_CCCD_DESC_HANDLE)
             {
                 notifyFlags.temperature = wrReqParam->handleValPair.value.val[0];
                 CyBle_GattsWriteRsp(cyBle_connHandle);
             }
-
+            
+            
+            // POT
+            if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_POT_CCCD_DESC_HANDLE)
+            {
+                notifyFlags.pot = wrReqParam->handleValPair.value.val[0];
+                CyBle_GattsWriteRsp(cyBle_connHandle);
+            }
+            
   	    break;  
         
         default:
@@ -300,21 +315,22 @@ int main()
     for(;;)
     {
 
-     
-        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLESTATE)
+        #ifndef BootLoadable__DISABLED
+        // if they write into the BLEIOT_local.bootload (from EzI2C)
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BOOTLOAD || BLEIOT_local.bootload)
         {
-            if(BLEIOT_remote.bleState == BLEOFF)
-            {
-                CyBle_Stop();
-                BLEIOT_updateBleState(BLEOFF);
-                processBlueLed();
-            }
-            if(BLEIOT_remote.bleState == BLEON && BLEIOT_local.bleState == BLEOFF)
-            {
-                CyBle_Start(BleCallBack);
-                BLEIOT_updateBleState(BLESTART);
-            }
+            // enter the bootloader
+            Bootloadable_Load();
         }
+        #endif
+       
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLUE)
+        {
+            BLEIOT_updateBlue(BLEIOT_remote.blue);
+            processBlueLed();
+            updateGattDB((uint8 *)&BLEIOT_local.blue,sizeof(BLEIOT_local.blue),notifyFlags.blue,CYBLE_CY8CKIT021_BLUE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
+        }
+        
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_LED0)
         {
@@ -343,18 +359,19 @@ int main()
             updateGattDB(&BLEIOT_local.button1,sizeof(BLEIOT_local.button1),notifyFlags.button1,CYBLE_CY8CKIT021_BUTTON1_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
         }
   
-        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_CONTRAST)
-        {
-            BLEIOT_updateContrast(BLEIOT_remote.contrast);
-            updateGattDB(&BLEIOT_local.contrast,sizeof(BLEIOT_local.contrast),notifyFlags.contrast,CYBLE_CY8CKIT021_CONTRAST_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
-        }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_TRIM)
         {
             BLEIOT_updateTrim(BLEIOT_remote.trim);
             updateGattDB((uint8 *)&BLEIOT_local.trim,sizeof(BLEIOT_local.trim),notifyFlags.trim,CYBLE_CY8CKIT021_TRIM_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
         }
-
+        
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_CONTRAST)
+        {
+            BLEIOT_updateContrast(BLEIOT_remote.contrast);
+            updateGattDB(&BLEIOT_local.contrast,sizeof(BLEIOT_local.contrast),notifyFlags.contrast,CYBLE_CY8CKIT021_CONTRAST_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
+        }
+       
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_DISPLAY)
         {
             BLEIOT_updateDisplay(BLEIOT_remote.display);
@@ -367,28 +384,19 @@ int main()
             updateGattDB((uint8 *)&BLEIOT_local.tone,sizeof(BLEIOT_local.tone),notifyFlags.tone,CYBLE_CY8CKIT021_TONE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
         }
    
-        #ifndef BootLoadable__DISABLED
-        // if they write into the BLEIOT_local.bootload (from EzI2C)
-        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BOOTLOAD || BLEIOT_local.bootload)
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLESTATE)
         {
-            // enter the bootloader
-            Bootloadable_Load();
-        }
-        #endif
-        
-        
-        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLUE)
-        {
-            BLEIOT_updateBlue(BLEIOT_remote.blue);
-            processBlueLed();
-            updateGattDB((uint8 *)&BLEIOT_local.blue,sizeof(BLEIOT_local.blue),notifyFlags.blue,CYBLE_CY8CKIT021_BLUE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
-        }
-        
-       
-        if(BLEIOT_local.bleState != BLEOFF)
-        {
-            CyBle_ProcessEvents();
-            CyBle_EnterLPM(CYBLE_BLESS_DEEPSLEEP);
+            if(BLEIOT_remote.bleState == BLEIOT_BLEOFF)
+            {
+                CyBle_Stop();
+                BLEIOT_updateBleState(BLEIOT_BLEOFF);
+                processBlueLed();
+            }
+            if(BLEIOT_remote.bleState == BLEIOT_BLEON && BLEIOT_local.bleState == BLEIOT_BLEOFF)
+            {
+                CyBle_Start(BleCallBack);
+                BLEIOT_updateBleState(BLEIOT_BLESTART);
+            }
         }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_TEMPERATURE)
@@ -396,6 +404,18 @@ int main()
             BLEIOT_updateTemperature(BLEIOT_remote.temperature);
             updateGattDB((uint8 *)&BLEIOT_local.temperature,sizeof(BLEIOT_local.temperature),notifyFlags.temperature,CYBLE_CY8CKIT021_TEMPERATURE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
 
+        }
+        
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_POT)
+        {
+            BLEIOT_updatePot(BLEIOT_remote.pot);
+            updateGattDB((uint8 *)&BLEIOT_local.pot,sizeof(BLEIOT_local.pot),notifyFlags.pot,CYBLE_CY8CKIT021_POT_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
+        }
+        
+        if(BLEIOT_local.bleState != BLEIOT_BLEOFF)
+        {
+            CyBle_ProcessEvents();
+            CyBle_EnterLPM(CYBLE_BLESS_DEEPSLEEP);
         }
     }
 }
