@@ -15,12 +15,22 @@ void buzzerPlay(int16 val)
      PWM_WriteCompare(period>>1);
 }
 
+CY_ISR(StartBootload_ISR)
+{
+    BLEIOT_updateBootload(1);
+    ResetTimer_ClearInterrupt(ResetTimer_INTR_MASK_TC);
+    sendBootload_ClearPending();
+}
+
 int main()
 {
     
     CyDelay(200);
 
     CyGlobalIntEnable;
+    
+    ResetTimer_Start();
+    sendBootload_StartEx(StartBootload_ISR);
     
     int buttonPrevious = 1;
     uint8 buff[] = {1,2,3,4};
@@ -44,8 +54,8 @@ int main()
     
     LCD_Start();
     LCD_SetContrast(20);
-    BLEIOT_sendUpdateContrast(20);
-    BLEIOT_sendUpdateTemperature(123);
+    BLEIOT_updateContrast(20);
+    BLEIOT_updateTemperature(123);
     
     LCD_Write7SegNumber_0(1234,0,0);
     
@@ -59,12 +69,12 @@ int main()
         {          
             if(BLEIOT_remote.bleState == BLEOFF)
             {
-                BLEIOT_sendUpdateBleState(BLEON);
+                BLEIOT_updateBleState(BLEON);
                 
             }
             else
             {
-                BLEIOT_sendUpdateBleState(BLEOFF);        
+                BLEIOT_updateBleState(BLEOFF);        
             }
         }
         buttonPrevious = button_Read();
@@ -75,54 +85,54 @@ int main()
             uint8 b1current = CapSense_CheckIsWidgetActive(CapSense_BUTTON1__BTN);
             
             if(BLEIOT_local.button0 != b0current)
-                BLEIOT_sendUpdateButton0(b0current);
+                BLEIOT_updateButton0(b0current);
             if(BLEIOT_local.button1 != b1current)
-                BLEIOT_sendUpdateButton1(b1current);
+                BLEIOT_updateButton1(b1current);
             
             if(b0current == 1 && b0previous == 0)
             {
-                BLEIOT_sendUpdateLed0(!BLEIOT_local.led0);  
+                BLEIOT_updateLed0(!BLEIOT_local.led0);  
                 
                 led0_Write(!BLEIOT_local.led0);
                 temperature = temperature + 10;
                 
-                BLEIOT_sendUpdateTemperature(temperature);
+                BLEIOT_updateTemperature(temperature);
                 LCD_Write7SegNumber_0(temperature,0,1);
-                BLEIOT_sendUpdateDisplay(temperature);
+                BLEIOT_updateDisplay(temperature);
                 
                 LCD_SetContrast(temperature);
-                BLEIOT_sendUpdateContrast(temperature);
+                BLEIOT_updateContrast(temperature);
                 
-                BLEIOT_sendUpdateTrim(temperature);
+                BLEIOT_updateTrim(temperature);
                 
             }
             if( b1current == 1 && b1previous==0)
             {   
-                BLEIOT_sendUpdateLed1(!BLEIOT_local.led1);
+                BLEIOT_updateLed1(!BLEIOT_local.led1);
                 led1_Write(!BLEIOT_local.led1);
                 
                 temperature = temperature - 10;
-                BLEIOT_sendUpdateTemperature(temperature);
+                BLEIOT_updateTemperature(temperature);
                 
                 
                 LCD_Write7SegNumber_0(temperature,0,1);
-                BLEIOT_sendUpdateDisplay(temperature);
+                BLEIOT_updateDisplay(temperature);
                 
                 LCD_SetContrast(temperature);
-                BLEIOT_sendUpdateContrast(temperature);
+                BLEIOT_updateContrast(temperature);
                 
-                BLEIOT_sendUpdateTrim(temperature);
+                BLEIOT_updateTrim(temperature);
                 
                 if(BLEIOT_local.led1)
                 {
                     
-                    BLEIOT_sendUpdateTone(440);
+                    BLEIOT_updateTone(440);
                     buzzerPlay(BLEIOT_local.tone);
                 }
                 else
                 {
                     
-                    BLEIOT_sendUpdateTone(0);
+                    BLEIOT_updateTone(0);
                     buzzerPlay(BLEIOT_local.tone);
                 }   
             }
@@ -136,38 +146,38 @@ int main()
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_LED0)
         {
-            BLEIOT_sendUpdateLed0(BLEIOT_remote.led0);
+            BLEIOT_updateLed0(BLEIOT_remote.led0);
             led0_Write(!BLEIOT_local.led0);
         }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_LED1)
         {
-            BLEIOT_sendUpdateLed1(BLEIOT_remote.led1);
+            BLEIOT_updateLed1(BLEIOT_remote.led1);
             led1_Write(!BLEIOT_local.led1);
         }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_CONTRAST)
         {
-            BLEIOT_sendUpdateContrast(BLEIOT_remote.contrast);
+            BLEIOT_updateContrast(BLEIOT_remote.contrast);
             LCD_SetContrast(BLEIOT_remote.contrast);
             LCD_Write7SegNumber_0(BLEIOT_remote.contrast,0,0);
         }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_DISPLAY)
         {
-            BLEIOT_sendUpdateDisplay(BLEIOT_remote.display);
+            BLEIOT_updateDisplay(BLEIOT_remote.display);
             LCD_Write7SegNumber_0(BLEIOT_local.display,0,1);
         }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_TONE)
         {
-            BLEIOT_sendUpdateTone(BLEIOT_remote.tone);
+            BLEIOT_updateTone(BLEIOT_remote.tone);
            buzzerPlay(BLEIOT_local.tone);
         }
         
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLUE)
         {
-            BLEIOT_sendUpdateBlue(BLEIOT_remote.blue);
+            BLEIOT_updateBlue(BLEIOT_remote.blue);
         }
         
     }
