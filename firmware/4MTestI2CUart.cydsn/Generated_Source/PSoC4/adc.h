@@ -117,7 +117,7 @@ typedef struct
 #define adc_DEFAULT_ALT_RESOLUTION_SEL     (0u)
 #define adc_DEFAULT_JUSTIFICATION_SEL      (0u)
 #define adc_DEFAULT_DIFF_RESULT_FORMAT_SEL (1u)
-#define adc_DEFAULT_SE_RESULT_FORMAT_SEL   (1u)
+#define adc_DEFAULT_SE_RESULT_FORMAT_SEL   (0u)
 #define adc_DEFAULT_CLOCK_SOURCE           (1u)
 #define adc_DEFAULT_VREF_MV_VALUE          (1024)
 #define adc_DEFAULT_BUFFER_GAIN            (0u)
