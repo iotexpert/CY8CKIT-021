@@ -48,7 +48,6 @@
 #include "EZI2C_EZI2C.h"
 #include "EZI2C_EZI2C_PVT.h"
 #include "EZI2C_BOOT.h"
-#include "Bootloadable.h"
 #include "BLEIOT_UART_SCBCLK.h"
 #include "BLEIOT_UART_tx.h"
 #include "BLEIOT_UART_tx_aliases.h"

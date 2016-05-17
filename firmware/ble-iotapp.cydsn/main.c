@@ -141,6 +141,7 @@ void BleCallBack(uint32 event, void* eventParam)
             processBlueLed();
 		//break;
         //case CYBLE_EVT_GATT_CONNECT_IND:
+            
             updateGattDB((uint8 *)&BLEIOT_local.blue,sizeof(BLEIOT_local.blue),notifyFlags.blue,CYBLE_CY8CKIT021_BLUE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
             updateGattDB(&BLEIOT_local.led0,sizeof(BLEIOT_local.led0),notifyFlags.led0,CYBLE_CY8CKIT021_LED0_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
             updateGattDB(&BLEIOT_local.led1,sizeof(BLEIOT_local.led1),notifyFlags.led1,CYBLE_CY8CKIT021_LED1_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
@@ -150,7 +151,7 @@ void BleCallBack(uint32 event, void* eventParam)
             updateGattDB(&BLEIOT_local.contrast,sizeof(BLEIOT_local.contrast),notifyFlags.contrast,CYBLE_CY8CKIT021_CONTRAST_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);            
             updateGattDB((uint8 *)&BLEIOT_local.display,sizeof(BLEIOT_local.display),notifyFlags.trim,CYBLE_CY8CKIT021_DISPLAY_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
             updateGattDB((uint8 *)&BLEIOT_local.tone,sizeof(BLEIOT_local.tone),notifyFlags.tone,CYBLE_CY8CKIT021_TONE_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
-        
+       
         break;
             
 
@@ -307,6 +308,7 @@ int main()
     for(;;)
     {
 
+     
         if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_BLESTATE)
         {
             if(BLEIOT_remote.bleState == BLEOFF)
