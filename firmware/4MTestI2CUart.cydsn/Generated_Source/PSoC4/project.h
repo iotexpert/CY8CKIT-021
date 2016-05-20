@@ -1,7 +1,7 @@
 /*******************************************************************************
 * File Name: project.h
 * 
-* PSoC Creator  3.3 Nightly Build 9582
+* PSoC Creator  3.3 SP2
 *
 * Description:
 * It contains references to all generated header files and should not be modified.
@@ -76,14 +76,11 @@
 #include "BLEIOT_UART_rx.h"
 #include "BLEIOT_UART_rx_aliases.h"
 #include "core_cm0_psoc4.h"
-#include "core_cm0.h"
 #include "CyFlash.h"
 #include "CyLib.h"
 #include "cyPm.h"
 #include "cytypes.h"
 #include "cypins.h"
-#include "core_cmFunc.h"
-#include "core_cmInstr.h"
 #include "CyDMA.h"
 #include "CyLFClk.h"
 

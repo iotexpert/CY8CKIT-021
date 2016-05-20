@@ -13,8 +13,8 @@
 <v>.\BLEInterface.cylib\BLEInterface.cyprj</v>
 </projects>
 <workspace_id v="8f071ebc-6bce-4fa7-85d4-1732aa674a3e" />
-<WriteAppVersionLastSavedWith v="3.3.0.9582" />
-<WriteAppMarketingVersionLastSavedWith v="3.3 Nightly Build 9582" />
+<WriteAppVersionLastSavedWith v="3.3.0.9604" />
+<WriteAppMarketingVersionLastSavedWith v="3.3 SP2" />
 <CyGuid_dcbd9771-0334-43dc-9cc3-fe99dc3c5316 type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjDependencyList" version="4">
 <wrkspc_dependencies>
 <wrkspc_dependency project="4MTestI2CUart.cydsn\4MTestI2CUart.cyprj" dependency=".\BLEInterface.cylib\BLEInterface.cyprj" />

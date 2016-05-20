@@ -1,8 +1,8 @@
-/*******************************************************************************
-* File Name: .h
-* Version 3.10
+/***************************************************************************//**
+* \file .h
+* \version 3.20
 *
-* Description:
+* \brief
 *  This private file provides constants and parameter values for the
 *  SCB Component.
 *  Please do not use this file or its content in your project.
@@ -10,7 +10,8 @@
 * Note:
 *
 ********************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation. All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation. All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -84,6 +85,12 @@ extern BLEIOT_UART_BACKUP_STRUCT BLEIOT_UART_backup;
     extern uint8 BLEIOT_UART_numberOfAddr;
     extern uint8 BLEIOT_UART_subAddrSize;
 #endif /* (BLEIOT_UART_SCB_MODE_UNCONFIG_CONST_CFG) */
+
+#if (! (BLEIOT_UART_SCB_MODE_I2C_CONST_CFG || \
+        BLEIOT_UART_SCB_MODE_EZI2C_CONST_CFG))
+    extern uint16 BLEIOT_UART_IntrTxMask;
+#endif /* (! (BLEIOT_UART_SCB_MODE_I2C_CONST_CFG || \
+              BLEIOT_UART_SCB_MODE_EZI2C_CONST_CFG)) */
 
 
 /***************************************

@@ -1,15 +1,16 @@
-/*******************************************************************************
-* File Name: EZI2C_EZI2C.h
-* Version 3.10
+/***************************************************************************//**
+* \file EZI2C_EZI2C.h
+* \version 3.20
 *
-* Description:
+* \brief
 *  This file provides constants and parameter values for the SCB Component in
 *  the EZI2C mode.
 *
 * Note:
 *
 ********************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -81,13 +82,7 @@
     #define EZI2C_EZI2C_WAKE_ENABLE_CONST         (0u != EZI2C_EZI2C_WAKE_ENABLE)
     #define EZI2C_EZI2C_EC_AM_ENABLE              (0u != EZI2C_EZI2C_WAKE_ENABLE)
 
-    #if (EZI2C_CY_SCBIP_V0 || EZI2C_CY_SCBIP_V1)
-       #define EZI2C_EZI2C_FIFO_SIZE    (EZI2C_FIFO_SIZE)
-
-    #else
-        #define EZI2C_EZI2C_FIFO_SIZE \
-                                            EZI2C_GET_FIFO_SIZE(EZI2C_EZI2C_BYTE_MODE_ENABLE)
-    #endif /* (EZI2C_CY_SCBIP_V0 || EZI2C_CY_SCBIP_V1) */
+    #define EZI2C_EZI2C_FIFO_SIZE EZI2C_GET_FIFO_SIZE(EZI2C_EZI2C_BYTE_MODE_ENABLE)
 
 #endif /* (EZI2C_SCB_MODE_UNCONFIG_CONST_CFG) */
 
@@ -95,23 +90,66 @@
 /***************************************
 *       Type Definitions
 ***************************************/
-
+/**
+* \addtogroup group_structures
+* @{
+*/
 typedef struct
 {
+    /** When enabled the SCL is stretched as required for proper operation: 
+     *  0 – disable, 1 – enable.
+    */
     uint32 enableClockStretch;
+    
+    /** This field is left for compatibility and its value is ignored. 
+     *  Median filter is disabled for EZI2C mode.
+    */
     uint32 enableMedianFilter;
+    
+    /** Number of supported addresses: 
+     *  - EZI2C_EZI2C_ONE_ADDRESS
+     *  - EZI2C_EZI2C_TWO_ADDRESSES
+    */
     uint32 numberOfAddresses;
+    
+    /** Primary 7-bit slave address.
+    */
     uint32 primarySlaveAddr;
+    
+    /** Secondary 7-bit slave address.
+    */
     uint32 secondarySlaveAddr;
+    
+    /** Size of sub-address.
+     *  - EZI2C_EZI2C_SUB_ADDR8_BITS 
+     *  - EZI2C_EZI2C_SUB_ADDR16_BITS
+    */
     uint32 subAddrSize;
+    
+    /** When enabled the TX and RX FIFO depth is doubled and equal to 
+     *  16 bytes: 0 – disable, 1 – enable.
+    */
     uint32 enableWake;
+    
+    /** When enabled the TX and RX FIFO depth is 16 bytes: 0 – disable, 
+     *  1 – enable.
+     * 
+     *  Ignored for all devices other than PSoC 4100 BLE / PSoC 4200 BLE / 
+     *  PSoC 4100M / PSoC 4200M / PSoC 4200L / PSoC 4000S / PSoC 4100S / 
+     *  PSoC Analog Coprocessor.
+    */
     uint8  enableByteMode;
 } EZI2C_EZI2C_INIT_STRUCT;
-
+/** @} structures */
 
 /***************************************
 *        Function Prototypes
 ***************************************/
+
+/**
+* \addtogroup group_ezi2c
+* @{
+*/
 
 #if(EZI2C_SCB_MODE_UNCONFIG_CONST_CFG)
     void EZI2C_EzI2CInit(const EZI2C_EZI2C_INIT_STRUCT *config);
@@ -130,6 +168,7 @@ void   EZI2C_EzI2CSetReadBoundaryBuffer1(uint32 rwBoundary);
     void   EZI2C_EzI2CSetBuffer2(uint32 bufSize, uint32 rwBoundary, volatile uint8 * buffer);
     void   EZI2C_EzI2CSetReadBoundaryBuffer2(uint32 rwBoundary);
 #endif /* (EZI2C_SECONDARY_ADDRESS_ENABLE_CONST) */
+/** @} ezi2c */
 
 #if(EZI2C_EZI2C_SCL_STRETCH_ENABLE_CONST)
     CY_ISR_PROTO(EZI2C_EZI2C_STRETCH_ISR);
@@ -306,8 +345,8 @@ void   EZI2C_EzI2CSetReadBoundaryBuffer1(uint32 rwBoundary);
 #define EZI2C_EZI2C_TX_FIFO_CTRL (2u)
 #define EZI2C_TX_LOAD_SIZE       (2u)
 
-#define EZI2C_EZI2C_TX_CTRL  ((EZI2C_FIFO_SIZE - 1u)   | \
-                                          EZI2C_TX_CTRL_MSB_FIRST | \
+#define EZI2C_EZI2C_TX_CTRL  ((EZI2C_ONE_BYTE_WIDTH - 1u) | \
+                                          EZI2C_TX_CTRL_MSB_FIRST    | \
                                           EZI2C_TX_CTRL_ENABLED)
 
 #define EZI2C_EZI2C_INTR_SLAVE_MASK  (EZI2C_INTR_SLAVE_I2C_BUS_ERROR | \

@@ -93,6 +93,7 @@ int main()
             
             if(b0current == 1 && b0previous == 0)
             {
+                BLEIOT_updateName("asdf");
                 BLEIOT_updateLed0(!BLEIOT_local.led0);  
                 
                 led0_Write(!BLEIOT_local.led0);

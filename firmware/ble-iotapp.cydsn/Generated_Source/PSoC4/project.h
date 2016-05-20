@@ -1,7 +1,7 @@
 /*******************************************************************************
 * File Name: project.h
 * 
-* PSoC Creator  3.3 Nightly Build 9582
+* PSoC Creator  3.3 SP2
 *
 * Description:
 * It contains references to all generated header files and should not be modified.
@@ -48,7 +48,6 @@
 #include "EZI2C_EZI2C.h"
 #include "EZI2C_EZI2C_PVT.h"
 #include "EZI2C_BOOT.h"
-#include "Bootloadable.h"
 #include "BLEIOT_UART_SCBCLK.h"
 #include "BLEIOT_UART_tx.h"
 #include "BLEIOT_UART_tx_aliases.h"
@@ -63,14 +62,11 @@
 #include "EZI2C_scl_aliases.h"
 #include "EZI2C_SCB_IRQ.h"
 #include "core_cm0_psoc4.h"
-#include "core_cm0.h"
 #include "CyFlash.h"
 #include "CyLib.h"
 #include "cyPm.h"
 #include "cytypes.h"
 #include "cypins.h"
-#include "core_cmFunc.h"
-#include "core_cmInstr.h"
 #include "CyLFClk.h"
 
 /*[]*/

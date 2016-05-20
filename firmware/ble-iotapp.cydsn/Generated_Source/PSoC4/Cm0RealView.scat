@@ -3,16 +3,12 @@
 ; to pass a scatter file through a C preprocessor.
 
 ;********************************************************************************
-;* File Name: Cm0RealView.scat
-;* Version 5.30
+;* \file Cm0RealView.scat
+;* \version 5.40
 ;*
-;*  Description:
-;*  This Linker Descriptor file describes the memory layout of the PSOC4 device
-;*  family.  The memory layout of the final binary and hex images as well as
-;*  the placement in the PSOC4 memory is described.
-;*
-;*
-;*  Note:
+;* \brief This Linker Descriptor file describes the memory layout of the PSOC4
+;* device family.  The memory layout of the final binary and hex images as well
+;* as the placement in the PSOC4 memory is described.
 ;*
 ;*  romvectors: Cypress default Interrupt service routine vector table.
 ;*
@@ -23,9 +19,8 @@
 ;*
 ;*      This is the ISR vector table used by the application.
 ;*
-;*
 ;********************************************************************************
-;* Copyright 2010-2015, Cypress Semiconductor Corporation.  All rights reserved.
+;* Copyright 2010-2016, Cypress Semiconductor Corporation.  All rights reserved.
 ;* You may use this file only in accordance with the license, terms, conditions,
 ;* disclaimers, and limitations in the end user license agreement accompanying
 ;* the software package with which this file was provided.
@@ -39,7 +34,7 @@
 #define CY_METADATA_SIZE                64
 
 #define CY_APPL_FOR_STACK_AND_COPIER    0
-#define CY_CHECKSUM_EXCLUDE_SIZE        AlignExpr(755, CY_FLASH_ROW_SIZE)
+#define CY_CHECKSUM_EXCLUDE_SIZE        AlignExpr(0, CY_FLASH_ROW_SIZE)
 #define CY_APPL_NUM                     1
 #define CY_APPL_MAX                     1
 
@@ -116,7 +111,7 @@ APPLICATION APPL_START (CY_FLASH_SIZE - APPL_START)
         * (.noinit)
     }
 
-    DATA +1
+    DATA +0
     {
         .ANY (+RW, +ZI)
     }
@@ -136,7 +131,7 @@ APPLICATION APPL_START (CY_FLASH_SIZE - APPL_START)
 *******************************************************************************/
 #if ((CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLE) || (CYDEV_PROJ_TYPE == CYDEV_PROJ_TYPE_LOADABLEANDBOOTLOADER))
 
-    #if (755 != 0)
+    #if (0 != 0)
 
         /* General case */
         #if ((CYDEV_IS_EXPORTING_CODE == 0) && (CYDEV_IS_IMPORTING_CODE == 0))
@@ -156,7 +151,7 @@ APPLICATION APPL_START (CY_FLASH_SIZE - APPL_START)
             #endif
 
             /* App for SP+L */
-            #if ((CYDEV_IS_IMPORTING_CODE == 1) && (1 == 2))
+            #if ((CYDEV_IS_IMPORTING_CODE == 1) && (0 == 2))
                 #define CY_CHECKSUM_EXCLUDE_START           AlignExpr((CY_FLASH_SIZE - CY_FLASH_ROW_SIZE * 2) - CY_CHECKSUM_EXCLUDE_SIZE, CY_FLASH_ROW_SIZE)
             #endif
         #endif
@@ -169,7 +164,7 @@ APPLICATION APPL_START (CY_FLASH_SIZE - APPL_START)
             }
         }
 
-    #endif /* (755 != 0) */
+    #endif /* (0 != 0) */
 
 #endif
 
@@ -206,7 +201,7 @@ APPLICATION APPL_START (CY_FLASH_SIZE - APPL_START)
     #endif
 
     /* App for SP+L */
-    #if ((CYDEV_IS_IMPORTING_CODE == 1) && (1 == 2))
+    #if ((CYDEV_IS_IMPORTING_CODE == 1) && (0 == 2))
        #define CY_APPL_METADATA_SLOT_NUM        (1)
     #endif
 

@@ -301,6 +301,14 @@ void BleCallBack(uint32 event, void* eventParam)
     }
 } 
 
+void updateName()
+{
+    // need to put the name into cyBle_discoverModeInfo.advData
+    // The 5 is the index into the advertising packet of the name
+    memcpy(&cyBle_discoveryModeInfo.advData->advData[5],BLEIOT_local.name,BLEIOT_NAMELENGTH);
+    CyBle_GapUpdateAdvData(cyBle_discoveryModeInfo.advData, cyBle_discoveryModeInfo.scanRspData);
+}
+
 #define LED_ON 0
 #define LED_OFF 1
 int main()
@@ -413,7 +421,29 @@ int main()
             BLEIOT_updatePot(BLEIOT_remote.pot);
             updateGattDB((uint8 *)&BLEIOT_local.pot,sizeof(BLEIOT_local.pot),notifyFlags.pot,CYBLE_CY8CKIT021_POT_CHAR_HANDLE,CYBLE_GATT_DB_LOCALLY_INITIATED);
         }
-        
+ 
+        if(BLEIOT_getDirtyFlags() & BLEIOT_FLAG_NAME)
+        {
+            // you are only allowed to change the adverting packet in the EVENT_CLOSE state
+            if(CyBle_GetBleSsState() == CYBLE_BLESS_STATE_EVENT_CLOSE)
+            {
+                memcpy(&cyBle_discoveryModeInfo.advData->advData[5],BLEIOT_remote.name,BLEIOT_NAMELENGTH);
+                CYBLE_API_RESULT_T res = CyBle_GapUpdateAdvData(cyBle_discoveryModeInfo.advData, cyBle_discoveryModeInfo.scanRspData);
+                switch(res)
+                {
+                    case CYBLE_ERROR_INVALID_PARAMETER:
+                        break;
+                    case CYBLE_ERROR_INVALID_OPERATION:
+                        break;
+                    case CYBLE_ERROR_OK:
+                        BLEIOT_updateName((uint8 *)BLEIOT_remote.name);
+                        break;
+                    default:
+                    break;
+                }            
+            }
+        }
+ 
         if(BLEIOT_local.bleState != BLEIOT_BLEOFF)
         {
             CyBle_ProcessEvents();

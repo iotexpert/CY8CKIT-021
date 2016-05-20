@@ -1,7 +1,7 @@
 /*******************************************************************************
 * File Name: cydevice_trm.h
 * 
-* PSoC Creator  3.3 Nightly Build 9582
+* PSoC Creator  3.3 SP2
 *
 * Description:
 * This file provides all of the address values for the entire PSoC device.

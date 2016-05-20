@@ -17,6 +17,11 @@ typedef enum BLEIOT_BleStates {
     BLEIOT_BLECONNECTED
 } BLEIOT_BleStates;
 
+// The number of bytes of the name of the BLE device
+// this must be exactly the same as the # of bytes in the
+// advertising packet
+#define BLEIOT_NAMELENGTH (4)
+
 void BLEIOT_Start();
 uint32 BLEIOT_getDirtyFlags();
 
@@ -35,7 +40,8 @@ void BLEIOT_updateTone(uint16);
 void BLEIOT_updateBleState(BLEIOT_BleStates);
 void BLEIOT_updateTemperature(int16);
 void BLEIOT_updatePot(int16);
-
+void BLEIOT_updateName(uint8 *);
+void BLEIOT_updateGPIO(uint16);
 
 #define BLEIOT_FLAG_BOOTLOAD (1<<0)
 #define BLEIOT_FLAG_BLUE (1<<1)
@@ -50,6 +56,8 @@ void BLEIOT_updatePot(int16);
 #define BLEIOT_FLAG_BLESTATE (1<<10)
 #define BLEIOT_FLAG_TEMPERATURE (1<<11)
 #define BLEIOT_FLAG_POT (1<<12)
+#define BLEIOT_FLAG_NAME (1<<13)
+#define BLEIOT_FLAG_GPIO (1<<14)
 
 
 typedef struct BLEIOT_SystemStatus {
@@ -67,6 +75,8 @@ typedef struct BLEIOT_SystemStatus {
     BLEIOT_BleStates bleState;
     int16 temperature;
     int16 pot;
+    uint8 name[BLEIOT_NAMELENGTH];
+    uint16 gpio;
 } __attribute__((packed)) BLEIOT_SystemStatus;
 
 extern BLEIOT_SystemStatus BLEIOT_local;
