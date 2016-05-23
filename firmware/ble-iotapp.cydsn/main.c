@@ -1,6 +1,9 @@
 #include <project.h>
 #include "BLEIOT_BLEIOT.h"
 
+// This structure contains a flag for the state of the notify request of the CCCD
+// when the CCCD is written I store the written byte into this structure so I will know
+// to send out notify's when the values change
 typedef struct NotifyFlags {
     uint8 blue;
     uint8 led0;
@@ -16,6 +19,10 @@ typedef struct NotifyFlags {
     
 } NotifyFlags;
 
+NotifyFlags notifyFlags;
+
+
+// This union is used to unwind the BLE written byte data into the right type
 typedef union Types {
     uint8 bytes[2];
     int16 integer16;
@@ -23,12 +30,18 @@ typedef union Types {
 } __attribute__((packed)) Types;
 
 
-NotifyFlags notifyFlags;
 
-
-/***************************************************************
- * Function to update the LED state in the GATT database
- **************************************************************/
+//
+// processBlueLed() -
+//
+// Arguments: None
+//   
+// This function makes the blue led do the right thing
+// If the LED is set to ON or OFF by the other side then it is on or off
+// If th LED is under "blecontrol" then it will either
+// - be off if the BLE is off
+// - blink if the BLE is advertising
+// - be solid if the BLE is connected
 void processBlueLed()
 {
     switch(BLEIOT_local.blue)
@@ -66,6 +79,18 @@ void processBlueLed()
                 break;
             }
 }
+
+// updateGattDB() -  
+//
+// Arguments: 
+//  uint8* val  - a pointer to the bytes that need to be writted into the GATTDB
+//  int size - the number of bytes that need to be written into the GATTDB
+//  uint8 notify - if the NOTIFY is on then send a notification
+//  CYBLE_GATT_DB_ATTR_HANDLE_T handle - a handle to the entry in the gatt table
+//  uint8 flags - a request 
+//   
+// This is a helper function that will update the GATT database with a value.  It update the field of
+// the "CYBLE_GATT_DB_ATTR_HANDLE_T"
 
 void updateGattDB(uint8 *val,int size,uint8 notify, CYBLE_GATT_DB_ATTR_HANDLE_T handle,uint8 flags)
 {
