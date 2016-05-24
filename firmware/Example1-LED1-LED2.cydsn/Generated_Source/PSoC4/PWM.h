@@ -121,7 +121,7 @@ extern uint8  PWM_initVar;
 #define PWM_PWM_SWITCH_SIGNAL_PRESENT      (0lu)
 
 /* Interrupt Mask */
-#define PWM_PWM_INTERRUPT_MASK             (1lu)
+#define PWM_PWM_INTERRUPT_MASK             (0lu)
 
 
 /***************************************

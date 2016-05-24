@@ -1018,4 +1018,112 @@ void LCD_Write7SegNumber_0(uint32 value, uint32 position, uint32 mode)
 }
 
 
+/*******************************************************************************
+* Function Name: LCD_WriteBargraph_1
+********************************************************************************
+*
+* Summary:
+*  This function displays an 8-bit integer location on a 1 to 255 segment
+*  bar-graph (numbered left to right). The bar graph may be any user defined
+*  size between 1 and 255 The bar graph may be any user defined created in a
+*  circle to display rotary position. The user defines what portion of the
+*  displays segments make up the bar-graph portion. Multiple, separate bargraph
+*  displays can be created in the frame buffer and are addressed through the
+*  index (n) in the function name.
+*
+* Parameters:
+*  location: Unsigned integer Location to be displayed. Valid values are from
+*            zero to the number of segments in the bar graph. A zero value
+*            turns all bar graph elements off. Values greater than the number
+*            of segments in the bar graph result in all elements on.
+*  mode:     Sets the bar graph display mode.
+*    Value    Description
+*     0        The specified Location segment is turned on.
+*     1        The Location segment and all segments to the left are turned on.
+*     -1       The Location segment and all segments to the right are turned on.
+*     2 to 10  Display the Location segment and 2 to 10 segments to the right.
+*              This mode can be used to create wide indicators.
+*
+* Return: 
+*  None.
+*
+* Global variables:
+*  LCD_DIGIT_NUM_1 - holds the maximum digit number for the helper.
+*
+*******************************************************************************/
+void LCD_WriteBargraph_1(uint32 location, int32 mode)
+{
+    static const uint32 LCD_disp1[5u][1u] = {{0u}, {LCD_COLON}, {LCD_DP1}, {LCD_DP2}, {LCD_DP3}};
+    uint32 i;
+    uint32 maxValue = LCD_DIGIT_NUM_1;
+    uint32 locationInt = location;
+    int32 modeInt = mode;
+
+    if (locationInt != 0u)
+    {
+        /* If location greater then the number of elements in bar graph then
+        set location to a maxvalue and set mode to -1.
+        */
+        if (locationInt > maxValue)
+        {
+            locationInt = 1u;
+            modeInt = -1;
+        }
+        
+        for(i = 1u; i <= ((uint32)LCD_DIGIT_NUM_1); i++) 
+        {
+            (void)LCD_WritePixel(LCD_disp1[i][0u], LCD_PIXEL_STATE_OFF);
+        }
+        
+        switch (modeInt)
+        {
+            case 0:
+                (void)LCD_WritePixel(LCD_disp1[locationInt][0u], LCD_PIXEL_STATE_ON);
+                break;
+            case 1:
+                for(i = locationInt; i >= 1u; i--) 
+                {
+                    (void)LCD_WritePixel(LCD_disp1[i][0u], LCD_PIXEL_STATE_ON);
+                }
+                break;
+            case -1:
+                for(i = locationInt; i <= maxValue; i++) 
+                {
+                    (void)LCD_WritePixel(LCD_disp1[i][0u], LCD_PIXEL_STATE_ON);
+                }
+                break;
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+                #if (LCD_DIGIT_NUM_1 > 1u) /* Doesn't make sense for bar graph with size less than 2 */
+                    if (((locationInt + ((uint32)modeInt)) - 1u) <= maxValue) 
+                    {
+                        maxValue = (locationInt + ((uint32)modeInt)) - 1u;
+                    }
+                #endif /* LCD_DIGIT_NUM_1 > 1u */
+                for (i = locationInt; i <= maxValue; i++) 
+                {
+                    (void)LCD_WritePixel(LCD_disp1[i][0u], LCD_PIXEL_STATE_ON);
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    else 
+    {
+        for (i = 1u; i <= maxValue; i++) 
+        {
+            (void)LCD_WritePixel(LCD_disp1[i][0u], LCD_PIXEL_STATE_OFF);
+        }
+    }
+}
+
+
 /* [] END OF FILE */

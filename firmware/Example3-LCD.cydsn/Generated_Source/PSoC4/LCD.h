@@ -65,6 +65,7 @@ void    LCD_RestoreConfig(void);
 
 void    LCD_Write7SegDigit_0(uint32 digit, uint32 position);
 void    LCD_Write7SegNumber_0(uint32 value, uint32 position, uint32 mode);
+void    LCD_WriteBargraph_1(uint32 location, int32 mode);
 
 #define LCD_7SEG
 
@@ -147,6 +148,7 @@ extern uint32 LCD_initVar;
 #define LCD_7SEG_BLANK_DIG           (0x10u)
 
 #define LCD_DIGIT_NUM_0              (4u)
+#define LCD_DIGIT_NUM_1              (4u)
 
 #define LCD_COM0_PORT                (LCD_bSeg_LCD__COMMON_0 / LCD_PINS_PER_PORT)
 #define LCD_COM0_PIN                 (LCD_bSeg_LCD__COMMON_0 % LCD_PINS_PER_PORT)
@@ -207,11 +209,10 @@ extern uint32 LCD_initVar;
 #define LCD_H7SEG3_E                 LCD_FIND_PIXEL(LCD_SEG6_PORT, LCD_SEG6_PIN, 1u)
 #define LCD_H7SEG3_F                 LCD_FIND_PIXEL(LCD_SEG6_PORT, LCD_SEG6_PIN, 3u)
 #define LCD_H7SEG3_G                 LCD_FIND_PIXEL(LCD_SEG6_PORT, LCD_SEG6_PIN, 2u)
-
-#define LCD_PIX4                     LCD_FIND_PIXEL(LCD_SEG1_PORT,  LCD_SEG1_PIN,  0u)
-#define LCD_PIX12                    LCD_FIND_PIXEL(LCD_SEG3_PORT,  LCD_SEG3_PIN,  0u)
-#define LCD_PIX20                    LCD_FIND_PIXEL(LCD_SEG5_PORT,  LCD_SEG5_PIN,  0u)
-#define LCD_PIX28                    LCD_FIND_PIXEL(LCD_SEG7_PORT,  LCD_SEG7_PIN,  0u)
+#define LCD_COLON                    LCD_FIND_PIXEL(LCD_SEG7_PORT, LCD_SEG7_PIN, 0u)
+#define LCD_DP1                      LCD_FIND_PIXEL(LCD_SEG1_PORT, LCD_SEG1_PIN, 0u)
+#define LCD_DP2                      LCD_FIND_PIXEL(LCD_SEG3_PORT, LCD_SEG3_PIN, 0u)
+#define LCD_DP3                      LCD_FIND_PIXEL(LCD_SEG5_PORT, LCD_SEG5_PIN, 0u)
 
 
 /***************************************

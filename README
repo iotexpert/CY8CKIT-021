@@ -1,12 +1,26 @@
-The directory firmware contains a creator workspace called "CY8CKIT-021".  The project has 4 projects.
+The directory firmware contains a creator workspace called "CY8CKIT-021".  The project has 11 projects.
 
-1. I2C-Bootloader.  This project comes preprogrammed on the PRoC on the module.  It is an I2C bootloader that listens on address 0x0B.  It flashes the blue LED on the kit until you are going to have a seizure.  You need to reference this hex file in your bootloable image.
+1. 4MTestI2CUart - a test project that was written to test all of the communication pieces.  Yes it is badly named.
 
 2. BleInterface - this project contains the "BLEIOT" component.  You can find it on the components tab of this project.  There are two files.  BLEIOT.h and BLEIOT.h that provide the communication interface for the project.  The schematic contains a single SCB based UART which is the communication interface.
 
 3. ble-iotapp.  This project contains the firmware that runs the PRoC BLE on the shield.  It is a bootloable project that is linked to (1).  The bootloadable image is on the "BootLoable" schematic page.  If you disable this page it will automatically comment out all of the bootloading code which will enable you to debug (if you have a miniprog3 attached)
 
-4. 4MTestI2CUart - a test project that was written to test all of the communication pieces.  Yes it is badly named.
+4. Example 1 - LED1 LED2 - blink the LEDs in alternating fasion
+
+5. Example 2 - Buzzer - beep the buzzer at 440hz
+
+6. Example 3 - LCD - Test all of the 7 segment display segments
+
+7. Example 4 - Potentiometer - User the 7 segment display to show the pot voltage in mV
+
+8. Example 5 - Thermistor - Use the 7 degment display to show the thermistor temperature
+
+9. Example 6 - Capsense - A demonstration of the CSD 2.40
+
+10. Example 7 - Capsense New Capsense  - A demonstration of CSD 3.00
+
+11. I2C-Bootloader.  This project comes preprogrammed on the PRoC on the module.  It is an I2C bootloader that listens on address 0x0B.  It flashes the blue LED on the kit until you are going to have a seizure.  You need to reference this hex file in your bootloable image.
 
 The directory called "common" has BLEIOT_BLEIOT.c and BLEIOT_BLEIOT.h which is just a direct copy from the generated source in project (4) above.  A new copy can be done by running the shell script "fixit"
 
