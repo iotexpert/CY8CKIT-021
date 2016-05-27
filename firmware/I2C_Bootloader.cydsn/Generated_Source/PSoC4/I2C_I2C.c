@@ -1,15 +1,16 @@
-/*******************************************************************************
-* File Name: I2C_I2C.c
-* Version 3.10
+/***************************************************************************//**
+* \file I2C_I2C.c
+* \version 3.20
 *
-* Description:
+* \brief
 *  This file provides the source code to the API for the SCB Component in
 *  I2C mode.
 *
 * Note:
 *
 *******************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -49,18 +50,23 @@ volatile uint8 I2C_state;  /* Current state of I2C FSM */
 
     /*******************************************************************************
     * Function Name: I2C_I2CInit
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
-    *  Configures the SCB for I2C operation.
     *
-    * Parameters:
-    *  config:  Pointer to a structure that contains the following ordered list of
-    *           fields. These fields match the selections available in the
-    *           customizer.
+    *  Configures the I2C for I2C operation.
     *
-    * Return:
-    *  None
+    *  This function is intended specifically to be used when the I2C 
+    *  configuration is set to “Unconfigured I2C” in the customizer. 
+    *  After initializing the I2C in I2C mode using this function, 
+    *  the component can be enabled using the I2C_Start() or 
+    * I2C_Enable() function.
+    *  This function uses a pointer to a structure that provides the configuration 
+    *  settings. This structure contains the same information that would otherwise 
+    *  be provided by the customizer settings.
+    *
+    *  \param config: pointer to a structure that contains the following list of 
+    *   fields. These fields match the selections available in the customizer. 
+    *   Refer to the customizer for further description of the settings.
     *
     *******************************************************************************/
     void I2C_I2CInit(const I2C_I2C_INIT_STRUCT *config)
@@ -181,16 +187,9 @@ volatile uint8 I2C_state;  /* Current state of I2C FSM */
 
     /*******************************************************************************
     * Function Name: I2C_I2CInit
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Configures the SCB for the I2C operation.
-    *
-    * Parameters:
-    *  None
-    *
-    * Return:
-    *  None
     *
     *******************************************************************************/
     void I2C_I2CInit(void)
@@ -259,16 +258,9 @@ volatile uint8 I2C_state;  /* Current state of I2C FSM */
 
 /*******************************************************************************
 * Function Name: I2C_I2CStop
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
 *  Resets the I2C FSM into the default state.
-*
-* Parameters:
-*  None
-*
-* Return:
-*  None
 *
 *******************************************************************************/
 void I2C_I2CStop(void)
@@ -280,17 +272,10 @@ void I2C_I2CStop(void)
 #if(I2C_I2C_WAKE_ENABLE_CONST)
     /*******************************************************************************
     * Function Name: I2C_I2CSaveConfig
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Enables I2C_INTR_I2C_EC_WAKE_UP interrupt source. This interrupt
     *  triggers on address match and wakes up device.
-    *
-    * Parameters:
-    *  None
-    *
-    * Return:
-    *  None
     *
     *******************************************************************************/
     void I2C_I2CSaveConfig(void)
@@ -320,17 +305,10 @@ void I2C_I2CStop(void)
 
     /*******************************************************************************
     * Function Name: I2C_I2CRestoreConfig
-    ********************************************************************************
+    ****************************************************************************//**
     *
-    * Summary:
     *  Disables I2C_INTR_I2C_EC_WAKE_UP interrupt source. This interrupt
     *  triggers on address match and wakes up device.
-    *
-    * Parameters:
-    *  None
-    *
-    * Return:
-    *  None
     *
     *******************************************************************************/
     void I2C_I2CRestoreConfig(void)

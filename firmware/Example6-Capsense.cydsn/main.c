@@ -1,19 +1,19 @@
-/* ========================================
- *
- * Copyright YOUR COMPANY, THE YEAR
- * All Rights Reserved
- * UNPUBLISHED, LICENSED SOFTWARE.
- *
- * CONFIDENTIAL AND PROPRIETARY INFORMATION
- * WHICH IS THE PROPERTY OF your company.
- *
- * ========================================
-*/
+// Project: Example6- Capsense
+// Kit: CY8CKIT-021 Sheild
+// Baseboard: CY8CKit-44 PSoC4M
+//
+// This project demonstrated using the CapSense Buttons.  It uses
+// the V2.x component which has now been superseeded by the V3.0
+//
+// This project will turn on the LED coresponding to the CapSense
+// button that is being touched.  I use the "!" operator to invert
+// the result of the button because the LEDs are active LOW (meaning
+// that a 0 results in them lighting up)
 #include <project.h>
 
 int main()
 {
-    CyGlobalIntEnable; /* Enable global interrupts. */
+    CyGlobalIntEnable;
     CapSense_Start();
     CapSense_InitializeEnabledBaselines();
     CapSense_ScanEnabledWidgets();

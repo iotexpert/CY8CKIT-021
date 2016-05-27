@@ -1,7 +1,7 @@
 /*******************************************************************************
 * File Name: cymetadata.c
 * 
-* PSoC Creator  3.3 Nightly Build 9582
+* PSoC Creator  3.3 SP2
 *
 * Description:
 * This file defines all extra memory spaces that need to be included.

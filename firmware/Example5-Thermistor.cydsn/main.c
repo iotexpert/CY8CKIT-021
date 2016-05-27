@@ -1,4 +1,4 @@
-// Project: Example3-Thermistor
+// Project: Example5-Thermistor
 // Kit: CY8CKIT-021 Sheild
 // Baseboard: CY8CKit-44 PSoC4M
 //

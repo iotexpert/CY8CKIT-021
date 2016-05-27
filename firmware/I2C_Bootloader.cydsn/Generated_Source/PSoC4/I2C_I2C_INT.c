@@ -1,15 +1,16 @@
-/*******************************************************************************
-* File Name: I2C_I2C_INT.c
-* Version 3.10
+/***************************************************************************//**
+* \file I2C_I2C_INT.c
+* \version 3.20
 *
-* Description:
+* \brief
 *  This file provides the source code to the Interrupt Service Routine for
 *  the SCB Component in I2C mode.
 *
 * Note:
 *
 ********************************************************************************
-* Copyright 2013-2015, Cypress Semiconductor Corporation.  All rights reserved.
+* \copyright
+* Copyright 2013-2016, Cypress Semiconductor Corporation.  All rights reserved.
 * You may use this file only in accordance with the license, terms, conditions,
 * disclaimers, and limitations in the end user license agreement accompanying
 * the software package with which this file was provided.
@@ -22,16 +23,9 @@
 
 /*******************************************************************************
 * Function Name: I2C_I2C_ISR
-********************************************************************************
+****************************************************************************//**
 *
-* Summary:
 *  Handles the Interrupt Service Routine for the SCB I2C mode.
-*
-* Parameters:
-*  None
-*
-* Return:
-*  None
 *
 *******************************************************************************/
 CY_ISR(I2C_I2C_ISR)
@@ -42,7 +36,7 @@ CY_ISR(I2C_I2C_ISR)
 #ifdef I2C_I2C_ISR_ENTRY_CALLBACK
     I2C_I2C_ISR_EntryCallback();
 #endif /* I2C_I2C_ISR_ENTRY_CALLBACK */
-    
+
 #if (I2C_I2C_CUSTOM_ADDRESS_HANDLER_CONST)
     uint32 response;
 
@@ -483,7 +477,7 @@ CY_ISR(I2C_I2C_ISR)
             {
                 I2C_ClearSlaveInterruptSource(I2C_INTR_SLAVE_I2C_NACK);
 
-                /* All entries that remain in TX FIFO max value is 9: 8 (FIFO) + 1 (SHIFTER) */
+                /* All entries that remain in TX FIFO are: FIFO Size + 1 (SHIFTER) */
                 diffCount = (I2C_GET_TX_FIFO_ENTRIES + I2C_GET_TX_FIFO_SR_VALID);
 
                 if(I2C_slOverFlowCount > diffCount) /* Overflow */
@@ -587,7 +581,7 @@ CY_ISR(I2C_I2C_ISR)
                     else
                     {
                         /* Read address from the RX FIFO. If there is no address underflow triggers but
-                        * componnet does not use that source. */
+                        * component does not use that source. */
                         (void) I2C_RX_FIFO_RD_REG;
                         response = I2C_I2C_ACK_ADDR;
                     }
@@ -799,9 +793,9 @@ CY_ISR(I2C_I2C_ISR)
                     {
                         I2C_TX_FIFO_WR_REG = I2C_I2C_SLAVE_OVFL_RETURN;
 
-                        if(0u == (I2C_INTR_TX_OVERFLOW & I2C_slOverFlowCount))
+                        if(I2C_slOverFlowCount <= I2C_I2C_TX_OVERFLOW_COUNT)
                         {
-                            /* Get counter in range of byte: value 10 is overflow */
+                            /* Get counter in range of overflow. */
                             I2C_slOverFlowCount++;
                         }
                     }
@@ -845,7 +839,7 @@ CY_ISR(I2C_I2C_ISR)
 #ifdef I2C_I2C_ISR_EXIT_CALLBACK
     I2C_I2C_ISR_ExitCallback();
 #endif /* I2C_I2C_ISR_EXIT_CALLBACK */
-    
+
 }
 
 

@@ -20,6 +20,8 @@ The directory firmware contains a creator workspace called "CY8CKIT-021".  The p
 
 10. Example 7 - Capsense New Capsense  - A demonstration of CSD 3.00
 
+11. Example 8 - Simple Bootloadable - An example of how to bootload firmware into the PRoC.
+
 11. I2C-Bootloader.  This project comes preprogrammed on the PRoC on the module.  It is an I2C bootloader that listens on address 0x0B.  It flashes the blue LED on the kit until you are going to have a seizure.  You need to reference this hex file in your bootloable image.
 
 The directory called "common" has BLEIOT_BLEIOT.c and BLEIOT_BLEIOT.h which is just a direct copy from the generated source in project (4) above.  A new copy can be done by running the shell script "fixit"

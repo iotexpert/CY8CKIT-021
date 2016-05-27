@@ -1,7 +1,7 @@
 /*******************************************************************************
 * File Name: cyfitter_cfg.c
 * 
-* PSoC Creator  3.3 Nightly Build 9582
+* PSoC Creator  3.3 SP2
 *
 * Description:
 * This file contains device initialization code.
