@@ -2,6 +2,9 @@
 #define BLEIOT_H
 #include "cytypes.h"
 
+// An enum with the list of possible states for the PRoC
+// blue LED.
+// If the LED is in BLECONTROL state then
 typedef enum BLEIOT_BlueStates {
     BLEIOT_OFF=0,
     BLEIOT_ON=1,
@@ -9,6 +12,8 @@ typedef enum BLEIOT_BlueStates {
     BLEIOT_BLECONTROL=3
 } BLEIOT_BlueStates;
 
+// An enum with a list of possible BleStates.  This can be used
+// to turn on the BLE from the PSoC side.
 typedef enum BLEIOT_BleStates {
     BLEIOT_BLEOFF,
     BLEIOT_BLEON,
@@ -22,11 +27,12 @@ typedef enum BLEIOT_BleStates {
 // advertising packet
 #define BLEIOT_NAMELENGTH (4)
 
+// Get thing going
 void BLEIOT_Start();
-uint32 BLEIOT_getDirtyFlags();
 
+#define BLEIOT_getDirtyFlags() (BLEIOT_dirtyFlags)
 
-
+// The public API to update the local table and 
 void BLEIOT_updateBootload(uint8);
 void BLEIOT_updateBlue(BLEIOT_BlueStates);
 void BLEIOT_updateLed0(uint8);
@@ -43,6 +49,8 @@ void BLEIOT_updatePot(int16);
 void BLEIOT_updateName(uint8 *);
 void BLEIOT_updateGPIO(uint16);
 
+// The bit masks for the dirtyFlag and the updatedFlags
+// be careful not to double up on a bit
 #define BLEIOT_FLAG_BOOTLOAD (1<<0)
 #define BLEIOT_FLAG_BLUE (1<<1)
 #define BLEIOT_FLAG_LED0 (1<<2)
@@ -59,7 +67,9 @@ void BLEIOT_updateGPIO(uint16);
 #define BLEIOT_FLAG_NAME (1<<13)
 #define BLEIOT_FLAG_GPIO (1<<14)
 
-
+// This is the TABLE that represents the local and remote
+// state of the system.  It will have one entry for each
+// possible system peripheral
 typedef struct BLEIOT_SystemStatus {
     uint8 bootload;
     uint32 updatedFlags;
@@ -79,10 +89,10 @@ typedef struct BLEIOT_SystemStatus {
     uint16 gpio;
 } __attribute__((packed)) BLEIOT_SystemStatus;
 
+// You can directly access the local and remote dirty flags
+// but you should be careful
 extern BLEIOT_SystemStatus BLEIOT_local;
 extern BLEIOT_SystemStatus BLEIOT_remote;
 extern uint32 BLEIOT_dirtyFlags;
-#define BLEIOT_getDirtyFlags() (BLEIOT_dirtyFlags)
-
 
 #endif

@@ -73,7 +73,8 @@ void BLEIOT_update(uint32 mask,void *local,void *remote,void *newVal,int size)
 //
 inline void BLEIOT_updateBootload(uint8 val)
 {
-    BLEIOT_update(BLEIOT_FLAG_BOOTLOAD,&BLEIOT_local.bootload,&BLEIOT_remote.bootload,&val,sizeof(BLEIOT_remote.bootload));
+    BLEIOT_update(BLEIOT_FLAG_BOOTLOAD,&BLEIOT_local.bootload,&BLEIOT_remote.bootload
+        ,&val,sizeof(BLEIOT_remote.bootload));
 }
 
 inline void BLEIOT_updateBlue(BLEIOT_BlueStates val)
@@ -296,6 +297,16 @@ void BLEIOT_updateDirtyFlags(void *local,void *remote,uint32 mask,int size)
             BLEIOT_dirtyFlags &= ~mask;
     }
 }
+
+//
+// BLEIOT_Receive() -
+//
+// Arguments:
+//   none
+//
+// This method is called by the systick interrupt when the UART receive buffer is full
+// The method reads all of the data out of the receive buffer into the "remote" structure
+// it then figures out which remote dirtyflags need to be set
 
 void BLEIOT_Receive()
 {
