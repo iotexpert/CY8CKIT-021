@@ -773,7 +773,7 @@
 #define BLEIOT_UART_tx__SHIFT 5u
 
 /* Miscellaneous */
-#define CY_PROJECT_NAME "ble-iotapp"
+#define CY_PROJECT_NAME "Example10a-PRoCBLE"
 #define CY_VERSION "PSoC Creator  3.3 SP2"
 #define CYDEV_BANDGAP_VOLTAGE 1.024
 #define CYDEV_BCLK__HFCLK__HZ 48000000U

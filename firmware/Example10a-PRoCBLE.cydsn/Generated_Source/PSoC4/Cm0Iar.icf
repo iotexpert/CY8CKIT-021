@@ -23,7 +23,7 @@ define symbol CY_APPL_LOADER    = 0;
 define symbol CY_APPL_NUM       = 1;
 define symbol CY_METADATA_SIZE  = 64;
 define symbol CY_APPL_MAX       = 1;
-define symbol CY_CHECKSUM_EXCLUDE_SIZE = 755;
+define symbol CY_CHECKSUM_EXCLUDE_SIZE = 665;
 define symbol CY_APPL_FOR_STACK_AND_COPIER  = 0;
 define symbol CY_FIRST_AVAILABLE_META_ROW   = 1;
 

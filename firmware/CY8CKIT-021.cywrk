@@ -3,7 +3,7 @@
 <!--This file is machine generated and read. It is not intended to be edited by hand.-->
 <!--Due to this, there is no schema for this file.-->
 <CyGuid_2867d519-54d2-4c01-9830-c51cb08bc3dd type_name="CyDesigner.Common.ProjMgmt.Model.CyPrjMgmtWrkspc" version="5" xml_contents_version="3" name="CY8CKIT-021" persistent="" platform="NOT_USED">
-<current_project name=".\ble-iotapp.cydsn\ble-iotapp.cyprj" />
+<current_project name=".\Example10b-PSoC.cydsn\Example10b-PSoC.cyprj" />
 <wrkspc_folders />
 <files />
 <projects>
@@ -22,6 +22,7 @@
 <v>.\Example09b-PSoC-BLEIOT-Test.cydsn\Example09b-PSoC-BLEIOT-Test.cyprj</v>
 <v>.\Example10a-PRoCBLE.cydsn\Example10a-PRoCBLE.cyprj</v>
 <v>.\ble-iotapp.cydsn\ble-iotapp.cyprj</v>
+<v>.\Example10b-PSoC.cydsn\Example10b-PSoC.cyprj</v>
 </projects>
 <workspace_id v="aa1048d2-4aaf-4870-9b6f-19c674b07fdf" />
 <WriteAppVersionLastSavedWith v="3.3.0.9604" />

@@ -41,9 +41,9 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 }, 
             },
 
-            /* blue characteristic */
+            /* led0 characteristic */
             {
-                0x0013u, /* Handle of the blue characteristic */ 
+                0x0013u, /* Handle of the led0 characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
@@ -52,113 +52,14 @@ const CYBLE_CUSTOMS_T cyBle_customs[0x01u] = {
                 }, 
             },
 
-            /* led0 characteristic */
+            /* button0 characteristic */
             {
-                0x0017u, /* Handle of the led0 characteristic */ 
+                0x0017u, /* Handle of the button0 characteristic */ 
                 
                 /* Array of Descriptors handles */
                 {
                     0x0018u, /* Handle of the CCCD descriptor */ 
                     0x0019u, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* led1 characteristic */
-            {
-                0x001Bu, /* Handle of the led1 characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x001Cu, /* Handle of the CCCD descriptor */ 
-                    0x001Du, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* button0 characteristic */
-            {
-                0x001Fu, /* Handle of the button0 characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x0020u, /* Handle of the CCCD descriptor */ 
-                    0x0021u, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* button1 characteristic */
-            {
-                0x0023u, /* Handle of the button1 characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x0024u, /* Handle of the CCCD descriptor */ 
-                    0x0025u, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* trim characteristic */
-            {
-                0x0027u, /* Handle of the trim characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x0028u, /* Handle of the CCCD descriptor */ 
-                    0x0029u, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* contrast characteristic */
-            {
-                0x002Bu, /* Handle of the contrast characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x002Cu, /* Handle of the CCCD descriptor */ 
-                    0x002Du, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* display characteristic */
-            {
-                0x002Fu, /* Handle of the display characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x0030u, /* Handle of the CCCD descriptor */ 
-                    0x0031u, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* tone characteristic */
-            {
-                0x0033u, /* Handle of the tone characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x0034u, /* Handle of the CCCD descriptor */ 
-                    0x0035u, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* temperature characteristic */
-            {
-                0x0037u, /* Handle of the temperature characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x0038u, /* Handle of the CCCD descriptor */ 
-                    0x0039u, /* Handle of the Characteristic User Description descriptor */ 
-                }, 
-            },
-
-            /* pot characteristic */
-            {
-                0x003Bu, /* Handle of the pot characteristic */ 
-                
-                /* Array of Descriptors handles */
-                {
-                    0x003Cu, /* Handle of the CCCD descriptor */ 
-                    0x003Du, /* Handle of the Characteristic User Description descriptor */ 
                 }, 
             },
         }, 
