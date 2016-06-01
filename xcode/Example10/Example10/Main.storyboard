@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Example10" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dt5-Sv-khc">
+                                <rect key="frame" x="271" y="269" width="59" height="62"/>
+                                <subviews>
+                                    <switch opaque="NO" contentMode="redraw" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BPR-x0-qHv">
+                                        <rect key="frame" x="5" y="0.0" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="led0SwitchAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="drH-nQ-MBP"/>
+                                        </connections>
+                                    </switch>
+                                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JIZ-xc-DlB">
+                                        <rect key="frame" x="0.0" y="31" width="59" height="31"/>
+                                        <state key="normal" title="Button 0"/>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                            <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JCn-3c-Z6H">
+                                <rect key="frame" x="244" y="541" width="113" height="30"/>
+                                <state key="normal" title="Start Bootloader"/>
+                                <connections>
+                                    <action selector="startBootLoader:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lQc-i8-RbV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dt5-Sv-khc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7Zm-EM-oOi"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="JCn-3c-Z6H" secondAttribute="bottom" constant="29" id="87b-4N-H6t"/>
+                            <constraint firstItem="dt5-Sv-khc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="l2F-Ww-gfX"/>
+                            <constraint firstItem="JCn-3c-Z6H" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="n1t-Qt-sCJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bootLoaderButton" destination="JCn-3c-Z6H" id="C4n-Tt-D50"/>
+                        <outlet property="button0" destination="JIZ-xc-DlB" id="K1y-a4-4Nq"/>
+                        <outlet property="led0switch" destination="BPR-x0-qHv" id="vfB-Di-rwl"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="432" y="427"/>
+        </scene>
+    </scenes>
+</document>

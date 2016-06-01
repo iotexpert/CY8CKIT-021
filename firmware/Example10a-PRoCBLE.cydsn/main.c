@@ -100,7 +100,7 @@ void BleCallBack(uint32 event, void* eventParam)
             #ifndef BootLoadable__DISABLED
             if(wrReqParam->handleValPair.attrHandle == CYBLE_CY8CKIT021_BOOTLOAD_CHAR_HANDLE)
             {
-                if(wrReqParam->handleValPair.value.val[0]) Bootloadable_Load();
+                Bootloadable_Load();
             
             }
             #endif
