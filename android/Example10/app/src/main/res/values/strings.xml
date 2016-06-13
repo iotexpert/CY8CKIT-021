@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Example 10</string>
+    <string name="led0">Led 0</string>
+    <string name="bootload">BootLoad</string>
+</resources>
