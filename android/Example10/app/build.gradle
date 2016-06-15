@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.iotexpert.test4"
+        applicationId "com.iotexpert.example10"
         minSdkVersion 23
         targetSdkVersion 23
         versionCode 1

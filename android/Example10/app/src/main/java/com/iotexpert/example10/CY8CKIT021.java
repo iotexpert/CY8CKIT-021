@@ -32,6 +32,8 @@ public class CY8CKIT021 extends Service {
     public CY8CKIT021() {
     }
 
+    private BLEQueue queue = new BLEQueue();
+
     private final static String TAG = CY8CKIT021.class.getSimpleName();
 
     // Bluetooth objects that we need to interact with
@@ -53,7 +55,8 @@ public class CY8CKIT021 extends Service {
     private final static String bootloadCharacteristicUUID =      baseUUID + "1";
     private final static String led0CharacteristicUUID =       baseUUID + "2";
     private final static String button0CharacteristicUUID =  baseUUID + "4";
-    private final static String button0CccdUUID =            "00002902-0000-1000-8000-00805f9b34fb";
+    //private final static String CCCDUUID =            "00002902-0000-1000-8000-00805f9b34fb";
+    private final static UUID CCCDUUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
 
     // Variables to keep track of the LED switch state and CapSense Value
     private boolean mLed0SwitchState = false; // assume false
@@ -65,7 +68,7 @@ public class CY8CKIT021 extends Service {
     }
 
     public void setLed0SwitchState(boolean mLed0SwitchState) {
-        mLed0SwitchState = mLed0SwitchState;
+        this.mLed0SwitchState = mLed0SwitchState;
     }
 
     public boolean isButton0SwitchState() {
@@ -73,7 +76,7 @@ public class CY8CKIT021 extends Service {
     }
 
     public void setButton0SwitchState(boolean mButton0SwitchState) {
-        mButton0SwitchState = mButton0SwitchState;
+        this.mButton0SwitchState = mButton0SwitchState;
     }
 
     public boolean isConnected() {
@@ -138,7 +141,8 @@ public class CY8CKIT021 extends Service {
 
         Log.d(TAG,"got bluetooth adaptor");
         broadcastUpdate("Got BlueTooth Adaptor");
-        //scan();
+
+        scan();
 
         return true;
     }
@@ -154,18 +158,18 @@ public class CY8CKIT021 extends Service {
         UUID CY8CKIT021Service =       UUID.fromString(CY8CKIT021ServiceUUID);
         UUID[] CY8CKIT021ServiceArray = {CY8CKIT021Service};
 
-            ScanSettings settings;
-            List<ScanFilter> filters;
-            mLEScanner = mBluetoothAdapter.getBluetoothLeScanner();
-            settings = new ScanSettings.Builder()
-                    .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
-                    .build();
-            filters = new ArrayList<>();
-            // We will scan just for the CAR's UUID
-            ParcelUuid PUuid = new ParcelUuid(CY8CKIT021Service);
-            ScanFilter filter = new ScanFilter.Builder().setServiceUuid(PUuid).build();
-            filters.add(filter);
-            mLEScanner.startScan(filters, settings, mScanCallback);
+        ScanSettings settings;
+        List<ScanFilter> filters;
+        mLEScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        settings = new ScanSettings.Builder()
+                .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
+                .build();
+        filters = new ArrayList<>();
+        // We will scan just for the CAR's UUID
+        ParcelUuid PUuid = new ParcelUuid(CY8CKIT021Service);
+        ScanFilter filter = new ScanFilter.Builder().setServiceUuid(PUuid).build();
+        filters.add(filter);
+        mLEScanner.startScan(filters, settings, mScanCallback);
     }
 
     /**
@@ -199,31 +203,13 @@ public class CY8CKIT021 extends Service {
      * Runs service discovery on the connected device.
      */
     public void discoverServices() {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
-            return;
-        }
         mBluetoothGatt.discoverServices();
     }
 
-    /**
-     * Disconnects an existing connection or cancel a pending connection. The disconnection result
-     * is reported asynchronously through the
-     * {@code BluetoothGattCallback#onConnectionStateChange(android.bluetooth.BluetoothGatt, int, int)}
-     * callback.
-     */
     public void disconnect() {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
-            return;
-        }
         mBluetoothGatt.disconnect();
     }
 
-    /**
-     * After using a given BLE device, the app must call this method to ensure resources are
-     * released properly.
-     */
     public void close() {
         if (mBluetoothGatt == null) {
             return;
@@ -232,33 +218,24 @@ public class CY8CKIT021 extends Service {
         mBluetoothGatt = null;
     }
 
-    /**
-     * This method is used to read the state of the LED from the device
-     */
     public void readLed0Characteristic() {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
-            return;
-        }
-        mBluetoothGatt.readCharacteristic(mLed0Characterisitc);
+        queue.readCharacteristic(mLed0Characterisitc);
     }
 
-    /**
-     * This method is used to read the state of the LED from the device
-     */
     public void readButton0Characteristic() {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
-            return;
-        }
-        mBluetoothGatt.readCharacteristic(mButton0Characteristic);
+        queue.readCharacteristic(mButton0Characteristic);
     }
 
-    /**
-     * This method is used to turn the LED on or off
-     *
-     * @param value Turns the LED on (1) or off (0)
-     */
+    public void writeLed0Characteristic(boolean value)
+    {
+        queue.writeBoolean(mLed0Characterisitc,new Boolean(value));
+    }
+
+    public void writeBootloadCharacteristic()
+    {
+        queue.writeBoolean(mBootloadCharacteristic,new Boolean(true)); // it doesnt matter what you write it always starts
+    }
+    /*
     public void writeLed0Characteristic(boolean value) {
         byte[] byteVal = new byte[1];
         if (value) {
@@ -271,6 +248,7 @@ public class CY8CKIT021 extends Service {
         mLed0Characterisitc.setValue(byteVal);
         mBluetoothGatt.writeCharacteristic(mLed0Characterisitc);
     }
+    */
 
     /**
      * This method enables or disables notifications for the CapSense slider
@@ -278,29 +256,11 @@ public class CY8CKIT021 extends Service {
      * @param value Turns notifications on (1) or off (0)
      */
     public void writeButton0Notification(boolean value) {
-        // Set notifications locally in the CCCD
-        Log.d(TAG,"Set Local = " + mButton0Characteristic.getUuid().toString());
-        mBluetoothGatt.setCharacteristicNotification(mButton0Characteristic, value);
-        byte[] byteVal = new byte[1];
-        if (value) {
-            byteVal[0] = 1;
-        } else {
-            byteVal[0] = 0;
-        }
-        // Write Notification value to the device
-        Log.i(TAG, "Button0 Notification " + value);
-        mButton0Cccd.setValue(byteVal);
-        mBluetoothGatt.writeDescriptor(mButton0Cccd);
-    }
 
-    public void setNotify()
-    {
-        Log.d(TAG,"Turned on notification");
-        // 0x2902 org.bluetooth.descriptor.gatt.client_characteristic_configuration.xml
-        UUID uuid = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
-        BluetoothGattDescriptor descriptor = mButton0Characteristic.getDescriptor(uuid);
-        descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
-        mBluetoothGatt.writeDescriptor(descriptor);
+        if(value)
+            queue.enableNotification(mButton0Characteristic);
+        else
+            queue.disableNotification(mButton0Characteristic);
     }
 
     /**
@@ -314,93 +274,9 @@ public class CY8CKIT021 extends Service {
         public void onScanResult(int callbackType, ScanResult result) {
             mLeDevice = result.getDevice();
             mLEScanner.stopScan(mScanCallback); // Stop scanning after the first device is found
-            //broadcastUpdate(ACTION_BLESCAN_CALLBACK); // Tell the main activity that a device has been found
             connect();
-            Log.d(TAG,"Found service");
-
         }
     };
-
-
-    /**
-     * Implements the callback for when scanning for devices has found a device with
-     * the service we are looking for.
-     *
-     * This is the callback for BLE scanning on versions prior to Lollipop
-     */
-    /*
-    private BluetoothAdapter.LeScanCallback mLeScanCallback =
-            new BluetoothAdapter.LeScanCallback() {
-                @Override
-                public void onLeScan(final BluetoothDevice device, int rssi, byte[] scanRecord) {
-                    mLeDevice = device;
-                    //noinspection deprecation
-                    mBluetoothAdapter.stopLeScan(mLeScanCallback); // Stop scanning after the first device is found
-                    Log.d(TAG,"found device");
-                    discoverServices();
-                    //broadcastUpdate(ACTION_BLESCAN_CALLBACK); // Tell the main activity that a device has been found
-                }
-            };
-
-*/
-
-    //http://stackoverflow.com/questions/17910322/android-ble-api-gatt-notification-not-received
-    // http://www.brendanwhelan.net/2015/bluetooth-command-queuing-for-android
-
-    private Queue<BluetoothGattDescriptor> descriptorWriteQueue = new LinkedList<BluetoothGattDescriptor>();
-    private Queue<BluetoothGattCharacteristic> characteristicReadQueue = new LinkedList<BluetoothGattCharacteristic>();
-
-    public void writeGattDescriptor(BluetoothGattDescriptor d){
-        //put the descriptor into the write queue
-        descriptorWriteQueue.add(d);
-        //if there is only 1 item in the queue, then write it.  If more than 1, we handle asynchronously in the callback above
-        if(descriptorWriteQueue.size() == 1){
-            mBluetoothGatt.writeDescriptor(d);
-        }
-    }
-
-    public void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status) {
-        if (status == BluetoothGatt.GATT_SUCCESS) {
-            Log.d(TAG, "Callback: Wrote GATT Descriptor successfully.");
-        }
-        else{
-            Log.d(TAG, "Callback: Error writing GATT Descriptor: "+ status);
-        }
-        descriptorWriteQueue.remove();  //pop the item that we just finishing writing
-        //if there is more to write, do it!
-        if(descriptorWriteQueue.size() > 0)
-            mBluetoothGatt.writeDescriptor(descriptorWriteQueue.element());
-        else if(characteristicReadQueue.size() > 0)
-            mBluetoothGatt.readCharacteristic(characteristicReadQueue.element());
-    }
-
-    public void readCharacteristic(BluetoothGattCharacteristic c) {
-        if (mBluetoothAdapter == null || mBluetoothGatt == null) {
-            Log.w(TAG, "BluetoothAdapter not initialized");
-            return;
-        }
-        //put the characteristic into the read queue
-        characteristicReadQueue.add(c);
-        //if there is only 1 item in the queue, then read it.  If more than 1, we handle asynchronously in the callback above
-        //GIVE PRECEDENCE to descriptor writes.  They must all finish first.
-        if((characteristicReadQueue.size() == 1) && (descriptorWriteQueue.size() == 0))
-            mBluetoothGatt.readCharacteristic(c);
-    }
-
-    public void onCharacteristicRead(BluetoothGatt gatt,
-                                     BluetoothGattCharacteristic characteristic,
-                                     int status) {
-        characteristicReadQueue.remove();
-        if (status == BluetoothGatt.GATT_SUCCESS) {
-            broadcastUpdate(ACTION_DATA_AVAILABLE, characteristic);
-        }
-        else{
-            Log.d(TAG, "onCharacteristicRead error: " + status);
-        }
-
-        if(characteristicReadQueue.size() > 0)
-            mBluetoothGatt.readCharacteristic(characteristicReadQueue.element());
-    }
 
     /**
      * Implements callback methods for GATT events that the app cares about.  For example,
@@ -434,17 +310,15 @@ public class CY8CKIT021 extends Service {
             Log.d(TAG,"On Services Discovered");
             // Get just the service that we are looking for
             BluetoothGattService mService = gatt.getService(UUID.fromString(CY8CKIT021ServiceUUID));
-            /* Get characteristics from our desired service */
             mLed0Characterisitc = mService.getCharacteristic(UUID.fromString(led0CharacteristicUUID));
             mButton0Characteristic = mService.getCharacteristic(UUID.fromString(button0CharacteristicUUID));
-            /* Get the CapSense CCCD */
-            mButton0Cccd = mButton0Characteristic.getDescriptor(UUID.fromString(button0CccdUUID));
+            mBootloadCharacteristic = mService.getCharacteristic(UUID.fromString(bootloadCharacteristicUUID));
 
             // Read the current state of the LED from the device
-            //readLed0Characteristic();
-            //readButton0Characteristic();
-            //writeButton0Notification(true);
-            setNotify();
+            readLed0Characteristic();
+            readButton0Characteristic();
+
+            writeButton0Notification(true); // turn on notifications for the capsense button
             // Broadcast that service/characteristic/descriptor discovery is done
             broadcastUpdate(ACTION_CONNECTED);
         }
@@ -461,28 +335,34 @@ public class CY8CKIT021 extends Service {
                                          BluetoothGattCharacteristic characteristic,
                                          int status) {
 
-            Log.d(TAG,"Got read from device : "+characteristic.getUuid().toString());
+            queue.clearEvent();
+            String uuid = characteristic.getUuid().toString();
 
-            if (status == BluetoothGatt.GATT_SUCCESS) {
-                // Verify that the read was the LED state
-                String uuid = characteristic.getUuid().toString();
-                // In this case, the only read the app does is the LED state.
-                // If the application had additional characteristics to read we could
-                // use a switch statement here to operate on each one separately.
-                if(uuid.equals(led0CharacteristicUUID)) {
-                    final byte[] data = characteristic.getValue();
-                    // Set the LED switch state variable based on the characteristic value ttat was read
-                    mLed0SwitchState = ((data[0] & 0xff) != 0x00);
-                    broadcastUpdate(ACTION_UPDATED_LED0);
-                }
-
-                if(uuid.equals(button0CharacteristicUUID)) {
-                    final byte[] data = characteristic.getValue();
-                    // Set the LED switch state variable based on the characteristic value ttat was read
-                    mButton0SwitchState = ((data[0] & 0xff) != 0x00);
-                    broadcastUpdate(ACTION_UPDATED_BUTTON0);
-                }
+            if(uuid.equals(led0CharacteristicUUID)) {
+                final byte[] data = characteristic.getValue();
+                // Set the LED switch state variable based on the characteristic value ttat was read
+                mLed0SwitchState = ((data[0] & 0xff) != 0x00);
+                broadcastUpdate(ACTION_UPDATED_LED0);
             }
+
+            if(uuid.equals(button0CharacteristicUUID)) {
+                final byte[] data = characteristic.getValue();
+                // Set the LED switch state variable based on the characteristic value ttat was read
+                mButton0SwitchState = ((data[0] & 0xff) != 0x00);
+                broadcastUpdate(ACTION_UPDATED_BUTTON0);
+            }
+        }
+
+        @Override
+        public void onCharacteristicWrite(BluetoothGatt gatt, BluetoothGattCharacteristic characteristic, int status)
+        {
+            queue.clearEvent();
+        }
+
+        @Override
+        public  void onDescriptorWrite(BluetoothGatt gatt, BluetoothGattDescriptor descriptor, int status)
+        {
+            queue.clearEvent();
         }
 
         /**
@@ -498,8 +378,6 @@ public class CY8CKIT021 extends Service {
 
             String uuid = characteristic.getUuid().toString();
 
-            Log.d(TAG,"Characteristic changed = "+uuid);
-
             if(uuid.equals(button0CharacteristicUUID)) {
                 Integer buttonState = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT8,0);
                 if(buttonState == 0) {
@@ -508,11 +386,8 @@ public class CY8CKIT021 extends Service {
                 else {
                     mButton0SwitchState = true;
                 }
-
+                broadcastUpdate(ACTION_UPDATED_BUTTON0);
             }
-
-            // Notify the main activity that new data is available
-            broadcastUpdate(ACTION_UPDATED_BUTTON0);
         }
     }; // End of GATT event callback methods
 
@@ -524,6 +399,166 @@ public class CY8CKIT021 extends Service {
     private void broadcastUpdate(final String action) {
         final Intent intent = new Intent(action);
         sendBroadcast(intent);
+    }
+
+    static class BLEQueue {
+        private Queue<BLEActivity> actitvityQueue = new LinkedList<>();
+        private boolean idle = true;
+
+
+        private enum BLEActivities {
+            WRITE,
+            READ,
+            ENABLE_NOTIFICATION,
+            DISABLE_NOTIFICATION
+        }
+
+        private class BLEActivity {
+            private boolean launched = false;
+            private BLEActivities BLEActivity;
+            private BluetoothGattCharacteristic characteristic;
+            private BluetoothGattDescriptor descriptor;
+            private BLEWriteType writeType;
+            private java.lang.Object value;
+
+        }
+
+        private enum BLEWriteType {
+            UINT8,
+            BOOLEAN
+        }
+        private void addBleActivity(BLEActivity activity)
+        {
+            actitvityQueue.add(activity);
+            launchNextEvent();
+        }
+
+        public void readCharacteristic(BluetoothGattCharacteristic characteristic)
+        {
+            BLEActivity activity = new BLEActivity();
+            activity.characteristic = characteristic;
+            activity.BLEActivity = BLEActivities.READ;
+            addBleActivity(activity);
+        }
+
+        public void disableNotification(BluetoothGattCharacteristic characteristic)
+        {
+            BLEActivity activity = new BLEActivity();
+            activity.characteristic = characteristic;
+            //UUID uuid = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
+            activity.descriptor = characteristic.getDescriptor(CCCDUUID);
+            activity.BLEActivity = BLEActivities.DISABLE_NOTIFICATION;
+            addBleActivity(activity);
+
+        }
+
+        public void enableNotification(BluetoothGattCharacteristic characteristic)
+        {
+
+            BLEActivity activity = new BLEActivity();
+            activity.characteristic = characteristic;
+            //UUID uuid = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb");
+            activity.descriptor = characteristic.getDescriptor(CCCDUUID);
+            activity.BLEActivity = BLEActivities.ENABLE_NOTIFICATION;
+            addBleActivity(activity);
+
+        }
+
+        public void enableNotification(BluetoothGattDescriptor descriptor)
+        {
+            BLEActivity activity = new BLEActivity();
+            activity.descriptor = descriptor;
+            activity.BLEActivity = BLEActivities.ENABLE_NOTIFICATION;
+            addBleActivity(activity);
+
+        }
+
+        public void disableNotification(BluetoothGattDescriptor descriptor)
+        {
+            BLEActivity activity = new BLEActivity();
+            activity.descriptor = descriptor;
+            activity.BLEActivity = BLEActivities.DISABLE_NOTIFICATION;
+            addBleActivity(activity);
+        }
+
+        public void clearEvent()
+        {
+            idle = true;
+            actitvityQueue.remove();
+            launchNextEvent();
+        }
+
+        public void launchNextEvent()
+        {
+
+            if(actitvityQueue.size() == 0)
+                return;
+
+            if(!idle) // if it is already busy then come back later
+                return;
+
+            idle = false; // now busy
+
+            BLEActivity top = actitvityQueue.element(); // look at the first element in the queue
+
+            if(top.launched)
+            {
+                actitvityQueue.remove();
+                if(actitvityQueue.size() == 0) {
+                    return;
+                }
+
+                top = actitvityQueue.element();
+            }
+
+
+            switch(top.BLEActivity)
+            {
+                case WRITE:
+                    writeActivity(top);
+                    break;
+                case READ:
+                    mBluetoothGatt.readCharacteristic(top.characteristic);
+                    break;
+                case ENABLE_NOTIFICATION:
+                    mBluetoothGatt.setCharacteristicNotification(top.characteristic,true);
+                    top.descriptor.setValue(BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE);
+                    mBluetoothGatt.writeDescriptor(top.descriptor);
+                    break;
+                case DISABLE_NOTIFICATION:
+                    mBluetoothGatt.setCharacteristicNotification(top.characteristic,false);
+                    top.descriptor.setValue(BluetoothGattDescriptor.DISABLE_NOTIFICATION_VALUE);
+                    mBluetoothGatt.writeDescriptor(top.descriptor);
+                    break;
+            }
+        }
+
+        private void writeActivity(BLEActivity activity)
+        {
+            byte[] bytes  = new byte[1]; // initialized just to make error go away
+            switch (activity.writeType)
+            {
+                case BOOLEAN:
+                    bytes = new byte[1];
+                    if((Boolean)activity.value)
+                        bytes[0] = 1;
+                    else
+                        bytes[0] = 0;
+                    break;
+            }
+            activity.characteristic.setValue(bytes);
+            mBluetoothGatt.writeCharacteristic(activity.characteristic);
+        }
+
+        public void writeBoolean(BluetoothGattCharacteristic characteristic,Object value)
+        {
+            BLEActivity activity = new BLEActivity();
+            activity.characteristic = characteristic;
+            activity.BLEActivity = BLEActivities.WRITE;
+            activity.writeType = BLEWriteType.BOOLEAN;
+            activity.value = value;
+            addBleActivity(activity);
+        }
     }
 
 }

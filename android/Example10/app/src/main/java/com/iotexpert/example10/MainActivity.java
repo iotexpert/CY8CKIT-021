@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private Button mBootLoad;
     private ToggleButton mButton0;
     private Switch mLed0Switch;
-    private Button mScan;
 
     CY8CKIT021 mCY8CKIT021Model;
 
@@ -67,10 +66,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(com.iotexpert.example10.R.layout.activity_main);
 
+
         mBootLoad = (Button) findViewById(com.iotexpert.example10.R.id.bootloadbutton);
         mLed0Switch = (Switch) findViewById(com.iotexpert.example10.R.id.led0switch);
         mButton0 = (ToggleButton) findViewById(com.iotexpert.example10.R.id.button0);
-        mScan = (Button) findViewById(com.iotexpert.example10.R.id.scanbutton);
 
         mBootLoad.setEnabled(false);
         mLed0Switch.setChecked(false);
@@ -81,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check 
             if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                /*
                 final AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setTitle("This app needs location access ");
                 builder.setMessage("Please grant location access so this app can detect devices.");
@@ -91,27 +91,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
                 builder.show();
+                */
+                requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
             }
         } //End of section for Android 6.0 (Marshmallow)
+
 
 
         mBootLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //mCY8CKIT021Model.readButton0Characteristic();
-                //mCY8CKIT021Model.setNotify();
-                mCY8CKIT021Model.writeButton0Notification(true);
+                mCY8CKIT021Model.writeBootloadCharacteristic();
             }
         });
 
-
-        mScan.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
-                mCY8CKIT021Model.scan();
-                mScan.setEnabled(false);
-                Log.d(TAG,"Clicked Scan Button");
-            }
-        });
 
         mLed0Switch.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
@@ -174,14 +167,12 @@ public class MainActivity extends AppCompatActivity {
                     mLed0Switch.setEnabled(false); // turn off the Led switch
                     mBootLoad.setEnabled(false); // turn off the bootload button
                     mButton0.setEnabled(false);
-                    mScan.setEnabled(true);
+                    //mScan.setEnabled(true);
+                    mCY8CKIT021Model.scan();
                     Log.d(TAG, "Disconnected");
-
                     break;
                 case CY8CKIT021.ACTION_UPDATED_BUTTON0:
-                    Log.d(TAG,"Button Update=" + mCY8CKIT021Model.isButton0SwitchState());
                     mButton0.setChecked(mCY8CKIT021Model.isButton0SwitchState()); // ask the model the current state of the button
-
                     break;
                 case CY8CKIT021.ACTION_UPDATED_LED0:
                     mLed0Switch.setChecked(mCY8CKIT021Model.isLed0SwitchState()); // ask the model the current state of the switch
