@@ -24,36 +24,33 @@ public class MainActivity extends AppCompatActivity {
 
     private final static String TAG = CY8CKIT021.class.getSimpleName();
 
-
+    // member variables to represent the GUI elements
     private Button mBootLoad;
     private ToggleButton mButton0;
     private Switch mLed0Switch;
-
-    CY8CKIT021 mCY8CKIT021Model;
+    CY8CKIT021 mCY8CKIT021Model; // a reference to the model which contains the interface to the CY8CKIT021 Board
 
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
 
         /**
-         * This is called when the PSoCCapSenseLedService is connected
+         * This is called when the CY8CKIT021 Service is connected
          *
          * @param componentName the component name of the service that has been connected
          * @param service service being bound
          */
         @Override
         public void onServiceConnected(ComponentName componentName, IBinder service) {
-            Log.i(TAG, "onServiceConnected");
             mCY8CKIT021Model = ((CY8CKIT021.LocalBinder) service).getService();
-            mCY8CKIT021Model.initialize();
+            mCY8CKIT021Model.initialize(); // tell the model to get going
         }
 
         /**
-         * This is called when the PSoCCapSenseService is disconnected.
+         * This is called when the CY8CKIT021 Service is disconnected.
          *
          * @param componentName the component name of the service that has been connected
          */
         @Override
         public void onServiceDisconnected(ComponentName componentName) {
-            Log.i(TAG, "onServiceDisconnected");
             mCY8CKIT021Model = null;
         }
     };
@@ -74,30 +71,17 @@ public class MainActivity extends AppCompatActivity {
         mBootLoad.setEnabled(false);
         mLed0Switch.setChecked(false);
         mButton0.setEnabled(false);
-        mButton0.setClickable(false);
+        mButton0.setClickable(false); // this button is only interacted with programmatically
 
         //This section required for Android 6.0 (Marshmallow)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // Android M Permission check 
             if (this.checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                /*
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("This app needs location access ");
-                builder.setMessage("Please grant location access so this app can detect devices.");
-                builder.setPositiveButton(android.R.string.ok, null);
-                builder.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    public void onDismiss(DialogInterface dialog) {
-                        requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
-                    }
-                });
-                builder.show();
-                */
                 requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_REQUEST_COARSE_LOCATION);
             }
         } //End of section for Android 6.0 (Marshmallow)
 
-
-
+        // when the button is clicked request the model to send the bootload message to the PSoC
         mBootLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,25 +89,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         mLed0Switch.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 mCY8CKIT021Model.writeLed0Characteristic(mLed0Switch.isChecked());
-                //mCY8CKIT021Model.writeLed0Characteristic(true);
-
             }
         });
 
-        Log.d(TAG, "Starting BLE Service");
         Intent gattServiceIntent = new Intent(this, CY8CKIT021.class);
         bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-
     }
 
+    // This function adds a list of broadCast messages to listen for.  The Model broadcasts these
+    // messages when something happens inside of the model that the viewcontroller needs to know about
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d(TAG,"OnResume: adding filters");
         final IntentFilter filter = new IntentFilter();
         filter.addAction(CY8CKIT021.ACTION_CONNECTED);
         filter.addAction(CY8CKIT021.ACTION_DISCONNECTED);
@@ -132,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
         registerReceiver(mBleUpdateReceiver, filter);
     }
 
+    // I am not sure that this needs to be done?  If so why?
     @Override
     protected void onPause() {
         super.onPause();
@@ -146,9 +127,7 @@ public class MainActivity extends AppCompatActivity {
         unbindService(mServiceConnection);
     }
 
-
-    /**
-     */
+    // This class listens is called when a broadcast occurs
     private final BroadcastReceiver mBleUpdateReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -160,24 +139,16 @@ public class MainActivity extends AppCompatActivity {
                         mBootLoad.setEnabled(true);
                         mLed0Switch.setEnabled(true);
                         mButton0.setEnabled(true);
-                        Log.d(TAG, "Connected to Device");
                     break;
                 case CY8CKIT021.ACTION_DISCONNECTED:
-                    // Turn off and disable the LED and CapSense switches
                     mLed0Switch.setEnabled(false); // turn off the Led switch
                     mBootLoad.setEnabled(false); // turn off the bootload button
-                    mButton0.setEnabled(false);
-                    //mScan.setEnabled(true);
-                    mCY8CKIT021Model.scan();
-                    Log.d(TAG, "Disconnected");
                     break;
                 case CY8CKIT021.ACTION_UPDATED_BUTTON0:
                     mButton0.setChecked(mCY8CKIT021Model.isButton0SwitchState()); // ask the model the current state of the button
                     break;
                 case CY8CKIT021.ACTION_UPDATED_LED0:
                     mLed0Switch.setChecked(mCY8CKIT021Model.isLed0SwitchState()); // ask the model the current state of the switch
-                    break;
-                default:
                     break;
             }
         }

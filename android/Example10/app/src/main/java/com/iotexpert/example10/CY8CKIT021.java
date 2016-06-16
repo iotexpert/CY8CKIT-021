@@ -292,6 +292,7 @@ public class CY8CKIT021 extends Service {
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 Log.i(TAG, "Disconnected from GATT server.");
                 disconnect(); // ARH not sure about this
+                scan(); // start the scanning adgain
                 broadcastUpdate(ACTION_DISCONNECTED);
             }
         }
